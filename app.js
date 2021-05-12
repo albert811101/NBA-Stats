@@ -13,8 +13,8 @@ app.use("/api/1.0",
 );
 
 // eslint-disable-next-line node/handle-callback-err
-app.use(function (err, req, res) {
-  console.log(err);
+app.use(function (err, req, res, next) {
+  console.log("err");
   res.status(500).send("server error");
 });
 
