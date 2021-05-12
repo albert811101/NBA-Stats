@@ -20,6 +20,7 @@ async function fetchPlayerstats () {
 //   console.log("Done!");
 }
 // start the main script
+
 fetchPlayerstats();
 
 // async function
