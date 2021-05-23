@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>NBA Stats</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link href="./styles/header.css" rel="stylesheet" />
+    <link href="./styles/index.css" rel="stylesheet" />
+    <link href="./styles/footer.css" rel="stylesheet" />
+  </head>
+  <body class="body">
+    <header>
+      <a href="/" id="logo">NBA STATS</a>
+      <nav class="navbar">
+        <a href="/fantasy.html" id="fantasy">Fantasy</a>
+        <input
+          type="text"
+          class="form-control searchbar"
+          placeholder="Search"
+        />
+        <a href="/" class="search"><img src="images/search.png" /></a>
+        <a href="/" class="member"><img src="images/member.png" /></a>
+      </nav>
+    </header>
+    <div class="title"><h2>2020-21 Regular Season</h2></div>
+    <div class="wrap">
+      <h3>Offensive Leaders</h3>
+      <h3>Defensive Leaders</h3>
+    </div>
+    <div class="group">
+      <div class="leftgroup">
+        <div class="container">
+          <div class="col-lg-15">
+            <div class="page-header">
+              <p>POINTS</p>
+            </div>
+            <ul class="list-group">
+              <li class="list-group-item d-flex align-items-center">
+                <span class="playerRank mr-1">1</span>
+                <img class="image1" />
+                <a href="/" class="playerName1"></a>
+                <span class="badge navbar-brand ml-1"></span>
+                <span class="stat1 badge navbar-right ml-auto"></span>
+              </li>
+              <li class="list-group-item d-flex align-items-center">
+                <span class="playerRank mr-1">2</span>
+                <img class="image1" />
+                <a href="/" class="playerName1"></a>
+                <span class="badge navbar-brand ml-1"></span>
+                <span class="stat1 badge navbar-right ml-auto"></span>
+              </li>
+              <li class="list-group-item d-flex align-items-center">
+                <span class="playerRank mr-1">3</span>
+                <img class="image1" />
+                <a href="/" class="playerName1"> </a>
+                <span class="badge navbar-brand ml-1"></span>
+                <span class="stat1 badge navbar-right ml-auto"></span>
+              </li>
+              <li class="list-group-item d-flex align-items-center">
+                <span class="playerRank mr-1">4</span>
+                <img class="image1" />
+                <a href="/" class="playerName1"> </a>
+                <span class="badge navbar-brand ml-1"></span>
+                <span class="stat1 badge navbar-right ml-auto"></span>
+              </li>
+              <li class="list-group-item d-flex align-items-center">
+                <span class="playerRank mr-1">5</span>
+                <img class="image1" />
+                <a href="/" class="playerName1"> </a>
+                <span class="badge navbar-brand ml-1"></span>
+                <span class="stat1 badge navbar-right ml-auto"></span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="container">
+          <div class="col-lg-15">
+            <div class="page-header">
+              <p>ASSISTS</p>
+            </div>
+            <ul class="list-group">
+              <li class="list-group-item d-flex align-items-center">
+                <span class="playerRank mr-1">1</span>
+                <img class="image2" />
+                <a href="/" class="playerName2"></a>
+                <span class="team2 badge navbar-brand ml-1"></span>
+                <span class="stat2 badge navbar-right ml-auto"></span>
+              </li>
+              <li class="list-group-item d-flex align-items-center">
+                <span class="playerRank mr-1">2</span>
+                <img class="image2" />
+                <a href="/" class="playerName2"> </a>
+                <span class="team2 badge navbar-brand ml-1"></span>
+                <span class="stat2 badge navbar-right ml-auto"></span>
+              </li>
+              <li class="list-group-item d-flex align-items-center">
+                <span class="playerRank mr-1">3</span>
+                <img class="image2" />
+                <a href="/" class="playerName2"></a>
+                <span class="team2 badge navbar-brand ml-1"></span>
+                <span class="stat2 badge navbar-right ml-auto"></span>
+              </li>
+              <li class="list-group-item d-flex align-items-center">
+                <span class="playerRank mr-1">4</span>
+                <img class="image2" />
+                <a href="/" class="playerName2"></a>
+                <span class="team2 badge navbar-brand ml-1"></span>
+                <span class="stat2 badge navbar-right ml-auto"></span>
+              </li>
+              <li class="list-group-item d-flex align-items-center">
+                <span class="playerRank mr-1">5</span>
+                <img class="image2" />
+                <a href="/" class="playerName2"></a>
+                <span class="team2 badge navbar-brand ml-1"></span>
+                <span class="stat2 badge navbar-right ml-auto"></span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="container">
+          <div class="col-lg-15">
+            <div class="page-header">
+              <p>3-POINTERS MADE</p>
+            </div>
+            <ul class="list-group">
+              <li class="list-group-item d-flex align-items-center">
+                <span class="playerRank mr-1">1</span>
+                <img class="image3" />
+                <a href="/" class="playerName3"> </a>
+                <span class="team3 badge navbar-brand ml-1"></span>
+                <span class="stat3 badge navbar-right ml-auto"></span>
+              </li>
+              <li class="list-group-item d-flex align-items-center">
+                <span class="playerRank mr-1">2</span>
+                <img class="image3" />
+                <a href="/" class="playerName3"> </a>
+                <span class="team3 badge navbar-brand ml-1"></span>
+                <span class="stat3 badge navbar-right ml-auto"></span>
+              </li>
+              <li class="list-group-item d-flex align-items-center">
+                <span class="playerRank mr-1">3</span>
+                <img class="image3" />
+                <a href="/" class="playerName3"></a>
+                <span class="team3 badge navbar-brand ml-1"></span>
+                <span class="stat3 badge navbar-right ml-auto"></span>
+              </li>
+              <li class="list-group-item d-flex align-items-center">
+                <span class="playerRank mr-1">4</span>
+                <img class="image3" />
+                <a href="/" class="playerName3"></a>
+                <span class="team3 badge navbar-brand ml-1"></span>
+                <span class="stat3 badge navbar-right ml-auto"></span>
+              </li>
+              <li class="list-group-item d-flex align-items-center">
+                <span class="playerRank mr-1">5</span>
+                <img class="image3" />
+                <a href="/" class="playerName3"> </a>
+                <span class="team3 badge navbar-brand ml-1"></span>
+                <span class="stat3 badge navbar-right ml-auto"></span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="rightgroup">
+        <div class="container">
+          <div class="col-lg-15">
+            <div class="page-header">
+              <p>REBOUNDS</p>
+            </div>
+            <ul class="list-group">
+              <li class="list-group-item d-flex align-items-center">
+                <span class="playerRank mr-1">1</span>
+                <img class="image4" />
+                <a href="/" class="playerName4"></a>
+                <span class="team4 badge navbar-brand ml-1"></span>
+                <span class="stat4 badge navbar-right ml-auto"></span>
+              </li>
+              <li class="list-group-item d-flex align-items-center">
+                <span class="playerRank mr-1">2</span>
+                <img class="image4" />
+                <a href="/" class="playerName4"></a>
+                <span class="team4 badge navbar-brand ml-1"></span>
+                <span class="stat4 badge navbar-right ml-auto"></span>
+              </li>
+              <li class="list-group-item d-flex align-items-center">
+                <span class="playerRank mr-1">3</span>
+                <img class="image4" />
+                <a href="/" class="playerName4"></a>
+                <span class="team4 badge navbar-brand ml-1"></span>
+                <span class="stat4 badge navbar-right ml-auto"></span>
+              </li>
+              <li class="list-group-item d-flex align-items-center">
+                <span class="playerRank mr-1">4</span>
+                <img class="image4" />
+                <a href="/" class="playerName4"></a>
+                <span class="team4 badge navbar-brand ml-1"></span>
+                <span class="stat4 badge navbar-right ml-auto"></span>
+              </li>
+              <li class="list-group-item d-flex align-items-center">
+                <span class="playerRank mr-1">5</span>
+                <img class="image4" />
+                <a href="/" class="playerName4"></a>
+                <span class="team4 badge navbar-brand ml-1"></span>
+                <span class="stat4 badge navbar-right ml-auto"></span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="container">
+          <div class="col-lg-15">
+            <div class="page-header">
+              <p>BLOCKS</p>
+            </div>
+            <ul class="list-group">
+              <li class="list-group-item d-flex align-items-center">
+                <span class="playerRank mr-1">1</span>
+                <img class="image5" />
+                <a href="/" class="playerName5"></a>
+                <span class="team5 badge navbar-brand ml-1"></span>
+                <span class="stat5 badge navbar-right ml-auto"></span>
+              </li>
+              <li class="list-group-item d-flex align-items-center">
+                <span class="playerRank mr-1">2</span>
+                <img class="image5" />
+                <a href="/" class="playerName5"></a>
+                <span class="team5 badge navbar-brand ml-1"></span>
+                <span class="stat5 badge navbar-right ml-auto"></span>
+              </li>
+              <li class="list-group-item d-flex align-items-center">
+                <span class="playerRank mr-1">3</span>
+                <img class="image5" />
+                <a href="/" class="playerName5"></a>
+                <span class="team5 badge navbar-brand ml-1"></span>
+                <span class="stat5 badge navbar-right ml-auto"></span>
+              </li>
+              <li class="list-group-item d-flex align-items-center">
+                <span class="playerRank mr-1">4</span>
+                <img class="image5" />
+                <a href="/" class="playerName5"></a>
+                <span class="team5 badge navbar-brand ml-1"></span>
+                <span class="stat5 badge navbar-right ml-auto"></span>
+              </li>
+              <li class="list-group-item d-flex align-items-center">
+                <span class="playerRank mr-1">5</span>
+                <img class="image5" />
+                <a href="/" class="playerName5"></a>
+                <span class="team5 badge navbar-brand ml-1"></span>
+                <span class="stat5 badge navbar-right ml-auto"></span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="container">
+          <div class="col-lg-15">
+            <div class="page-header">
+              <p>STEALS</p>
+            </div>
+            <ul class="list-group">
+              <li class="list-group-item d-flex align-items-center">
+                <span class="playerRank mr-1">1</span>
+                <img class="image6" />
+                <a href="/" class="playerName6"></a>
+                <span class="team6 badge navbar-brand ml-1"></span>
+                <span class="stat6 badge navbar-right ml-auto"></span>
+              </li>
+              <li class="list-group-item d-flex align-items-center">
+                <span class="playerRank mr-1">2</span>
+                <img class="image6" />
+                <a href="/" class="playerName6"></a>
+                <span class="team6 badge navbar-brand ml-1"></span>
+                <span class="stat6 badge navbar-right ml-auto"></span>
+              </li>
+              <li class="list-group-item d-flex align-items-center">
+                <span class="playerRank mr-1">3</span>
+                <img class="image6" />
+                <a href="/" class="playerName6"></a>
+                <span class="team6 badge navbar-brand ml-1"></span>
+                <span class="stat6 badge navbar-right ml-auto"></span>
+              </li>
+              <li class="list-group-item d-flex align-items-center">
+                <span class="playerRank mr-1">4</span>
+                <img class="image6" />
+                <a href="/" class="playerName6"></a>
+                <span class="team6 badge navbar-brand ml-1"></span>
+                <span class="stat6 badge navbar-right ml-auto"></span>
+              </li>
+              <li class="list-group-item d-flex align-items-center">
+                <span class="playerRank mr-1">5</span>
+                <img class="image6" />
+                <a href="/" class="playerName6"></a>
+                <span class="team6 badge navbar-brand ml-1"></span>
+                <span class="stat6 badge navbar-right ml-auto"></span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer>
+      <div class="name d-flex">
+        © 2021 NBA STATS
+        <div class="rights">All Rights Reserved.</div>
+      </div>
+    </footer>
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="./src/index.js"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.min.js" integrity="sha384-lpyLfhYuitXl2zRZ5Bn2fqnhNAKOAaM/0Kr9laMspuaMiZfGmfwRNFh8HlMy49eQ" crossorigin="anonymous"></script>
+    -->
+  </body>
+</html>

@@ -1,5 +1,4 @@
 require("dotenv").config();
-const { fetchPlayerstats } = require("./util/crawler");
 
 const express = require("express");
 const app = express();
@@ -9,7 +8,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/1.0",
-  fetchPlayerstats
+  [
+    require("./server/routes/crawler_route")
+  ]
 );
 
 // eslint-disable-next-line node/handle-callback-err
