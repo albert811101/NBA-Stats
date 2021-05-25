@@ -100,7 +100,7 @@ const fetchStatsleader = async (req, res) => {
       Referer: "https://www.nba.com/"
     }
   });
-  console.log(statsleader.data.items[0].items[0].playerstats[0]);
+  // console.log(statsleader.data.items[0].items[0].playerstats[0]);
   res.send(JSON.stringify(statsleader.data));
   // console.log(statsleader.data.items[0].items[0].playerstats[0]);
 };

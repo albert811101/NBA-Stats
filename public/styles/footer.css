@@ -13,6 +13,7 @@ footer {
 }
 
 .d-flex {
+  display: flex;
   color: white;
 }
 
