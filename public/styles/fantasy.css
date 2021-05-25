@@ -1,0 +1,145 @@
+.body {
+  background-color: rgb(237, 238, 240);
+  position: relative;
+  height: 1300px;
+}
+
+.container {
+  margin-top: 50px;
+  text-align: center;
+}
+
+.panel {
+  font-weight: 800;
+  font-size: 15px;
+}
+
+.panel-body {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  height: 51px;
+}
+
+.totalbox {
+  display: flex;
+  justify-content: space-around;
+  font-weight: 700;
+  font-size: 15px;
+  padding: 50px 0;
+}
+
+.box1 {
+  width: 250px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  border: #5ba7b4 3px solid;
+}
+
+.box2 {
+  width: 250px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  border: #5ba7b4 3px solid;
+}
+
+.box3 {
+  width: 250px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  border: #5ba7b4 3px solid;
+}
+
+.step {
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  align-items:center;
+  padding-top: 30px;
+}
+
+.step1 {
+  width: 100px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  border: #5ba7b4 3px solid;
+  margin-bottom: 15px;
+}
+
+.step2 {
+  width: 100px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  border: #5ba7b4 3px solid;
+  margin-bottom: 15px;
+}
+
+.step3 {
+  width: 100px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  border: #5ba7b4 3px solid;
+  margin-bottom: 15px;
+}
+
+.text1 {
+  display: flex;
+  width: 400px;
+  justify-content: left;
+}
+
+.text2 {
+  display: flex;
+  width: 400px;
+  justify-content: left;
+}
+
+.text3 {
+  display: flex;
+  width: 400px;
+  justify-content: left;
+}
+
+p {
+  align-self: center;
+  margin-left: 15px;
+}
+
+.reminder {
+  padding: 20px 0;
+  color: lightslategray;
+}
+
+.user-selection {
+  padding: 50px 0;
+}
+
+.position-name {
+  position: absolute;
+}
+
+.glyphicon-plus-sign {
+  position: absolute;
+  left: 1100px;
+  line-height: 51px;
+}
+
+.player {
+  background-color: rgb(198, 202, 207);
+}
+
+.btn {
+  margin: 0 10px;
+}

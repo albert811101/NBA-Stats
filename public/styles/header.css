@@ -1,0 +1,94 @@
+header {
+  display: flex;
+  justify-content: space-between;
+  height: 71px;
+  padding: 0 35px;
+  background-color: #051c2c;
+}
+
+img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+input:focus {
+  border-color: grey;
+}
+
+#logo {
+  font-size: x-large;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: white;
+}
+
+#logo1 {
+  font-size: 28px;
+  font-weight: bolder;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: white;
+}
+
+#fantasy {
+  font-family: sans-serif;
+  font-weight: bolder;
+  opacity: 0.9;
+  text-decoration: none;
+  color: white;
+}
+
+#rules {
+  font-family: sans-serif;
+  font-size: large;
+  opacity: 0.9;
+  text-decoration: none;
+  color: white;
+  margin-top: 5px;
+}
+
+.leftbar {
+  display: flex;
+  justify-content: space-between;
+  width: 190px;
+  align-items: center;
+}
+
+.navbar {
+  display: flex;
+  align-self: center;
+  justify-content: space-around;
+  width: 410px;
+  font-size: 20px;
+}
+
+.searchbar {
+  width: 170px;
+  height: 28px;
+  border: solid 1px #979797;
+  border-radius: 5px;
+  margin-left: 30px;
+}
+
+.search {
+  margin-bottom: 5px;
+  margin-left: 3px;
+  width: 30px;
+  height: 30px;
+}
+
+.member {
+  width: 52px;
+  height: 52px;
+  margin-bottom: 3px;
+}
+
+.member1 {
+  width: 52px;
+  height: 52px;
+  margin-top: 8px;
+  margin-right: 18.5px;
+}

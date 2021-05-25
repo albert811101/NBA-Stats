@@ -1,0 +1,152 @@
+.body {
+  background-color: rgb(237, 238, 240);
+  position: relative;
+  height: 1600px;
+}
+
+.title {
+  font-weight: bolder;
+  text-align: center;
+  margin-top: 30px;
+  opacity: 0.7;
+  height: 100px;
+}
+
+.wrap {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 0px 200px;
+  opacity: 0.7;
+}
+
+.group {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 0 200px;
+}
+
+.leftgroup {
+  width: 350px;
+}
+
+.rightgroup {
+  width: 350px;
+}
+
+.container {
+  margin-top: 20px;
+}
+
+.page-header {
+  font-weight: bold;
+  opacity: 0.8;
+}
+
+.navbar-brand {
+  color: rgb(141, 141, 140);
+}
+
+.image1 {
+  max-height: 20%;
+  max-width: 20%;
+}
+
+.image2 {
+  max-height: 20%;
+  max-width: 20%;
+}
+
+.image3 {
+  max-height: 20%;
+  max-width: 20%;
+}
+
+.image4 {
+  max-height: 20%;
+  max-width: 20%;
+}
+
+.image5 {
+  max-height: 20%;
+  max-width: 20%;
+}
+
+.image6 {
+  max-height: 20%;
+  max-width: 20%;
+}
+
+.playerRank {
+  color: black;
+}
+
+.playerName1 {
+  color: black;
+}
+
+.playerName2 {
+  color: black;
+}
+.playerName3 {
+  color: black;
+}
+
+.playerName4 {
+  color: black;
+}
+
+.playerName5 {
+  color: black;
+}
+
+.playerName6 {
+  color: black;
+}
+
+.stat1 {
+  color: black;
+}
+
+.stat2 {
+  color: black;
+}
+
+.stat3 {
+  color: black;
+}
+
+.stat4 {
+  color: black;
+}
+
+.stat5 {
+  color: black;
+}
+
+.stat6 {
+  color: black;
+}
+
+.playerName1:hover {
+  text-decoration: none;
+}
+
+.playerName2:hover {
+  text-decoration: none;
+}
+
+.playerName3:hover {
+  text-decoration: none;
+}
+
+.playerName4:hover {
+  text-decoration: none;
+}
+
+.playerName5:hover {
+  text-decoration: none;
+}
+
+.playerName6:hover {
+  text-decoration: none;
+}
