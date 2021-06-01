@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const xhr = new XMLHttpRequest();
 xhr.onreadystatechange = function () {
   if (xhr.readyState === 4 && xhr.status === 200) {
@@ -119,3 +120,91 @@ xhr.onreadystatechange = function () {
 };
 xhr.open("get", "api/1.0/crawler/statsleader");
 xhr.send();
+
+const signUp = document.querySelector(".signup");
+const signIn = document.querySelector(".signin");
+
+signUp.addEventListener("click", function () {
+  Swal.fire({
+    title: "Sign Up",
+    html: `<input type="text" id="signup" class="swal2-input" placeholder="Username">
+    <input type="password" id="password" class="swal2-input" placeholder="Password">`,
+    confirmButtonText: "Sign Up",
+    focusConfirm: false,
+    preConfirm: () => {
+      const signup = Swal.getPopup().querySelector("#signup").value;
+      const password = Swal.getPopup().querySelector("#password").value;
+      if (!signup || !password) {
+        Swal.showValidationMessage("Please enter username and password");
+      }
+      return { name: signup, password: password };
+    }
+  }).then((result) => {
+    fetch("/api/1.0/user/signup", {
+      method: "POST",
+      headers: new Headers({
+        "Content-Type": "application/json"
+      }),
+      body: JSON.stringify(result.value)
+    })
+      .then(function (response) {
+        if (response.status === 200) {
+          Swal.fire("Sign Up!".trim());
+          return response.json();
+        } else {
+          Swal.fire("此名稱已有人使用！".trim());
+          console.log("error");
+        }
+      })
+      .then((data) => {
+        console.log(data);
+      });
+  });
+});
+
+signIn.addEventListener("click", function () {
+  Swal.fire({
+    title: "Sign In",
+    html: `<input type="text" id="signin" class="swal2-input" placeholder="Username">
+    <input type="password" id="password" class="swal2-input" placeholder="Password">`,
+    confirmButtonText: "Sign In",
+    focusConfirm: false,
+    preConfirm: () => {
+      const signin = Swal.getPopup().querySelector("#signin").value;
+      const password = Swal.getPopup().querySelector("#password").value;
+      if (!signin || !password) {
+        Swal.showValidationMessage("Please enter username and password");
+      }
+      return { name: signin, password: password };
+    }
+  }).then((result) => {
+    fetch("/api/1.0/user/signin", {
+      method: "POST",
+      headers: new Headers({
+        "Content-Type": "application/json"
+      }),
+      body: JSON.stringify(result.value)
+    })
+      .then(function (response) {
+        if (response.status === 200) {
+          Swal.fire("Sign In!".trim());
+          return response.json();
+        } else if (response.status === 403) {
+          return response.json();
+        }
+      })
+      .then((data) => {
+        if (!data.error) {
+          console.log("good");
+          const confirm = document.querySelector(".swal2-confirm");
+          confirm.addEventListener("click", function () {
+            location.href = "/"; // 跳到會員頁
+          });
+        } else if (data.error === "Password is wrong") {
+          Swal.fire("密碼有誤!".trim());
+        } else {
+          Swal.fire("請先註冊!".trim());
+        }
+      });
+  });
+});

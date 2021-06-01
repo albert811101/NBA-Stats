@@ -1,7 +1,7 @@
 .body {
   background-color: rgb(237, 238, 240);
   position: relative;
-  height: 1600px;
+  height: 100%;
 }
 
 .title {
@@ -23,6 +23,8 @@
   display: flex;
   justify-content: space-evenly;
   margin: 0 200px;
+  margin-bottom: 100px;
+  min-height: calc(100% - 80px);
 }
 
 .leftgroup {

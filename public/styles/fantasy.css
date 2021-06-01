@@ -1,17 +1,19 @@
 .body {
   background-color: rgb(237, 238, 240);
   position: relative;
-  height: 1300px;
+  height: 100%;
 }
 
-.container {
+.ranking {
   margin-top: 50px;
+  margin-bottom: 80px;
   text-align: center;
 }
 
 .panel {
   font-weight: 800;
   font-size: 15px;
+  justify-content: center;
 }
 
 .panel-body {
@@ -35,7 +37,7 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
-  border: #5ba7b4 3px solid;
+  border: #587D71 3px solid;
 }
 
 .box2 {
@@ -44,7 +46,7 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
-  border: #5ba7b4 3px solid;
+  border: #587D71 3px solid;
 }
 
 .box3 {
@@ -53,7 +55,7 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
-  border: #5ba7b4 3px solid;
+  border: #587D71 3px solid;
 }
 
 .step {
@@ -70,7 +72,7 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
-  border: #5ba7b4 3px solid;
+  border: #587D71 3px solid;
   margin-bottom: 15px;
 }
 
@@ -80,7 +82,7 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
-  border: #5ba7b4 3px solid;
+  border: #587D71 3px solid;
   margin-bottom: 15px;
 }
 
@@ -90,7 +92,7 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
-  border: #5ba7b4 3px solid;
+  border: #587D71 3px solid;
   margin-bottom: 15px;
 }
 
@@ -122,6 +124,23 @@ p {
   color: lightslategray;
 }
 
+.table {
+  width: 700px;
+  margin: 10px auto;
+}
+
+.players {
+  margin: auto;
+}
+
+th {
+  text-align: center;
+}
+
+/* td:hover {
+  background-color :#C5FFFD;
+} */
+
 .user-selection {
   padding: 50px 0;
 }
@@ -130,16 +149,45 @@ p {
   position: absolute;
 }
 
+.playerName {
+  position: absolute;
+  left: 500px;
+  display: none;
+}
+
 .glyphicon-plus-sign {
   position: absolute;
-  left: 1100px;
+  left: 750px;
   line-height: 51px;
 }
 
+.glyphicon-minus-sign {
+  position: absolute;
+  left: 750px;
+  line-height: 51px;
+}
+
+.teamLogo {
+  width: 100px;
+  height: 100px;
+}
+
 .player {
-  background-color: rgb(198, 202, 207);
+  background-color: #CAD3C5;
+  width: 800px;
+  margin: 10px auto;
 }
 
 .btn {
   margin: 0 10px;
+}
+
+.btn-primary {
+  background-color: #CAD3C5;
+  color: black;
+}
+
+.name {
+  text-align: left;
+  width: 130px;
 }

@@ -4,6 +4,20 @@ header {
   height: 71px;
   padding: 0 35px;
   background-color: #051c2c;
+  box-shadow:1px 2px 1px 2px lightgray;
+  position: relative;
+}
+
+.signup {
+  font-size: smaller;
+  color: white;
+  margin-bottom: 5px;
+}
+
+.signin {
+  font-size: smaller;
+  color: white;
+  margin-bottom: 5px;
 }
 
 img {
@@ -36,7 +50,7 @@ input:focus {
 #fantasy {
   font-family: sans-serif;
   font-weight: bolder;
-  opacity: 0.9;
+  /* opacity: 0.9; */
   text-decoration: none;
   color: white;
 }
@@ -44,10 +58,17 @@ input:focus {
 #rules {
   font-family: sans-serif;
   font-size: large;
-  opacity: 0.9;
+  /* opacity: 0.9; */
   text-decoration: none;
   color: white;
   margin-top: 5px;
+}
+
+#home {
+  font-family: sans-serif;
+  text-decoration: none;
+  color: white;
+  margin-left: 35px;
 }
 
 .leftbar {
@@ -61,8 +82,17 @@ input:focus {
   display: flex;
   align-self: center;
   justify-content: space-around;
+  width: 550px;
+  font-size: 20px;
+}
+
+.rightbar {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
   width: 410px;
   font-size: 20px;
+  padding-left: 220px;
 }
 
 .searchbar {
@@ -70,25 +100,29 @@ input:focus {
   height: 28px;
   border: solid 1px #979797;
   border-radius: 5px;
-  margin-left: 30px;
+  margin-left: 40px;
 }
 
 .search {
   margin-bottom: 5px;
-  margin-left: 3px;
+  margin-right: 10px;
   width: 30px;
   height: 30px;
+}
+
+.sign {
+  margin-left: 8px;
+  margin-bottom: 5px;
 }
 
 .member {
   width: 52px;
   height: 52px;
-  margin-bottom: 3px;
 }
 
-.member1 {
+/* .member1 {
   width: 52px;
   height: 52px;
   margin-top: 8px;
   margin-right: 18.5px;
-}
+} */
