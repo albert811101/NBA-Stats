@@ -13,19 +13,23 @@
     />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="./styles/header.css" rel="stylesheet" />
     <link href="./styles/fantasy.css" rel="stylesheet" />
     <link href="./styles/footer.css" rel="stylesheet" />
   </head>
   <body class="body">
-    <header>
+    <header class="header">
       <div class="leftbar">
         <a href="/fantasy.html" id="logo1">Fantasy</a>
         <a href="/rules.html" div id="rules">Rules</a>
       </div>
-      <div class="member1"><img src="images/member.png" /></div>
+      <nav class="rightbar">
+      <a href="/" id="home">Home</a>
+      <div class="member"><img src="images/member.png" /></div>
+    </nav>
     </header>
-    <div class="container">
+    <div class="container ranking">
       <div class="panel panel-primary">
         <div class="panel-body">MY SCORE & RANK</div>
       </div>
@@ -60,37 +64,67 @@
           <div class="panel panel-primary player">
             <div class="panel-body">
               <div class="position-name">球員位置 後衛</div>
-              <div class="glyphicon glyphicon-plus-sign"></div>
+              <div class="playerName"></div>
+              <div
+                class="glyphicon glyphicon-plus-sign"
+                style="cursor: pointer"
+              ></div>
             </div>
           </div>
+          <div class="teams" style="cursor: pointer"></div>
+          <div class="players"></div>
           <div class="panel panel-primary player">
             <div class="panel-body">
               <div class="position-name">球員位置 後衛</div>
-              <div class="glyphicon glyphicon-plus-sign"></div>
+              <div class="playerName">123</div>
+              <div
+                class="glyphicon glyphicon-plus-sign"
+                style="cursor: pointer"
+              ></div>
             </div>
           </div>
+          <div class="teams" style="cursor: pointer"></div>
+          <div class="players"></div>
           <div class="panel panel-primary player">
             <div class="panel-body">
               <div class="position-name">球員位置 前鋒</div>
-              <div class="glyphicon glyphicon-plus-sign"></div>
+              <div class="playerName">123</div>
+              <div
+                class="glyphicon glyphicon-plus-sign"
+                style="cursor: pointer"
+              ></div>
             </div>
           </div>
+          <div class="teams" style="cursor: pointer"></div>
+          <div class="players"></div>
           <div class="panel panel-primary player">
             <div class="panel-body">
               <div class="position-name">球員位置 前鋒</div>
-              <div class="glyphicon glyphicon-plus-sign"></div>
+              <div class="playerName">123</div>
+              <div
+                class="glyphicon glyphicon-plus-sign"
+                style="cursor: pointer"
+              ></div>
             </div>
           </div>
+          <div class="teams" style="cursor: pointer"></div>
+          <div class="players"></div>
           <div class="panel panel-primary player">
             <div class="panel-body">
               <div class="position-name">球員位置 中鋒</div>
-              <div class="glyphicon glyphicon-plus-sign"></div>
+              <div class="playerName">123</div>
+              <div
+                class="glyphicon glyphicon-plus-sign"
+                style="cursor: pointer"
+              ></div>
             </div>
           </div>
+          <div class="teams" style="cursor: pointer"></div>
+          <div class="players"></div>
         </div>
       </div>
-      <button type="button" class="btn btn-primary">Submit</button>
-      <button type="button" class="btn btn-primary">Reset</button>
+      <button type="button" class="btn btn-primary submit">Submit</button>
+      <button type="button" class="btn btn-primary reset">Reset</button>
     </div>
     <footer>
       <div class="name d-flex">
@@ -98,6 +132,8 @@
         <div class="rights">All Rights Reserved.</div>
       </div>
     </footer>
+    <script src="./src/fantasy.js"></script>
+
     <!-- Optional JavaScript; choose one of the two! -->
 
     <!-- Option 1: Bootstrap Bundle with Popper -->

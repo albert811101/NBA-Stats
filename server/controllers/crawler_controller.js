@@ -1,5 +1,7 @@
 // const fs = require("fs");
 const axios = require("axios");
+// const request = require("request");
+// const cheerio = require("cheerio");
 const Crawler = require("../models/crawler_model");
 
 const fetchPlayerstats = async (req, res) => {
@@ -12,7 +14,7 @@ const fetchPlayerstats = async (req, res) => {
       Referer: "https://www.nba.com/"
     }
   });
-  res.status(200).json("okay");
+  res.status(200).json(results.data);
   console.log(
     "Got results =",
     results.data.resultSets[0].headers,
@@ -88,7 +90,7 @@ const fetchPlayerbio = async (req, res) => {
 const createPlayerbio = async (req, res) => {
   const result = await fetchPlayerbio();
   await Crawler.createPlayerbio(result);
-  res.send("okkk");
+  res.send("okay");
 };
 
 const fetchStatsleader = async (req, res) => {
@@ -105,6 +107,17 @@ const fetchStatsleader = async (req, res) => {
   // console.log(statsleader.data.items[0].items[0].playerstats[0]);
 };
 
+const fetchBoxscore = async (req, res) => {
+  // where to download the HTML from
+  const url = "https://stats.nba.com/stats/leaguegamelog?Counter=1000&DateFrom=&DateTo=&Direction=DESC&LeagueID=00&PlayerOrTeam=P&Season=2020-21&SeasonType=Playoffs&Sorter=DATE";
+  const boxscore = await axios.get(url, {
+    headers: {
+      Referer: "https://www.nba.com/"
+    }
+  });
+  res.send(JSON.stringify(boxscore.data));
+};
+
 // save the JSON to disk
 //   await fs.promises.writeFile("output.json", JSON.stringify(results, null, 2));
 //   console.log("Done!");
@@ -114,5 +127,6 @@ const fetchStatsleader = async (req, res) => {
 module.exports = {
   fetchPlayerstats,
   createPlayerbio,
-  fetchStatsleader
+  fetchStatsleader,
+  fetchBoxscore
 };
