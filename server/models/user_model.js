@@ -20,7 +20,6 @@ const signUp = async (name, password) => {
     await conn.query("START TRANSACTION");
 
     const names = await conn.query("SELECT name FROM user WHERE name = ? FOR UPDATE", [name]);
-    console.log(names[0]);
     if (names[0].length > 0) {
       await conn.query("COMMIT");
       return { error: "Name Already Exists" };
@@ -39,7 +38,6 @@ const signUp = async (name, password) => {
       name: user.name
     }, TOKEN_SECRET);
     user.access_token = accessToken;
-    console.log(user);
 
     const queryStr = "INSERT INTO user SET ?";
     const result = await conn.query(queryStr, user);
@@ -48,7 +46,6 @@ const signUp = async (name, password) => {
     await conn.query("COMMIT");
     return { user };
   } catch (error) {
-    console.log(error);
     await conn.query("ROLLBACK");
     return { error };
   }
@@ -91,7 +88,7 @@ const nativeSignIn = async (name, password) => {
 const getUserDetail = async (name) => {
   try {
     const users = await pool.query("SELECT * FROM user WHERE name = ?", [name]);
-    console.log(users);
+    // console.log(users[0][0]);
     return users[0][0];
   } catch (e) {
     return null;

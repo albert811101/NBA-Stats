@@ -1,14 +1,15 @@
 const xhr = new XMLHttpRequest();
 xhr.onreadystatechange = function () {
   if (xhr.readyState === 4 && xhr.status === 200) {
-    let today = new Date().toLocaleDateString();
+    const today = new Date().toLocaleDateString();
     console.log(today);
-    today = [today.slice(-3), today.slice(0, 4)].join("/");
-    console.log(today);
+    const newToday = today.split("/");
+    const todayDate = [newToday[1], newToday[2], newToday[0]].join("/");
+    console.log(todayDate);
     const datas = JSON.parse(xhr.responseText).leagueSchedule.gameDates;
     console.log(datas);
     const fantasyDate = datas.filter(function (data) {
-      return data.gameDate.includes(today);
+      return data.gameDate.includes(todayDate);
     });
     console.log(fantasyDate);
     const teamsId = [];
@@ -131,9 +132,10 @@ fetch("/api/1.0/fantasy/allplayerstats", {
           Swal.fire(
             "成功"
           );
-          // window.setTimeout(function () {
-          //   location.href = "/fantasy.html";
-          // }, 2000);
+          const confirm = document.querySelector(".swal2-confirm");
+          confirm.addEventListener("click", function () {
+            location.href = "/fantasy.html"; // 跳到會員頁
+          });
         }
       }
 
@@ -248,6 +250,18 @@ fetch("/api/1.0/fantasy/allplayerstats", {
     });
   });
 
+const member = document.querySelector(".member1");
+
+member.addEventListener("click", function () {
+  // eslint-disable-next-line no-undef
+  Swal.fire("確定要登出嗎？");
+  const confirm = document.querySelector(".swal2-actions");
+  confirm.addEventListener("click", function () {
+    window.localStorage.clear();
+    location.href = "/"; // 照理來說要跳到fantasy首頁
+  });
+});
+
 const btnConfirm = document.querySelector(".submit");
 btnConfirm.addEventListener("click", function () {
   if (selectedPlayers.size === 5) {
@@ -275,3 +289,21 @@ btnConfirm.addEventListener("click", function () {
     console.log("err");
   }
 });
+
+fetch("/api/1.0/user/profile", {
+  method: "GET",
+  headers: new Headers({
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${window.localStorage.getItem("access_token")}`
+  })
+})
+  .then(function (response) {
+    if (response.status === 200) {
+      return response.json();
+    } else {
+      console.log("error");
+    }
+  })
+  .then((data) => {
+    console.log(data);
+  });
