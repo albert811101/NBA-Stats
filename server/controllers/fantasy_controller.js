@@ -82,16 +82,26 @@ const fetchAllplayerstats = async (req, res) => {
 };
 
 const getSelectedplayers = async (req, res) => {
-  console.log(req.body);
-  console.log(typeof req.body.players[0]);
   const { players } = req.body;
-  console.log(players);
-  await playerinfo.getSelectedplayers(players);
+  const result = await playerinfo.getSelectedplayers(players, req.user.name);
+  if (result.error) {
+    res.send({ error: result.error });
+    return;
+  }
   res.status(200).send({ status: "okay" });
+};
+
+const getUserProfile = async (req, res) => {
+  res.status(200).send({
+    data: {
+      user: req.user.name
+    }
+  });
 };
 
 module.exports = {
   fetchschedule,
   fetchAllplayerstats,
-  getSelectedplayers
+  getSelectedplayers,
+  getUserProfile
 };

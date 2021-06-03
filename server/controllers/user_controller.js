@@ -80,16 +80,7 @@ const signIn = async (req, res) => {
   });
 };
 
-const getUserProfile = async (req, res) => {
-  res.status(200).send({
-    data: {
-      name: req.user.name
-    }
-  });
-};
-
 module.exports = {
   signUp,
-  signIn,
-  getUserProfile
+  signIn
 };

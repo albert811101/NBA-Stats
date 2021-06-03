@@ -1,3 +1,8 @@
+if (!localStorage.access_token) {
+  alert("請先登入");
+  location.href = "/";
+}
+
 const xhr = new XMLHttpRequest();
 xhr.onreadystatechange = function () {
   if (xhr.readyState === 4 && xhr.status === 200) {
@@ -94,17 +99,28 @@ fetch("/api/1.0/fantasy/allplayerstats", {
     document.addEventListener("click", function (event) {
       const targetElement = event.target;
       const playerName = document.querySelectorAll(".playerName");
-      // console.log(targetElement.alt);
-      if (targetElement.classList.contains("name")) {
-        if (playerName[parseInt(targetElement.getAttribute("alt"))].innerHTML !== "") {
-          playerSet.delete(playerName[parseInt(targetElement.getAttribute("alt"))].innerHTML);
+      const playerId = event.path[1].childNodes[1].dataset.player;
+
+      if (targetElement.classList.contains("reset")) {
+        playerSet.clear();
+        console.log(playerSet, 123456);
+        for (let i = 0; i < playerName.length; i++) {
+          playerName[i].innerHTML = "";
+          playerName[i].setAttribute("alt", "null");
         }
-        if (!playerSet.has(event.path[1].childNodes[1].innerText)) {
+      }
+
+      if (targetElement.classList.contains("name")) {
+        if (playerName[parseInt(targetElement.getAttribute("alt"))].getAttribute("alt") !== "null") {
+          playerSet.delete(playerName[parseInt(targetElement.getAttribute("alt"))].getAttribute("alt"));
+        }
+        if (!playerSet.has(playerId)) {
           closeOtherbuttons();
           playerName[parseInt(targetElement.getAttribute("alt"))].innerHTML = event.path[1].childNodes[1].innerText;
+          playerName[parseInt(targetElement.getAttribute("alt"))].setAttribute("alt", `${playerId}`);
           playerName[parseInt(targetElement.getAttribute("alt"))].style.display = "inline-block";
-          console.log(playerSet);
-          playerSet.add(event.path[1].childNodes[1].innerText);
+          // console.log(playerSet);
+          playerSet.add(playerId);
         } else {
           // eslint-disable-next-line no-undef
           Swal.fire(
@@ -113,12 +129,6 @@ fetch("/api/1.0/fantasy/allplayerstats", {
         }
       }
       selectedPlayers = playerSet;
-      if (targetElement.classList.contains("reset")) {
-        playerSet.clear();
-        for (let i = 0; i < playerName.length; i++) {
-          playerName[i].innerHTML = "";
-        }
-      }
 
       if (targetElement.classList.contains("submit")) {
         console.log(playerSet.size);
@@ -127,15 +137,6 @@ fetch("/api/1.0/fantasy/allplayerstats", {
           Swal.fire(
             "請確認您是否選了5位球員。"
           );
-        } else {
-          // eslint-disable-next-line no-undef
-          Swal.fire(
-            "成功"
-          );
-          const confirm = document.querySelector(".swal2-confirm");
-          confirm.addEventListener("click", function () {
-            location.href = "/fantasy.html"; // 跳到會員頁
-          });
         }
       }
 
@@ -161,7 +162,7 @@ fetch("/api/1.0/fantasy/allplayerstats", {
                   </thead>
                   <tbody>
                     <tr class="selected-player">
-                      <td class="name" alt="${parseInt(targetElement.alt)}" style="cursor: pointer">${data.data.G[targetElement.src.slice(30, 40)][i].player_first_name} ${data.data.G[targetElement.src.slice(30, 40)][i].player_last_name}</td>
+                      <td class="name" data-player="${data.data.G[targetElement.src.slice(30, 40)][i].person_id}" alt="${parseInt(targetElement.alt)}" style="cursor: pointer">${data.data.G[targetElement.src.slice(30, 40)][i].player_first_name} ${data.data.G[targetElement.src.slice(30, 40)][i].player_last_name}</td>
                       <td>${data.data.G[targetElement.src.slice(30, 40)][i].pts}</td>
                       <td>${data.data.G[targetElement.src.slice(30, 40)][i].fg3m}</td>
                       <td>${data.data.G[targetElement.src.slice(30, 40)][i].reb}</td>
@@ -196,7 +197,7 @@ fetch("/api/1.0/fantasy/allplayerstats", {
               </thead>
               <tbody>
                 <tr class="selected-player">
-                  <td class="name" alt="${parseInt(targetElement.alt)}" style="cursor: pointer">${data.data.F[targetElement.src.slice(30, 40)][i].player_first_name} ${data.data.F[targetElement.src.slice(30, 40)][i].player_last_name}</td>
+                  <td class="name" data-player="${data.data.F[targetElement.src.slice(30, 40)][i].person_id}" alt="${parseInt(targetElement.alt)}" style="cursor: pointer">${data.data.F[targetElement.src.slice(30, 40)][i].player_first_name} ${data.data.F[targetElement.src.slice(30, 40)][i].player_last_name}</td>
                   <td>${data.data.F[targetElement.src.slice(30, 40)][i].pts}</td>
                   <td>${data.data.F[targetElement.src.slice(30, 40)][i].fg3m}</td>
                   <td>${data.data.F[targetElement.src.slice(30, 40)][i].reb}</td>
@@ -231,7 +232,7 @@ fetch("/api/1.0/fantasy/allplayerstats", {
               </thead>
               <tbody>
                 <tr class="selected-player">
-                  <td class="name" alt="${parseInt(targetElement.alt)}" style="cursor: pointer">${data.data.C[targetElement.src.slice(30, 40)][i].player_first_name} ${data.data.C[targetElement.src.slice(30, 40)][i].player_last_name}</td>
+                  <td class="name" data-player="${data.data.C[targetElement.src.slice(30, 40)][i].person_id}" alt="${parseInt(targetElement.alt)}" style="cursor: pointer">${data.data.C[targetElement.src.slice(30, 40)][i].player_first_name} ${data.data.C[targetElement.src.slice(30, 40)][i].player_last_name}</td>
                   <td>${data.data.C[targetElement.src.slice(30, 40)][i].pts}</td>
                   <td>${data.data.C[targetElement.src.slice(30, 40)][i].fg3m}</td>
                   <td>${data.data.C[targetElement.src.slice(30, 40)][i].reb}</td>
@@ -275,13 +276,28 @@ btnConfirm.addEventListener("click", function () {
       const response = await fetch("/api/1.0/fantasy/selected_players", {
         method: "POST",
         headers: new Headers({
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${window.localStorage.getItem("access_token")}`
         }),
         body: JSON.stringify(playersObj)
       });
-      console.log(response);
       const json = await response.json();
       console.log(json);
+      if (json.error) {
+        // eslint-disable-next-line no-undef
+        Swal.fire(
+          "你今天已經選過球員囉！"
+        );
+      } else {
+        // eslint-disable-next-line no-undef
+        Swal.fire(
+          "成功"
+        );
+        const confirm = document.querySelector(".swal2-confirm");
+        confirm.addEventListener("click", function () {
+          location.href = "/fantasy.html"; // 跳到會員頁
+        });
+      }
       return json;
     };
     getselectedPlayers();

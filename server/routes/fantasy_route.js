@@ -1,8 +1,14 @@
 const router = require("express").Router();
+
+const {
+  authentication
+} = require("../../util/util");
+
 const {
   fetchschedule,
   fetchAllplayerstats,
-  getSelectedplayers
+  getSelectedplayers,
+  getUserProfile
 } = require("../controllers/fantasy_controller");
 
 router.route("/fantasy/schedule")
@@ -12,6 +18,9 @@ router.route("/fantasy/allplayerstats")
   .get(fetchAllplayerstats);
 
 router.route("/fantasy/selected_players")
-  .post(getSelectedplayers);
+  .post(authentication(), getSelectedplayers);
+
+router.route("/user/profile")
+  .get(authentication(), getUserProfile);
 
 module.exports = router;
