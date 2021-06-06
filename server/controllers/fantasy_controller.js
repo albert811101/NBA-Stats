@@ -34,31 +34,50 @@ const fetchAllplayerstats = async (req, res) => {
     BLK: 25
   };
 
-  // const playerStats = result.data.resultSets[0].rowSet.map((item) => [
-  //   item[playerStatMap.PLAYER_ID],
-  //   item[playerStatMap.PLAYER__NAME],
-  //   item[playerStatMap.TEAM_ID],
-  //   item[playerStatMap.PTS],
-  //   item[playerStatMap.FG3M],
-  //   item[playerStatMap.REB],
-  //   item[playerStatMap.AST],
-  //   item[playerStatMap.STL],
-  //   item[playerStatMap.BLK],
-  //   item[playerStatMap.TOV]
-  // ]);
+  const playerStats = result.data.resultSets[0].rowSet.map((item) => [
+    item[playerStatMap.PLAYER_ID],
+    item[playerStatMap.PLAYER__NAME],
+    item[playerStatMap.TEAM_ID],
+    item[playerStatMap.PTS],
+    item[playerStatMap.FG3M],
+    item[playerStatMap.REB],
+    item[playerStatMap.AST],
+    item[playerStatMap.STL],
+    item[playerStatMap.BLK],
+    item[playerStatMap.TOV]
+  ]);
 
+  // console.log(playerStats);
+
+  // const playerstats = {};
+  // for (const item of result.data.resultSets[0].rowSet) {
+  //   playerstats[item[playerStatMap.PLAYER_ID]] = {
+  //     player_name: item[playerStatMap.PLAYER__NAME],
+  //     team_id: item[playerStatMap.TEAM_ID],
+  //     pts: item[playerStatMap.PTS],
+  //     fg3m: item[playerStatMap.FG3M],
+  //     reb: item[playerStatMap.REB],
+  //     ast: item[playerStatMap.AST],
+  //     stl: item[playerStatMap.STL],
+  //     blk: item[playerStatMap.BLK],
+  //     tov: item[playerStatMap.TOV]
+  //   };
+  // }
+
+  const result2 = await playerinfo.getPlayerstats();
+  // console.log(result2[0][0].player_id);
   const playerstats = {};
-  for (const item of result.data.resultSets[0].rowSet) {
-    playerstats[item[playerStatMap.PLAYER_ID]] = {
-      player_name: item[playerStatMap.PLAYER__NAME],
-      team_id: item[playerStatMap.TEAM_ID],
-      pts: item[playerStatMap.PTS],
-      fg3m: item[playerStatMap.FG3M],
-      reb: item[playerStatMap.REB],
-      ast: item[playerStatMap.AST],
-      stl: item[playerStatMap.STL],
-      blk: item[playerStatMap.BLK],
-      tov: item[playerStatMap.TOV]
+  for (const item of result2[0]) {
+    playerstats[item.player_id] = {
+      player_name: item.player_name,
+      team_id: item.team_id,
+      pts: item.pts,
+      fg3m: item.fg3m,
+      reb: item.reb,
+      ast: item.ast,
+      stl: item.stl,
+      blk: item.blk,
+      tov: item.tov
     };
   }
 
@@ -78,6 +97,9 @@ const fetchAllplayerstats = async (req, res) => {
       detailMap[position][item.team_id].push(item);
     });
   });
+
+  // console.log(detailMap.F[1610612757][0]);
+  // res.send({ status: "okay" });
 
   res.send({ data: detailMap });
   // res.status(200).json(result.data.resultSets[0]);

@@ -1,4 +1,5 @@
 const { pool } = require("./mysqlcon");
+const moment = require("moment");
 
 const getPlayerinfo = async () => {
   const result = await pool.query("SELECT person_id, player_last_name, player_first_name, team_id, team_abbreviation, jersey_number, position, to_year FROM player_bio WHERE to_year = 2020");
@@ -9,16 +10,21 @@ const getSelectedplayers = async (players, name) => {
   console.log(name, "dqpqkwpo");
   const userDetail = await pool.query("SELECT * FROM user WHERE name = (?)", name);
   // console.log(userDetail[0][0].user_id);
-  const selectedDate = new Date();
-  const dateString =
-    selectedDate.getUTCFullYear() + "-" +
-    ("0" + (selectedDate.getUTCMonth() + 1)).slice(-2) + "-" +
-    ("0" + selectedDate.getUTCDate()).slice(-2);
-  players.push(dateString);
+  // const selectedDate = new Date();
+  const dateToday = moment().format();
+  console.log(dateToday);
+  const correctDate = dateToday.slice(0, 10);
+  console.log(correctDate);
+
+  // const dateString =
+  // selectedDate.getUTCFullYear() + "-" +
+  //   ("0" + (selectedDate.getUTCMonth() + 1)).slice(-2) + "-" +
+  //   ("0" + selectedDate.getUTCDate()).slice(-2);
+  players.push(correctDate);
   players.unshift(userDetail[0][0].user_id);
   console.log(players);
 
-  const date = await pool.query("SELECT * FROM selected_players WHERE (user_id, selected_date) = (?, ?)", [players[0], dateString]);
+  const date = await pool.query("SELECT * FROM selected_players WHERE (user_id, selected_date) = (?, ?)", [players[0], correctDate]);
 
   if (date[0].length !== 0) {
     return { error: "You have chosen players today" };
@@ -86,9 +92,34 @@ const getTotalscore = async (name) => {
   return (totalScore);
 };
 
+const createPlayerstats = async (playerStats) => {
+  const conn = await pool.getConnection();
+  try {
+    // await conn.query("INSERT INTO player_stats (player_id, player_name, team_id, pts, fg3m, reb, ast, stl, blk, tov) VALUES ?", [playerStats]);
+    // console.log("球員平均數據都進去囉");
+  } catch (error) {
+    await conn.query("ROLLBACK");
+    return error;
+  }
+};
+
+const getPlayerstats = async () => {
+  const conn = await pool.getConnection();
+  try {
+    const result = await conn.query("SELECT * FROM player_stats");
+    console.log("抓出球員數據囉");
+    return result;
+  } catch (error) {
+    await conn.query("ROLLBACK");
+    return error;
+  }
+};
+
 module.exports = {
   getPlayerinfo,
   getSelectedplayers,
   createPlayers,
-  getTotalscore
+  getTotalscore,
+  createPlayerstats,
+  getPlayerstats
 };

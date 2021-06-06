@@ -87,6 +87,7 @@ fetch("/api/1.0/fantasy/allplayerstats", {
     }
   })
   .then((data) => {
+    console.log(data);
     const teamPlayers = document.querySelectorAll(".players");
     const playerSet = new Set();
 

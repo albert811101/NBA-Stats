@@ -206,10 +206,6 @@ img {
   margin-right: 5px;
 }
 
-.games {
-  background-color: #FFFFFF;
-}
-
 p {
   font-size: large;
   font-family: "Lucida Sans", "trebuchet MS", Arial, Helvetica;
@@ -222,8 +218,8 @@ p {
 }
 
 .stat_title {
-  font: 21px "Lucida Sans", "trebuchet MS", Arial, Helvetica;
-  font-size: 5px;
+  font-family: "Lucida Sans", "trebuchet MS", Arial, Helvetica;
+  font-size: 10px;
   background-color: #F0F2EF;
 }
 
@@ -232,7 +228,23 @@ td {
 }
 
 tbody {
-  font-size: 5px;
+  font-size: 10px;
+}
+
+.games {
+  background-color: #FFFFFF;
+  width: 1300px!important;
+}
+
+.table-condensed {
+  width: 500px; 
+}
+
+@media (min-width: 992px) {
+  .games {
+    background-color: #FFFFFF;
+    width: 1300px!important;
+  }
 }
 
 
