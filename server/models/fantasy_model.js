@@ -1,5 +1,6 @@
 const { pool } = require("./mysqlcon");
-const moment = require("moment");
+// const moment = require("moment");
+const moment = require("moment-timezone");
 
 const getPlayerinfo = async () => {
   const result = await pool.query("SELECT person_id, player_last_name, player_first_name, team_id, team_abbreviation, jersey_number, position, to_year FROM player_bio WHERE to_year = 2020");
@@ -11,8 +12,8 @@ const getSelectedplayers = async (players, name) => {
   const userDetail = await pool.query("SELECT * FROM user WHERE name = (?)", name);
   // console.log(userDetail[0][0].user_id);
   // const selectedDate = new Date();
-  const dateToday = moment().format();
-  console.log(dateToday);
+  const dateToday = moment().tz("Asia/Taipei").format();
+  console.log(dateToday, 135);
   const correctDate = dateToday.slice(0, 10);
   console.log(correctDate);
 
