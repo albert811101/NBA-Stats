@@ -76,7 +76,7 @@ function closeOtherbuttons (index) {
 
 let selectedPlayers;
 
-fetch("/api/1.0/fantasy/allplayerstats", {
+fetch("/api/1.0/fantasy/playerstats", {
   method: "GET"
 })
   .then(function (response) {

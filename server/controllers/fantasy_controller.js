@@ -105,6 +105,43 @@ const fetchAllplayerstats = async (req, res) => {
   // res.status(200).json(result.data.resultSets[0]);
 };
 
+const fetchPlayerstats = async (req, res) => {
+  const result2 = await playerinfo.getPlayerstats();
+  // console.log(result2[0][0].player_id);
+  const playerstats = {};
+  for (const item of result2[0]) {
+    playerstats[item.player_id] = {
+      player_name: item.player_name,
+      team_id: item.team_id,
+      pts: item.pts,
+      fg3m: item.fg3m,
+      reb: item.reb,
+      ast: item.ast,
+      stl: item.stl,
+      blk: item.blk,
+      tov: item.tov
+    };
+  }
+
+  const results = await playerinfo.getPlayerinfo();
+  const playerData = results[0];
+  const detailMap = {};
+  playerData.forEach(function (item) {
+    item = { ...item, ...playerstats[item.person_id] };
+    const positions = item.position.split("-");
+    positions.forEach(function (position) {
+      if (!detailMap[position]) {
+        detailMap[position] = {};
+      }
+      if (!detailMap[position][item.team_id]) {
+        detailMap[position][item.team_id] = [];
+      }
+      detailMap[position][item.team_id].push(item);
+    });
+  });
+  res.send({ data: detailMap });
+};
+
 const fetchBoxscore = async (req, res) => {
   // where to download the HTML from
   const url = "https://stats.nba.com/stats/leaguegamelog?Counter=1000&DateFrom=&DateTo=&Direction=DESC&LeagueID=00&PlayerOrTeam=P&Season=2020-21&SeasonType=Playoffs&Sorter=DATE";
@@ -244,5 +281,6 @@ module.exports = {
   fetchBoxscore,
   getTotalscore,
   getSelectedplayers,
-  getUserProfile
+  getUserProfile,
+  fetchPlayerstats
 };
