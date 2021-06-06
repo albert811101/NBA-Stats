@@ -19,6 +19,8 @@ const fetchAllplayerstats = async (req, res) => {
     }
   });
 
+  // console.log(result.data.resultSets);
+
   const playerStatMap = {
     PLAYER_ID: 0,
     PLAYER__NAME: 1,
@@ -81,6 +83,121 @@ const fetchAllplayerstats = async (req, res) => {
   // res.status(200).json(result.data.resultSets[0]);
 };
 
+const fetchBoxscore = async (req, res) => {
+  // where to download the HTML from
+  const url = "https://stats.nba.com/stats/leaguegamelog?Counter=1000&DateFrom=&DateTo=&Direction=DESC&LeagueID=00&PlayerOrTeam=P&Season=2020-21&SeasonType=Playoffs&Sorter=DATE";
+  const boxscore = await axios.get(url, {
+    headers: {
+      Referer: "https://www.nba.com/"
+    }
+  });
+
+  const playerBoxscoreMap = {
+    PLAYER_ID: 1,
+    PLAYER__NAME: 2,
+    TEAM_ID: 3,
+    GAME_ID: 6,
+    GAME_DATE: 7,
+    MATCHUP: 8,
+    WL: 9,
+    MIN: 10,
+    FGM: 11,
+    FGA: 12,
+    FG_PCT: 13,
+    FG3M: 14,
+    FG3A: 15,
+    FG3_PCT: 16,
+    FTM: 17,
+    FTA: 18,
+    FT_PCT: 19,
+    OREB: 20,
+    DREB: 21,
+    REB: 22,
+    AST: 23,
+    STL: 24,
+    BLK: 25,
+    TOV: 26,
+    PF: 27,
+    PTS: 28,
+    PLUS_MINUS: 29
+  };
+
+  const playerBox = boxscore.data.resultSets[0].rowSet.map((item) => [
+    item[playerBoxscoreMap.PLAYER_ID],
+    item[playerBoxscoreMap.PLAYER__NAME],
+    item[playerBoxscoreMap.TEAM_ID],
+    item[playerBoxscoreMap.GAME_ID],
+    item[playerBoxscoreMap.GAME_DATE],
+    item[playerBoxscoreMap.MATCHUP],
+    item[playerBoxscoreMap.WL],
+    item[playerBoxscoreMap.MIN],
+    item[playerBoxscoreMap.PTS],
+    item[playerBoxscoreMap.FGM],
+    item[playerBoxscoreMap.FGA],
+    item[playerBoxscoreMap.FG_PCT],
+    item[playerBoxscoreMap.FG3M],
+    item[playerBoxscoreMap.FG3A],
+    item[playerBoxscoreMap.FG3_PCT],
+    item[playerBoxscoreMap.FTM],
+    item[playerBoxscoreMap.FTA],
+    item[playerBoxscoreMap.FT_PCT],
+    item[playerBoxscoreMap.OREB],
+    item[playerBoxscoreMap.DREB],
+    item[playerBoxscoreMap.REB],
+    item[playerBoxscoreMap.AST],
+    item[playerBoxscoreMap.STL],
+    item[playerBoxscoreMap.BLK],
+    item[playerBoxscoreMap.TOV],
+    item[playerBoxscoreMap.PF],
+    item[playerBoxscoreMap.PLUS_MINUS],
+    "playoff"
+  ]);
+  // console.log(playerBox);
+
+  const selectedDate = new Date();
+  const yesterday = new Date();
+  yesterday.setDate(selectedDate.getDate() - 1);
+  const dateString =
+    yesterday.getUTCFullYear() + "-" +
+    ("0" + (yesterday.getUTCMonth() + 1)).slice(-2) + "-" +
+    ("0" + yesterday.getUTCDate()).slice(-2);
+
+  const todayBoxscore = playerBox.filter(function (boxscore) {
+    return boxscore[4].includes(dateString);
+  });
+  // console.log(dateString);
+
+  // const playerBox = {};
+  // for (const item of boxscore.data.resultSets[0].rowSet) {
+  //   const key = JSON.stringify(item[playerBoxscoreMap.PLAYER_ID]) + "-" + item[playerBoxscoreMap.GAME_DATE];
+  //   playerBox[key] = {
+  //     player_name: item[playerBoxscoreMap.PLAYER__NAME],
+  //     player_id: item[playerBoxscoreMap.PLAYER_ID],
+  //     team_id: item[playerBoxscoreMap.TEAM_ID],
+  //     game_id: item[playerBoxscoreMap.GAME_ID],
+  //     game_date: item[playerBoxscoreMap.GAME_DATE],
+  //     pts: item[playerBoxscoreMap.PTS],
+  //     fg3m: item[playerBoxscoreMap.FG3M],
+  //     reb: item[playerBoxscoreMap.REB],
+  //     ast: item[playerBoxscoreMap.AST],
+  //     stl: item[playerBoxscoreMap.STL],
+  //     blk: item[playerBoxscoreMap.BLK],
+  //     tov: item[playerBoxscoreMap.TOV]
+  //   };
+  // }
+
+  await playerinfo.createPlayers(todayBoxscore); // 這裡的playerBox是要傳出去的資料
+  // console.log(playerBox);
+  // res.send(JSON.stringify(playerBox));
+  res.send(todayBoxscore);
+};
+
+const getTotalscore = async (req, res) => {
+  const result = await playerinfo.getTotalscore(req.user.name);
+  console.log(result, 12345);
+  res.status(200).send({ data: result });
+};
+
 const getSelectedplayers = async (req, res) => {
   const { players } = req.body;
   const result = await playerinfo.getSelectedplayers(players, req.user.name);
@@ -102,6 +219,8 @@ const getUserProfile = async (req, res) => {
 module.exports = {
   fetchschedule,
   fetchAllplayerstats,
+  fetchBoxscore,
+  getTotalscore,
   getSelectedplayers,
   getUserProfile
 };

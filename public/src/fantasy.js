@@ -7,22 +7,17 @@ const xhr = new XMLHttpRequest();
 xhr.onreadystatechange = function () {
   if (xhr.readyState === 4 && xhr.status === 200) {
     const today = new Date().toLocaleDateString();
-    console.log(today);
     const newToday = today.split("/");
     const todayDate = [newToday[1], newToday[2], newToday[0]].join("/");
-    console.log(todayDate);
     const datas = JSON.parse(xhr.responseText).leagueSchedule.gameDates;
-    console.log(datas);
     const fantasyDate = datas.filter(function (data) {
       return data.gameDate.includes(todayDate);
     });
-    console.log(fantasyDate);
     const teamsId = [];
     for (let i = 0; i < fantasyDate[0].games.length; i++) {
       teamsId.push(fantasyDate[0].games[i].homeTeam.teamId);
       teamsId.push(fantasyDate[0].games[i].awayTeam.teamId);
     }
-    console.log(teamsId); // 6
 
     const showTeams = document.querySelectorAll(".glyphicon-plus-sign"); // 5
     const teamsLogo = document.querySelectorAll(".teams"); // 5
@@ -92,7 +87,6 @@ fetch("/api/1.0/fantasy/allplayerstats", {
     }
   })
   .then((data) => {
-    console.log(data);
     const teamPlayers = document.querySelectorAll(".players");
     const playerSet = new Set();
 
@@ -306,6 +300,26 @@ btnConfirm.addEventListener("click", function () {
   }
 });
 
+fetch("/api/1.0/fantasy/total_score", {
+  method: "GET",
+  headers: new Headers({
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${window.localStorage.getItem("access_token")}`
+  })
+})
+  .then(function (response) {
+    if (response.status === 200) {
+      return response.json();
+    } else {
+      console.log("error");
+    }
+  })
+  .then((data) => {
+    console.log(data);
+    const score = document.querySelector(".score");
+    score.innerHTML = Math.round(data.data);
+  });
+
 fetch("/api/1.0/user/profile", {
   method: "GET",
   headers: new Headers({
@@ -322,4 +336,6 @@ fetch("/api/1.0/user/profile", {
   })
   .then((data) => {
     console.log(data);
+    const username = document.querySelector(".user");
+    username.innerHTML = data.data.user;
   });

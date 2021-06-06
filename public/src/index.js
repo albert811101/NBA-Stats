@@ -118,7 +118,7 @@ xhr.onreadystatechange = function () {
     }
   }
 };
-xhr.open("get", "api/1.0/crawler/statsleader");
+xhr.open("get", "api/1.0/player/statsleader");
 xhr.send();
 
 const signIn = document.querySelector(".signin");
@@ -130,9 +130,6 @@ if (localStorage.access_token) {
   signUp.style.display = "none";
   member.style.display = "inline-block";
 }
-
-// const signUp = document.querySelector(".signup");
-// const signIn = document.querySelector(".signin");
 
 signUp.addEventListener("click", function () {
   Swal.fire({

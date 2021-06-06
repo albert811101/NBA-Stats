@@ -100,10 +100,10 @@ input:focus {
   border: solid 1px #979797;
   border-radius: 5px;
   margin-left: 40px;
+  margin-top: 5px;
 }
 
 .search {
-  margin-bottom: 5px;
   margin-right: 10px;
   width: 30px;
   height: 30px;
@@ -123,4 +123,5 @@ input:focus {
   display: none;
   width: 52px;
   height: 52px;
+  margin-top: 5px;
 }

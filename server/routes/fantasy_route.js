@@ -7,6 +7,8 @@ const {
 const {
   fetchschedule,
   fetchAllplayerstats,
+  fetchBoxscore,
+  getTotalscore,
   getSelectedplayers,
   getUserProfile
 } = require("../controllers/fantasy_controller");
@@ -16,6 +18,12 @@ router.route("/fantasy/schedule")
 
 router.route("/fantasy/allplayerstats")
   .get(fetchAllplayerstats);
+
+router.route("/fantasy/box_score")
+  .get(fetchBoxscore);
+
+router.route("/fantasy/total_score")
+  .get(authentication(), getTotalscore);
 
 router.route("/fantasy/selected_players")
   .post(authentication(), getSelectedplayers);
