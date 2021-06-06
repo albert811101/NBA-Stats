@@ -58,6 +58,25 @@
   border: #587D71 3px solid;
 }
 
+.welcome {
+  display: flex;
+  justify-content: center;
+}
+
+.user {
+  margin-left: 5px;
+}
+
+.score {
+  font-size: large;
+  /* color: #01172F */
+}
+
+.totalrank {
+  display: flex;
+  justify-content: center;
+}
+
 .step {
   font-weight: 600;
   display: flex;

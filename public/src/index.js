@@ -118,11 +118,18 @@ xhr.onreadystatechange = function () {
     }
   }
 };
-xhr.open("get", "api/1.0/crawler/statsleader");
+xhr.open("get", "api/1.0/player/statsleader");
 xhr.send();
 
-const signUp = document.querySelector(".signup");
 const signIn = document.querySelector(".signin");
+const signUp = document.querySelector(".signup");
+const member = document.querySelector(".member");
+
+if (localStorage.access_token) {
+  signIn.style.display = "none";
+  signUp.style.display = "none";
+  member.style.display = "inline-block";
+}
 
 signUp.addEventListener("click", function () {
   Swal.fire({
@@ -151,13 +158,22 @@ signUp.addEventListener("click", function () {
         if (response.status === 200) {
           Swal.fire("Sign Up!".trim());
           return response.json();
-        } else {
+        } else if (response.status === 403) {
           Swal.fire("此名稱已有人使用！".trim());
-          console.log("error");
+          return response.json();
         }
-      })
-      .then((data) => {
-        console.log(data);
+      }).then((data) => {
+        if (!data.error) {
+          window.localStorage.setItem("access_token", data.data.access_token);
+          const confirm = document.querySelector(".swal2-confirm");
+          confirm.addEventListener("click", function () {
+            signIn.style.display = "none";
+            signUp.style.display = "none";
+            member.style.display = "inline-block";
+          });
+        } else {
+          console.log(data);
+        }
       });
   });
 });
@@ -195,10 +211,12 @@ signIn.addEventListener("click", function () {
       })
       .then((data) => {
         if (!data.error) {
-          console.log("good");
+          window.localStorage.setItem("access_token", data.data.access_token);
           const confirm = document.querySelector(".swal2-confirm");
           confirm.addEventListener("click", function () {
-            location.href = "/"; // 跳到會員頁
+            signIn.style.display = "none";
+            signUp.style.display = "none";
+            member.style.display = "inline-block";
           });
         } else if (data.error === "Password is wrong") {
           Swal.fire("密碼有誤!".trim());
@@ -207,4 +225,22 @@ signIn.addEventListener("click", function () {
         }
       });
   });
+});
+
+member.addEventListener("click", function () {
+  Swal.fire("確定要登出嗎？");
+  const confirm = document.querySelector(".swal2-actions");
+  confirm.addEventListener("click", function () {
+    window.localStorage.clear();
+    location.href = "/";
+  });
+});
+
+const fantasy = document.querySelector("#logo1");
+fantasy.addEventListener("click", function () {
+  if (window.localStorage.getItem("access_token")) {
+    location.href = "/fantasy.html";
+  } else {
+    Swal.fire("請先登入!".trim());
+  }
 });

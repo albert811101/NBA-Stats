@@ -80,17 +80,7 @@ const signIn = async (req, res) => {
   });
 };
 
-const getUserProfile = async (req, res) => {
-  console.log(req.body);
-  res.status(200).send({
-    data: {
-      name: req.user.name
-    }
-  });
-};
-
 module.exports = {
   signUp,
-  signIn,
-  getUserProfile
+  signIn
 };

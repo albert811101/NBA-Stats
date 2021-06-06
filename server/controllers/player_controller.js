@@ -2,7 +2,7 @@
 const axios = require("axios");
 // const request = require("request");
 // const cheerio = require("cheerio");
-const Crawler = require("../models/crawler_model");
+const player = require("../models/player_model");
 
 const fetchPlayerstats = async (req, res) => {
   console.log("Making API Request...");
@@ -15,11 +15,11 @@ const fetchPlayerstats = async (req, res) => {
     }
   });
   res.status(200).json(results.data);
-  console.log(
-    "Got results =",
-    results.data.resultSets[0].headers,
-    results.data.resultSets[0].rowSet[0]
-  );
+  // console.log(
+  //   "Got results =",
+  //   results.data.resultSets[0].headers,
+  //   results.data.resultSets[0].rowSet[0]
+  // );
 };
 
 const fetchPlayerbio = async (req, res) => {
@@ -83,14 +83,25 @@ const fetchPlayerbio = async (req, res) => {
   ]);
   // console.log("okay");
   // res.send("okay");
-  // console.log(playerBio);
   return playerBio;
 };
 
 const createPlayerbio = async (req, res) => {
   const result = await fetchPlayerbio();
-  await Crawler.createPlayerbio(result);
-  res.send("okay");
+  await player.createPlayerbio(result);
+  res.send(result);
+};
+
+const getPlayerbio = async (req, res) => {
+  const playerId = req.query.playerid;
+  const result = await player.getPlayerbio(playerId); // 傳出去的資料
+  res.send(result[0]);
+};
+
+const getRecentgames = async (req, res) => {
+  const playerId = req.query.playerid;
+  const result = await player.getRecentgames(playerId); // 傳出去的資料
+  res.send(result);
 };
 
 const fetchStatsleader = async (req, res) => {
@@ -104,29 +115,13 @@ const fetchStatsleader = async (req, res) => {
   });
   // console.log(statsleader.data.items[0].items[0].playerstats[0]);
   res.send(JSON.stringify(statsleader.data));
-  // console.log(statsleader.data.items[0].items[0].playerstats[0]);
 };
-
-const fetchBoxscore = async (req, res) => {
-  // where to download the HTML from
-  const url = "https://stats.nba.com/stats/leaguegamelog?Counter=1000&DateFrom=&DateTo=&Direction=DESC&LeagueID=00&PlayerOrTeam=P&Season=2020-21&SeasonType=Playoffs&Sorter=DATE";
-  const boxscore = await axios.get(url, {
-    headers: {
-      Referer: "https://www.nba.com/"
-    }
-  });
-  res.send(JSON.stringify(boxscore.data));
-};
-
-// save the JSON to disk
-//   await fs.promises.writeFile("output.json", JSON.stringify(results, null, 2));
-//   console.log("Done!");
-
-// start the main script
 
 module.exports = {
   fetchPlayerstats,
+  fetchPlayerbio,
   createPlayerbio,
-  fetchStatsleader,
-  fetchBoxscore
+  getPlayerbio,
+  getRecentgames,
+  fetchStatsleader
 };

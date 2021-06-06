@@ -80,7 +80,6 @@ input:focus {
 
 .navbar {
   display: flex;
-  align-self: center;
   justify-content: space-around;
   width: 550px;
   font-size: 20px;
@@ -101,10 +100,10 @@ input:focus {
   border: solid 1px #979797;
   border-radius: 5px;
   margin-left: 40px;
+  margin-top: 5px;
 }
 
 .search {
-  margin-bottom: 5px;
   margin-right: 10px;
   width: 30px;
   height: 30px;
@@ -115,14 +114,14 @@ input:focus {
   margin-bottom: 5px;
 }
 
-.member {
+.member1 {
   width: 52px;
   height: 52px;
 }
 
-/* .member1 {
+.member {
+  display: none;
   width: 52px;
   height: 52px;
-  margin-top: 8px;
-  margin-right: 18.5px;
-} */
+  margin-top: 5px;
+}

@@ -1,0 +1,240 @@
+.body {
+  background-color: rgb(237, 238, 240);
+  position: relative;
+  height: 100%;
+}
+
+.col-md-12 {
+  color: #0D1B2A;
+  margin-bottom: 50px;
+}
+
+.profile-header {
+  height: 300px;
+}
+
+.row1 {
+  display: flex;
+  width: 600px;
+  margin-top: 20px;
+}
+
+.stats-weight {
+  display: flex;
+  justify-content: center;
+}
+
+.stats-year {
+  display: flex;
+  justify-content: center;
+}
+
+.stats-title {
+  color:white
+}
+
+.profile-container
+  .profile-header
+  .profile-stats
+  .inlinestats-col:not(:last-child) {
+  border-right: 1px solid #eee;
+}
+.profile-container .profile-header .profile-stats .inlinestats-col {
+  padding-top: 15px;
+  text-align: center;
+  font-family: "Lucida Sans", "trebuchet MS", Arial, Helvetica;
+  border-top: 1px solid #eee;
+  min-height: 55px;
+}
+.profile-container .profile-header .profile-stats .stats-col .stats-value {
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+  font-size: 15px;
+  font-family: "Lucida Sans", "trebuchet MS", Arial, Helvetica;
+  font-weight: bold;
+}
+.white {
+  color: #ffffff !important;
+}
+.profile-container .profile-header .profile-stats .stats-col:not(:last-child) {
+  border-right: 1px solid #eee;
+}
+.profile-container .profile-header .profile-stats .stats-col {
+  margin: 30px 0;
+  text-align: center;
+}
+.profile-container .profile-header .profile-stats {
+  min-height: 175px;
+  border-right: 1px solid #eee;
+}
+.profile-container .profile-header .profile-info .header-information {
+  color:#ffffff;
+  line-height: 23px;
+  text-align: justify;
+}
+.profile-container .profile-header .profile-info .btn-follow {
+  position: absolute;
+  color: #ffffff;
+  top: 45px;
+  right: 40px;
+}
+
+.table-bordered {
+  text-align: center;
+  width: 300px;
+  margin-right: 50px;
+  margin-top: 30px;
+}
+
+th {
+  font-size: 20px;
+}
+
+caption {
+  color:#ffffff;
+}
+
+.btn1 {
+  font-size: 20px;
+  margin-right: 180px;
+  min-height: 175px;
+}
+
+.btn2 {
+  font-size: 20px;
+  margin-right: 70px;
+  min-height: 175px;
+  border-right: 1px solid #eee;
+}
+
+.btn3 {
+  font-size: 20px;
+  min-height: 175px;
+  border-right: 1px solid #eee;
+}
+
+.btn-palegreen,
+.btn-palegreen:focus {
+  background-color: #a0d468 !important;
+  border-color: #a0d468;
+  color: #fff;
+}
+.profile-container .profile-header .profile-info .header-fullname {
+  font: 21px "Lucida Sans", "trebuchet MS", Arial, Helvetica;
+  margin-top: 27px;
+  display: inline-block;
+}
+.profile-container .profile-header .profile-info {
+  min-height: 175px;
+  border-right: 1px solid #eee;
+  padding: 15px 40px 35px 0;
+}
+.profile-container .profile-header .header-avatar {
+  margin: 25px 0;
+  margin-left: 50px;
+  position: absolute;
+}
+
+.text-center {
+  text-align: left!important;
+}
+
+.header-avatar1 {
+  width: 130px;
+  height: 95px;
+  padding-right: 30px;
+}
+
+img {
+  max-height: 95%;
+}
+
+.profile-container .profile-header {
+  min-height: 175px;
+  margin: 15px 15px 0;
+  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+  -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+  background-color: #0A1045;
+}
+
+.header-intro {
+  display: flex;
+  color: #ffffff;
+  margin-top : 20px;
+}
+
+.header-teamcity {
+  margin-right: 5px;
+  color: #ffffff;
+}
+
+.header-teamname {
+  margin-right: 5px;
+  color: #ffffff;
+}
+
+.header-jersey_number {
+  margin-right: 5px;
+  color: #ffffff;
+} 
+
+.header-fisrtname {
+  font-size: xx-large;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.header-lastname {
+  font-size: xx-large;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.header-season {
+  font-weight: bold;
+  margin-left: 185px;
+  color: #ffffff;
+}
+
+.weight {
+  margin-right: 5px;
+}
+
+.experience {
+  margin-right: 5px;
+}
+
+.games {
+  background-color: #FFFFFF;
+}
+
+p {
+  font-size: large;
+  font-family: "Lucida Sans", "trebuchet MS", Arial, Helvetica;
+  font-weight: bold;
+}
+
+.table-condensed {
+  margin-bottom: 100px;
+  text-align: right;
+}
+
+.stat_title {
+  font: 21px "Lucida Sans", "trebuchet MS", Arial, Helvetica;
+  font-size: 5px;
+  background-color: #F0F2EF;
+}
+
+td {
+  font-family: -apple-system,BlinkMacSystemFont,Roboto,Arial,Helvetica Neue,Helvetica,sans-serif;
+}
+
+tbody {
+  font-size: 5px;
+}
+
+
+
+
