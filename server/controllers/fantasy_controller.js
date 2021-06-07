@@ -1,5 +1,6 @@
 const axios = require("axios");
 const playerinfo = require("../models/fantasy_model");
+const moment = require("moment-timezone");
 
 const fetchschedule = async (req, res) => {
   const url =
@@ -213,18 +214,13 @@ const fetchBoxscore = async (req, res) => {
   ]);
   // console.log(playerBox);
 
-  const selectedDate = new Date();
-  const yesterday = new Date();
-  yesterday.setDate(selectedDate.getDate() - 1);
-  const dateString =
-    yesterday.getUTCFullYear() + "-" +
-    ("0" + (yesterday.getUTCMonth() + 1)).slice(-2) + "-" +
-    ("0" + yesterday.getUTCDate()).slice(-2);
+  const dateYesterday = moment().tz("Asia/Taipei").subtract(1, "day").format();
+  const correctDate = dateYesterday.slice(0, 10);
 
   const todayBoxscore = playerBox.filter(function (boxscore) {
-    return boxscore[4].includes(dateString);
+    return boxscore[4].includes(correctDate);
   });
-  // console.log(dateString);
+  console.log(correctDate, "test");
 
   // const playerBox = {};
   // for (const item of boxscore.data.resultSets[0].rowSet) {

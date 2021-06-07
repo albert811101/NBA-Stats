@@ -16,10 +16,13 @@ const getPlayerbio = async (playerId) => {
   const conn = await pool.getConnection();
   try {
     const result = await conn.query(`SELECT * FROM player_bio WHERE person_id = ${playerId}`);
+    console.log(result);
     return result;
   } catch (error) {
     await conn.query("ROLLBACK");
     return error;
+  } finally {
+    await conn.release();
   }
 };
 
@@ -31,6 +34,8 @@ const getRecentgames = async (playerId) => {
   } catch (error) {
     await conn.query("ROLLBACK");
     return error;
+  } finally {
+    await conn.release();
   }
 };
 
