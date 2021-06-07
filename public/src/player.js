@@ -54,7 +54,7 @@ fetch(`/api/1.0/player/playerbio${params}`, {
     weight.innerHTML = data[0].weight;
     country.innerHTML = data[0].country;
     lastAttended.innerHTML = data[0].college;
-    experience.innerHTML = data[0].to_year - data[0].from_year;
+    experience.innerHTML = data[0].to_year - data[0].from_year + 1;
   });
 
 fetch(`/api/1.0/player/recent_games${params}`, {
