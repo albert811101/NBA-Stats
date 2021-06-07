@@ -65,6 +65,7 @@ const nativeSignIn = async (name, password) => {
     }
 
     const loginAt = new Date();
+    console.log(loginAt);
     const accessToken = jwt.sign({
       name: user.name
     }, TOKEN_SECRET);

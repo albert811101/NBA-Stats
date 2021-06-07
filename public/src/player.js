@@ -54,7 +54,7 @@ fetch(`/api/1.0/player/playerbio${params}`, {
     weight.innerHTML = data[0].weight;
     country.innerHTML = data[0].country;
     lastAttended.innerHTML = data[0].college;
-    experience.innerHTML = data[0].to_year - data[0].from_year;
+    experience.innerHTML = data[0].to_year - data[0].from_year + 1;
   });
 
 fetch(`/api/1.0/player/recent_games${params}`, {
@@ -233,4 +233,35 @@ fantasy.addEventListener("click", function () {
   } else {
     Swal.fire("請先登入!".trim());
   }
+});
+
+const search = document.querySelector("#bar");
+const input = document.querySelector(".searchbar");
+
+search.addEventListener("click", function () {
+  fetch("/api/1.0/player/playername", {
+    method: "POST",
+    headers: new Headers({
+      "Content-Type": "application/json"
+    }),
+    body: JSON.stringify({ name: input.value })
+  })
+    .then(function (response) {
+      if (response.status === 200) {
+        return response.json();
+      } else {
+        console.log("error");
+      }
+    })
+    .then((data) => {
+      console.log(data);
+      if (data.length === 0) {
+        Swal.fire(
+          "No Players!",
+          "No Players Matched your selected filters"
+        );
+      } else {
+        location.href = `/player.html?playerid=${data[0].person_id}`;
+      }
+    });
 });

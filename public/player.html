@@ -28,7 +28,9 @@
           class="form-control searchbar"
           placeholder="Search"
         />
-        <a href="/" class="search"><img src="images/search.png" /></a>
+        <a class="search" style="cursor: pointer"
+          ><img src="images/search.png" id="bar"
+        /></a>
         <div class="signup" style="cursor: pointer">Sign up</div>
         <div class="signin" style="cursor: pointer">Sign In</div>
         <div class="member" style="cursor: pointer">
@@ -44,34 +46,38 @@
               <img alt="" class="header-avatar" />
               <img alt="" class="header-avatar1" />
             </div>
-            <div class="col-md-8 col-sm-12 profile-info">
+            <div class="col-md-8 col-sm-12 profile-info profile-a">
               <div class="header-intro">
-                <div class="header-teamcity"></div>
-                <div class="header-teamname"></div>
-                <div class="header-jersey">#</div>
-                <div class="header-jersey_number"></div>
-                <div class="header-position"></div>
-                <div class="header-season">2020-21 SEASON STATS</div>
+                <div style="display: flex">
+                  <div class="header-teamcity"></div>
+                  <div class="header-teamname"></div>
+                  <div class="header-jersey">#</div>
+                  <div class="header-jersey_number"></div>
+                  <div class="header-position"></div>
+                </div>
+                <div class="header-fisrtname"></div>
+                <div class="header-lastname"></div>
               </div>
-              <div class="header-fisrtname"></div>
-              <div class="header-lastname"></div>
 
-              <table class="table table-bordered btn-follow">
-                <thead class="thead">
-                  <tr>
-                    <th scope="col">PTS</th>
-                    <th scope="col">REB</th>
-                    <th scope="col">AST</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="pts"></td>
-                    <td class="reb"></td>
-                    <td class="ast"></td>
-                  </tr>
-                </tbody>
-              </table>
+              <div class="mainstats">
+                <div class="header-season" style="text-align:center">2020-21 SEASON STATS</div>
+                <table class="table table-bordered btn-follow" style="margin: auto;">
+                  <thead class="thead">
+                    <tr>
+                      <th scope="col">PTS</th>
+                      <th scope="col">REB</th>
+                      <th scope="col">AST</th>
+                    </tr>
+                  </thead>
+
+                    <tr>
+                      <td class="pts"></td>
+                      <td class="reb"></td>
+                      <td class="ast"></td>
+                    </tr>
+       
+                </table>
+              </div>
             </div>
             <div class="col-md-12 col-sm-12 col-xs-12 profile-stats">
               <div class="row1">
@@ -109,32 +115,32 @@
     </div>
     <div class="container games">
       <p class="recent">Recent Games</p>
-      <table class="table table-condensed">
+        <table class="table table-condensed" id="bootstrap-table">
         <thead>
           <tr>
-            <th class="stat_title">GAME DATE</th>
-            <th class="stat_title">MATCHUP</th>
-            <th class="stat_title">W/L</th>
-            <th class="stat_title">MIN</th>
-            <th class="stat_title">PTS</th>
-            <th class="stat_title">FGM</th>
-            <th class="stat_title">FGA</th>
-            <th class="stat_title">FG%</th>
-            <th class="stat_title">3PM</th>
-            <th class="stat_title">3PA</th>
-            <th class="stat_title">3P%</th>
-            <th class="stat_title">FTM</th>
-            <th class="stat_title">FTA</th>
-            <th class="stat_title">FT%</th>
-            <th class="stat_title">OREB</th>
-            <th class="stat_title">DREB</th>
-            <th class="stat_title">REB</th>
-            <th class="stat_title">AST</th>
-            <th class="stat_title">STL</th>
-            <th class="stat_title">BLK</th>
-            <th class="stat_title">TOV</th>
-            <th class="stat_title">PF</th>
-            <th class="stat_title">+/-</th>
+            <th class="stat_title title-game">GAME DATE</th>
+            <th class="stat_title title-matchup">MATCHUP</th>
+            <th class="stat_title title-stat">W/L</th>
+            <th class="stat_title title-stat">MIN</th>
+            <th class="stat_title title-stat">PTS</th>
+            <th class="stat_title title-stat">FGM</th>
+            <th class="stat_title title-stat">FGA</th>
+            <th class="stat_title title-stat">FG%</th>
+            <th class="stat_title title-stat">3PM</th>
+            <th class="stat_title title-stat">3PA</th>
+            <th class="stat_title title-stat">3P%</th>
+            <th class="stat_title title-stat">FTM</th>
+            <th class="stat_title title-stat">FTA</th>
+            <th class="stat_title title-stat">FT%</th>
+            <th class="stat_title title-stat">OREB</th>
+            <th class="stat_title title-stat">DREB</th>
+            <th class="stat_title title-stat">REB</th>
+            <th class="stat_title title-stat">AST</th>
+            <th class="stat_title title-stat">STL</th>
+            <th class="stat_title title-stat">BLK</th>
+            <th class="stat_title title-stat">TOV</th>
+            <th class="stat_title title-stat">PF</th>
+            <th class="stat_title title-stat">+/-</th>
           </tr>
         </thead>
         <tbody>

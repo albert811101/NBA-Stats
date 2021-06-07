@@ -76,7 +76,7 @@ function closeOtherbuttons (index) {
 
 let selectedPlayers;
 
-fetch("/api/1.0/fantasy/allplayerstats", {
+fetch("/api/1.0/fantasy/playerstats", {
   method: "GET"
 })
   .then(function (response) {
@@ -87,6 +87,7 @@ fetch("/api/1.0/fantasy/allplayerstats", {
     }
   })
   .then((data) => {
+    console.log(data);
     const teamPlayers = document.querySelectorAll(".players");
     const playerSet = new Set();
 

@@ -5,10 +5,11 @@
 }
 
 .title {
+  color: black;
+  display: flex;
   font-weight: bolder;
-  text-align: center;
+  justify-content: center;
   margin-top: 30px;
-  opacity: 0.7;
   height: 100px;
 }
 
@@ -33,6 +34,10 @@
 
 .rightgroup {
   width: 350px;
+}
+
+.list-group-item {
+  width: 350px!important;
 }
 
 .container {
@@ -79,29 +84,37 @@
 }
 
 .playerRank {
+  font-size: 13.5px;
   color: black;
 }
 
 .playerName1 {
+  font-size: 13.5px;
   color: black;
 }
 
 .playerName2 {
+  font-size: 13.5px;
   color: black;
 }
+
 .playerName3 {
+  font-size: 13.5px;
   color: black;
 }
 
 .playerName4 {
+  font-size: 13.5px;
   color: black;
 }
 
 .playerName5 {
+  font-size: 13.5px;
   color: black;
 }
 
 .playerName6 {
+  font-size: 13.5px;
   color: black;
 }
 
