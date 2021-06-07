@@ -104,6 +104,11 @@ const getRecentgames = async (req, res) => {
   res.send(result);
 };
 
+const getPlayername = async (req, res) => {
+  const result = await player.getPlayername(req.body.name); // 傳出去的資料
+  res.send(result[0]);
+};
+
 const fetchStatsleader = async (req, res) => {
   // console.log("Making API Request...");
   // request the data from the JSON API
@@ -123,5 +128,6 @@ module.exports = {
   createPlayerbio,
   getPlayerbio,
   getRecentgames,
+  getPlayername,
   fetchStatsleader
 };

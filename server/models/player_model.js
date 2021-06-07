@@ -38,8 +38,24 @@ const getRecentgames = async (playerId) => {
   }
 };
 
+const getPlayername = async (name) => {
+  const conn = await pool.getConnection();
+  try {
+    const correctName = name.split(" ");
+    const result = await conn.query(`SELECT person_id FROM player_bio WHERE to_year = 2020 AND player_last_name = "${correctName[1]}" AND player_first_name = "${correctName[0]}";`);
+    // console.log(result);
+    return result;
+  } catch (error) {
+    await conn.query("ROLLBACK");
+    return error;
+  } finally {
+    await conn.release();
+  }
+};
+
 module.exports = {
   createPlayerbio,
   getPlayerbio,
-  getRecentgames
+  getRecentgames,
+  getPlayername
 };
