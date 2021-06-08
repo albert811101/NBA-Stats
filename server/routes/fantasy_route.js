@@ -9,6 +9,7 @@ const {
   fetchAllplayerstats,
   fetchBoxscore,
   getTotalscore,
+  getRanking,
   getSelectedplayers,
   getUserProfile,
   fetchPlayerstats
@@ -25,6 +26,9 @@ router.route("/fantasy/box_score")
 
 router.route("/fantasy/total_score")
   .get(authentication(), getTotalscore);
+
+router.route("/fantasy/ranking")
+  .get(authentication(), getRanking);
 
 router.route("/fantasy/selected_players")
   .post(authentication(), getSelectedplayers);

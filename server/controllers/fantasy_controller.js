@@ -249,8 +249,13 @@ const fetchBoxscore = async (req, res) => {
 
 const getTotalscore = async (req, res) => {
   const result = await playerinfo.getTotalscore(req.user.name);
-  console.log(result, 12345);
   res.status(200).send({ data: result });
+};
+
+const getRanking = async (req, res) => {
+  const result = await playerinfo.getRanking(req.user.name);
+  console.log(result[0]);
+  res.status(200).send(result[0]);
 };
 
 const getSelectedplayers = async (req, res) => {
@@ -276,6 +281,7 @@ module.exports = {
   fetchAllplayerstats,
   fetchBoxscore,
   getTotalscore,
+  getRanking,
   getSelectedplayers,
   getUserProfile,
   fetchPlayerstats

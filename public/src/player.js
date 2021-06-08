@@ -124,8 +124,8 @@ fetch(`/api/1.0/player/recent_games${params}`, {
 signUp.addEventListener("click", function () {
   Swal.fire({
     title: "Sign Up",
-    html: `<input type="text" id="signup" "swal2-input" placeholder="Username">
-      <input type="password" id="password" "swal2-input" placeholder="Password">`,
+    html: `<input type="text" id="signup" class="swal2-input" placeholder="Username">
+      <input type="password" id="password" class="swal2-input" placeholder="Password">`,
     confirmButtonText: "Sign Up",
     focusConfirm: false,
     preConfirm: () => {
@@ -171,8 +171,8 @@ signUp.addEventListener("click", function () {
 signIn.addEventListener("click", function () {
   Swal.fire({
     title: "Sign In",
-    html: `<input type="text" id="signin" "swal2-input" placeholder="Username">
-      <input type="password" id="password" "swal2-input" placeholder="Password">`,
+    html: `<input type="text" id="signin" class="swal2-input" placeholder="Username">
+    <input type="password" id="password" class="swal2-input" placeholder="Password">`,
     confirmButtonText: "Sign In",
     focusConfirm: false,
     preConfirm: () => {

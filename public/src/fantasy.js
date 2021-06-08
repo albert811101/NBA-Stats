@@ -321,6 +321,24 @@ fetch("/api/1.0/fantasy/total_score", {
     score.innerHTML = Math.round(data.data);
   });
 
+fetch("/api/1.0/fantasy/ranking", {
+  method: "GET",
+  headers: new Headers({
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${window.localStorage.getItem("access_token")}`
+  })
+})
+  .then(function (response) {
+    if (response.status === 200) {
+      return response.json();
+    } else {
+      console.log("error");
+    }
+  })
+  .then((data) => {
+    console.log(data);
+  });
+
 fetch("/api/1.0/user/profile", {
   method: "GET",
   headers: new Headers({
