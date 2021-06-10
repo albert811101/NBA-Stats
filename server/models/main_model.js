@@ -7,8 +7,6 @@ const getRanking = async () => {
     const dateYesterday = moment().tz("Asia/Taipei").subtract(1, "day").format();
     const correctDate = dateYesterday.slice(0, 10);
     const result = await conn.query(`SELECT selected_players.user_id, total_score, user.name FROM selected_players LEFT JOIN user ON selected_players.user_id = user.user_id WHERE selected_date = "${correctDate}" ORDER BY total_score DESC`);
-    // console.log(result2[0]);
-    // console.log(result2[0]);
     let rankArr = [];
     const ranking = result[0].map(function (value, index) {
       let rank;
@@ -44,24 +42,9 @@ const getTopplayers = async () => {
     const arr3 = arr2.concat(result3[0]);
     const arr4 = arr3.concat(result4[0]);
 
-    // console.log(arr4);
-
-    // const topPLayers = [];
-    // for (let i = 0; i < arr4.length; i++) {
-    //   if (arr4[i].player_id) {
-    //     arr4[]
-    //   }
-    // }
-
-    // console.log(topPLayers);
-
     const topPlayers = {};
-    // const playerKey = ["player1_id", "player2_id", "player3_id", "player4_id", "player5_id"];
     for (const topPlayer of arr4) {
       const fullkey = `${topPlayer.player_first_name}_${topPlayer.player_last_name}_${topPlayer.team_id}_${topPlayer.player_id}`;
-      // if (!(fullkey in topPlayer)) {
-      //   continue;
-      // }
       if (fullkey in topPlayers) {
         topPlayers[fullkey] += topPlayer.COUNT;
       } else {

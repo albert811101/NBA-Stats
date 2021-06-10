@@ -50,7 +50,6 @@ fetch("/api/1.0/fantasy/top_players", {
   })
   .then((data) => {
     console.log(data);
-    console.log(data[0][0].split("_"));
     const table = document.querySelector("#players-list");
     for (let i = 0; i < data.length; i++) {
       const tr = document.createElement("tr");
