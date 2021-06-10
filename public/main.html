@@ -4,7 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Fantasy Rules</title>
+    <title>Fantasy Main Page</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
     <!-- Bootstrap CSS -->
     <link
@@ -14,7 +14,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <link href="./styles/header.css" rel="stylesheet" />
-    <link href="./styles/rules.css" rel="stylesheet" />
+    <link href="./styles/main.css" rel="stylesheet" />
     <link href="./styles/footer.css" rel="stylesheet" />
   </head>
   <body class="body">
@@ -25,10 +25,43 @@
       </div>
       <div class="member1"><img src="images/member.png" /></div>
     </header>
-    <div class=main-rules>
-      <div class="container rules">
-        <div class="panel panel-primary">
-          <div class="panel-body">遊戲規則</div>
+    <div class="main-box">
+      <div class="main-top">
+        <div class="container top-players">
+          <div class="panel panel-primary">
+            <div class="panel-body">TOP PLAYERS</div>
+          </div>
+        </div>
+        <div class="col-3 players-list">
+          <table class="table" id="players-list">
+            <thead>
+              <tr>
+                <th scope="col"></th>
+                <th scope="col">PLAYER</th>
+                <th scope="col">PICKS</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="main-rank">
+        <div class="container top-ranking">
+          <div class="panel panel-primary">
+            <div class="panel-body">DAILY RANKING</div>
+          </div>
+          <div class="col-3 players-list">
+            <table class="table" id="ranking">
+              <thead class="thead">
+                <tr>
+                  <th scope="col">RANK</th>
+                  <th scope="col">NAME</th>
+                  <th scope="col">SCORE</th>
+                </tr>
+              </thead>
+            </table>
+          </div>
         </div>
       </div>
     </div>
@@ -38,6 +71,7 @@
         <div class="rights">All Rights Reserved.</div>
       </div>
     </footer>
+    <script src="./src/main.js"></script>
     <!-- Optional JavaScript; choose one of the two! -->
 
     <!-- Option 1: Bootstrap Bundle with Popper -->

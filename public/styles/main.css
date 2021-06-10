@@ -1,0 +1,58 @@
+.body {
+    background-color: rgb(237, 238, 240);
+    position: relative;
+    height: 100%;
+  }
+
+.container {
+  width: 500px;
+}
+
+.main-box {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.top-players {
+  margin-top: 30px;
+  text-align: center;
+}
+
+#players-list {
+  text-align: center;
+  margin-bottom: 200px;
+}
+
+.top-ranking {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.panel {
+  font-weight: 800;
+  font-size: 15px;
+}
+
+.panel-body {
+  height: 51px;
+}
+
+th {
+  text-align: center;
+}
+
+td {
+  width: 100px;
+}
+
+tr {
+  height: 50px;
+}
+
+
+img {
+  width: 90px;
+  height: 70px;
+  margin-bottom: 20px;
+}
+

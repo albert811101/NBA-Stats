@@ -124,7 +124,7 @@ fetch(`/api/1.0/player/recent_games${params}`, {
 signUp.addEventListener("click", function () {
   Swal.fire({
     title: "Sign Up",
-    html: `<input type="text" id="signup" class="swal2-input" placeholder="Username">
+    html: `<input type="text" id="signup" class="swal2-input" placeholder="Username" maxlength="12">
       <input type="password" id="password" class="swal2-input" placeholder="Password">`,
     confirmButtonText: "Sign Up",
     focusConfirm: false,
@@ -171,7 +171,7 @@ signUp.addEventListener("click", function () {
 signIn.addEventListener("click", function () {
   Swal.fire({
     title: "Sign In",
-    html: `<input type="text" id="signin" class="swal2-input" placeholder="Username">
+    html: `<input type="text" id="signin" class="swal2-input" placeholder="Username" maxlength="12">
     <input type="password" id="password" class="swal2-input" placeholder="Password">`,
     confirmButtonText: "Sign In",
     focusConfirm: false,
@@ -237,6 +237,36 @@ fantasy.addEventListener("click", function () {
 
 const search = document.querySelector("#bar");
 const input = document.querySelector(".searchbar");
+
+$(".searchbar").on("keypress", function (e) {
+  if (e.key === "Enter" || e.keyCode === 13) {
+    fetch("/api/1.0/player/playername", {
+      method: "POST",
+      headers: new Headers({
+        "Content-Type": "application/json"
+      }),
+      body: JSON.stringify({ name: input.value })
+    })
+      .then(function (response) {
+        if (response.status === 200) {
+          return response.json();
+        } else {
+          console.log("error");
+        }
+      })
+      .then((data) => {
+        console.log(data);
+        if (data.length === 0) {
+          Swal.fire(
+            "No Players!",
+            "No Players Matched your selected filters"
+          );
+        } else {
+          location.href = `/player.html?playerid=${data[0].person_id}`;
+        }
+      });
+  }
+});
 
 search.addEventListener("click", function () {
   fetch("/api/1.0/player/playername", {

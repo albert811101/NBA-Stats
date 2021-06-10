@@ -77,6 +77,10 @@
   justify-content: center;
 }
 
+.rank {
+  margin-left: 3px;
+}
+
 .step {
   font-weight: 600;
   display: flex;

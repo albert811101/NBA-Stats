@@ -220,7 +220,6 @@ const fetchBoxscore = async (req, res) => {
   const todayBoxscore = playerBox.filter(function (boxscore) {
     return boxscore[4].includes(correctDate);
   });
-  console.log(correctDate, "test");
 
   // const playerBox = {};
   // for (const item of boxscore.data.resultSets[0].rowSet) {
@@ -242,7 +241,6 @@ const fetchBoxscore = async (req, res) => {
   // }
 
   await playerinfo.createPlayers(todayBoxscore); // 這裡的playerBox是要傳出去的資料
-  // console.log(playerBox);
   // res.send(JSON.stringify(playerBox));
   res.send(todayBoxscore);
 };
@@ -254,8 +252,7 @@ const getTotalscore = async (req, res) => {
 
 const getRanking = async (req, res) => {
   const result = await playerinfo.getRanking(req.user.name);
-  console.log(result[0]);
-  res.status(200).send(result[0]);
+  res.status(200).send(result);
 };
 
 const getSelectedplayers = async (req, res) => {

@@ -336,7 +336,8 @@ fetch("/api/1.0/fantasy/ranking", {
     }
   })
   .then((data) => {
-    console.log(data);
+    const rank = document.querySelector(".rank");
+    rank.innerHTML = data[0].rank;
   });
 
 fetch("/api/1.0/user/profile", {
