@@ -225,13 +225,12 @@ function mode () {
 // eslint-disable-next-line no-unused-vars
 function checkmode () {
   const mode = document.querySelector("#mode");
-  // eslint-disable-next-line eqeqeq
-  // if (mode.value == 0) {
-  //   // eslint-disable-next-line no-undef
-  //   Swal.fire(
-  //     "請先選擇右上角的遊戲模式！"
-  //   );
-  // }
+  if (mode.value == 0) {
+    // eslint-disable-next-line no-undef
+    Swal.fire(
+      "請先選擇右上角的遊戲模式！"
+    );
+  }
 }
 
 function initSelect (json) {

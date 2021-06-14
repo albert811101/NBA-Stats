@@ -46,13 +46,27 @@ td {
 }
 
 tr {
-  height: 50px;
+  height: 80px;
 }
 
+.player {
+  width: 200px;
+  font-weight: bold;
+}
 
 .photo {
   width: 90px;
   height: 70px;
   margin-top: 20px;
+}
+
+.rank {
+  font-size: 15px;
+  font-weight: bold;
+  color: #B23A48;
+}
+
+.name {
+  font-weight: bold;
 }
 
