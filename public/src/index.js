@@ -165,12 +165,9 @@ signUp.addEventListener("click", function () {
       }).then((data) => {
         if (!data.error) {
           window.localStorage.setItem("access_token", data.data.access_token);
-          const confirm = document.querySelector(".swal2-confirm");
-          confirm.addEventListener("click", function () {
-            signIn.style.display = "none";
-            signUp.style.display = "none";
-            member.style.display = "inline-block";
-          });
+          signIn.style.display = "none";
+          signUp.style.display = "none";
+          member.style.display = "inline-block";
         } else {
           console.log(data);
         }
@@ -212,12 +209,9 @@ signIn.addEventListener("click", function () {
       .then((data) => {
         if (!data.error) {
           window.localStorage.setItem("access_token", data.data.access_token);
-          const confirm = document.querySelector(".swal2-confirm");
-          confirm.addEventListener("click", function () {
-            signIn.style.display = "none";
-            signUp.style.display = "none";
-            member.style.display = "inline-block";
-          });
+          signIn.style.display = "none";
+          signUp.style.display = "none";
+          member.style.display = "inline-block";
         } else if (data.error === "Password is wrong") {
           Swal.fire("密碼有誤!".trim());
         } else {

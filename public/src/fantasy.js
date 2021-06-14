@@ -401,7 +401,7 @@ getScore.addEventListener("click", function () {
         console.log(json);
         // eslint-disable-next-line no-undef
         Swal.fire(
-        `恭喜你獲得 ${json.data}分！`
+        `您的模擬分數是 ${json.data}分！`
         );
         return json;
       };
