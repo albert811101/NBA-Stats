@@ -3,6 +3,10 @@ if (!localStorage.access_token) {
   location.href = "/";
 }
 
+Swal.fire(
+  "請先選擇遊戲模式！"
+);
+
 function mode () {
   const mode = document.querySelector("#mode");
   const date = document.querySelector("#date");
@@ -15,7 +19,9 @@ function mode () {
     getScore.style.display = "inline-block";
     submit.style.display = "none";
     reset.style.display = "none";
-  } else {
+  } else if (mode.value == 2) {
+    const date = document.querySelector("#date");
+    console.log(date.value);
     date.style.display = "none";
     getScore.style.display = "none";
     submit.style.display = "inline-block";
@@ -74,6 +80,17 @@ function mode () {
     };
     xhr.open("get", "api/1.0/fantasy/schedule");
     xhr.send();
+  } else {
+    date.style.display = "none";
+    const showTeams = document.querySelectorAll(".glyphicon-plus-sign");
+    for (let i = 0; i < showTeams.length; i++) {
+      showTeams[i].addEventListener("click", function () {
+        // eslint-disable-next-line no-undef
+        Swal.fire(
+          "請先選擇遊戲模式！"
+        );
+      });
+    }
   }
 }
 
