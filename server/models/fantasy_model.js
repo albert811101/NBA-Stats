@@ -122,6 +122,8 @@ const getTotalscore = async (name) => {
     score.push(result[0][i].pts + result[0][i].fg3m * 2 + result[0][i].reb * 1.2 + result[0][i].ast * 1.5 + result[0][i].stl * 3 + result[0][i].blk * 3 - result[0][i].tov);
     totalScore = totalScore + score[i];
   };
+  console.log(score);
+  console.log(totalScore);
   return (totalScore);
 };
 

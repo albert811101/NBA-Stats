@@ -68,3 +68,15 @@ fetch("/api/1.0/fantasy/top_players", {
       td3.innerHTML = data[i][1];
     }
   });
+
+const member = document.querySelector(".member1");
+
+member.addEventListener("click", function () {
+  // eslint-disable-next-line no-undef
+  Swal.fire("確定要登出嗎？");
+  const confirm = document.querySelector(".swal2-actions");
+  confirm.addEventListener("click", function () {
+    window.localStorage.clear();
+    location.href = "/"; // 照理來說要跳到fantasy首頁
+  });
+});

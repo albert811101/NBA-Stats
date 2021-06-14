@@ -254,6 +254,7 @@ const fetchBoxscore = async (req, res) => {
 
 const getTotalscore = async (req, res) => {
   const result = await playerinfo.getTotalscore(req.user.name);
+  console.log(result);
   res.status(200).send({ data: result });
 };
 
