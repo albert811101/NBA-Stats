@@ -8,7 +8,15 @@ const fetchschedule = async (req, res) => {
   const results = await axios.get(url, {
 
   });
+  // console.log(results.data.leagueSchedule.gameDates[100].games[0].gameId);
+  // await playerinfo.createSchedule(results.data.leagueSchedule.gameDates);
   res.status(200).json(results.data);
+};
+
+const getSchedule = async (req, res) => {
+  const date = req.body.date;
+  const result = await playerinfo.getSchedule(date);
+  res.status(200).send({ data: result });
 };
 
 const fetchAllplayerstats = async (req, res) => {
@@ -25,14 +33,14 @@ const fetchAllplayerstats = async (req, res) => {
   const playerStatMap = {
     PLAYER_ID: 0,
     PLAYER__NAME: 1,
-    TEAM_ID: 2,
-    PTS: 29,
-    FG3M: 13,
-    REB: 21,
-    AST: 22,
-    TOV: 23,
-    STL: 24,
-    BLK: 25
+    TEAM_ID: 3,
+    PTS: 30,
+    FG3M: 14,
+    REB: 22,
+    AST: 23,
+    TOV: 24,
+    STL: 25,
+    BLK: 26
   };
 
   const playerStats = result.data.resultSets[0].rowSet.map((item) => [
@@ -48,7 +56,7 @@ const fetchAllplayerstats = async (req, res) => {
     item[playerStatMap.TOV]
   ]);
 
-  // console.log(playerStats);
+  console.log(playerStats);
 
   // const playerstats = {};
   // for (const item of result.data.resultSets[0].rowSet) {
@@ -241,7 +249,6 @@ const fetchBoxscore = async (req, res) => {
   // }
 
   await playerinfo.createPlayers(todayBoxscore); // 這裡的playerBox是要傳出去的資料
-  // res.send(JSON.stringify(playerBox));
   res.send(todayBoxscore);
 };
 
@@ -255,14 +262,62 @@ const getRanking = async (req, res) => {
   res.status(200).send(result);
 };
 
+const createPlayerstats = async (req, res) => {
+  const url =
+  "https://stats.nba.com/stats/leaguedashplayerstats?College=&Conference=&Country=&DateFrom=&DateTo=&Division=&DraftPick=&DraftYear=&GameScope=&GameSegment=&Height=&LastNGames=0&LeagueID=00&Location=&MeasureType=Base&Month=0&OpponentTeamID=0&Outcome=&PORound=0&PaceAdjust=N&PerMode=PerGame&Period=0&PlayerExperience=&PlayerPosition=&PlusMinus=N&Rank=N&Season=2020-21&SeasonSegment=&SeasonType=Playoffs&ShotClockRange=&StarterBench=&TeamID=0&TwoWay=0&VsConference=&VsDivision=&Weight=";
+  const result = await axios.get(url, {
+    headers: {
+      Referer: "https://www.nba.com/"
+    }
+  });
+
+  const playerStatMap = {
+    PLAYER_ID: 0,
+    PLAYER__NAME: 1,
+    TEAM_ID: 3,
+    PTS: 30,
+    FG3M: 14,
+    REB: 22,
+    AST: 23,
+    TOV: 24,
+    STL: 25,
+    BLK: 26
+  };
+
+  const playerStats = result.data.resultSets[0].rowSet.map((item) => [
+    item[playerStatMap.PLAYER_ID],
+    item[playerStatMap.PLAYER__NAME],
+    item[playerStatMap.TEAM_ID],
+    item[playerStatMap.PTS],
+    item[playerStatMap.FG3M],
+    item[playerStatMap.REB],
+    item[playerStatMap.AST],
+    item[playerStatMap.STL],
+    item[playerStatMap.BLK],
+    item[playerStatMap.TOV]
+  ]);
+
+  await playerinfo.createPlayerstats(playerStats);
+
+  res.status(200).send(playerStats);
+};
+
 const getSelectedplayers = async (req, res) => {
   const { players } = req.body;
   const result = await playerinfo.getSelectedplayers(players, req.user.name);
+
   if (result.error) {
     res.send({ error: result.error });
     return;
   }
   res.status(200).send({ status: "okay" });
+};
+
+const getHistoryplayers = async (req, res) => {
+  const date = req.body.date;
+  const players = req.body.players.players;
+  const result = await playerinfo.getHistoryplayers(date, players);
+  res.status(200).send({ data: result });
 };
 
 const getUserProfile = async (req, res) => {
@@ -275,11 +330,14 @@ const getUserProfile = async (req, res) => {
 
 module.exports = {
   fetchschedule,
+  getSchedule,
   fetchAllplayerstats,
   fetchBoxscore,
   getTotalscore,
   getRanking,
   getSelectedplayers,
+  getHistoryplayers,
   getUserProfile,
-  fetchPlayerstats
+  fetchPlayerstats,
+  createPlayerstats
 };

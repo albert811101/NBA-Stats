@@ -3,39 +3,114 @@ if (!localStorage.access_token) {
   location.href = "/";
 }
 
-const xhr = new XMLHttpRequest();
-xhr.onreadystatechange = function () {
-  if (xhr.readyState === 4 && xhr.status === 200) {
-    const today = new Date().toLocaleDateString();
-    const newToday = today.split("/");
-    const todayDate = [newToday[1], newToday[2], newToday[0]].join("/");
-    const datas = JSON.parse(xhr.responseText).leagueSchedule.gameDates;
-    const fantasyDate = datas.filter(function (data) {
-      return data.gameDate.includes(todayDate);
-    });
-    const teamsId = [];
-    for (let i = 0; i < fantasyDate[0].games.length; i++) {
-      teamsId.push(fantasyDate[0].games[i].homeTeam.teamId);
-      teamsId.push(fantasyDate[0].games[i].awayTeam.teamId);
-    }
+function mode () {
+  const mode = document.querySelector("#mode");
+  const date = document.querySelector("#date");
+  const submit = document.querySelector(".submit");
+  const reset = document.querySelector(".reset");
+  const getScore = document.querySelector(".get-score");
+  console.log(mode.value);
+  if (mode.value == 1) {
+    date.style.display = "flex";
+    getScore.style.display = "inline-block";
+    submit.style.display = "none";
+    reset.style.display = "none";
+  } else {
+    date.style.display = "none";
+    getScore.style.display = "none";
+    submit.style.display = "inline-block";
+    reset.style.display = "inline-block";
+    const xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        const today = new Date().toLocaleDateString();
+        const newToday = today.split("/");
+        const todayDate = [newToday[1], newToday[2], newToday[0]].join("/");
+        console.log(todayDate);
+        const datas = JSON.parse(xhr.responseText).leagueSchedule.gameDates;
+        const fantasyDate = datas.filter(function (data) {
+          return data.gameDate.includes(todayDate);
+        });
+        const teamsId = [];
+        for (let i = 0; i < fantasyDate[0].games.length; i++) {
+          teamsId.push(fantasyDate[0].games[i].homeTeam.teamId);
+          teamsId.push(fantasyDate[0].games[i].awayTeam.teamId);
+        }
 
-    const showTeams = document.querySelectorAll(".glyphicon-plus-sign"); // 5
-    const teamsLogo = document.querySelectorAll(".teams"); // 5
-    const teamPlayers = document.querySelectorAll(".players"); // 5
+        const showTeams = document.querySelectorAll(".glyphicon-plus-sign"); // 5
+        const teamsLogo = document.querySelectorAll(".teams"); // 5
+        const teamPlayers = document.querySelectorAll(".players"); // 5
+
+        for (let i = 0; i < showTeams.length; i++) {
+          showTeams[i].addEventListener("click", function (event) {
+            // console.log(event.path);
+            if (showTeams[i].classList.contains("glyphicon-plus-sign")) {
+              closeOtherbuttons(i);
+              showTeams[i].classList.remove("glyphicon-plus-sign");
+              showTeams[i].classList.add("glyphicon-minus-sign");
+
+              for (let j = 0; j < teamsId.length; j++) {
+                const image = document.createElement("img");
+                image.setAttribute(
+                  "src",
+              `https://cdn.nba.com/logos/nba/${teamsId[j]}/global/D/logo.svg`
+                );
+                image.setAttribute("class", "teamLogo");
+                image.setAttribute("alt", `${i}`);
+                teamsLogo[i].appendChild(image);
+              }
+            } else {
+              showTeams[i].classList.remove("glyphicon-minus-sign");
+              showTeams[i].classList.add("glyphicon-plus-sign");
+              for (let j = 0; j < teamsId.length; j++) {
+                const image = document.querySelector(".teamLogo");
+                teamsLogo[i].removeChild(image);
+                teamPlayers[i].innerHTML = "";
+              }
+            }
+          });
+        }
+      }
+    };
+    xhr.open("get", "api/1.0/fantasy/schedule");
+    xhr.send();
+  }
+}
+
+async function handler (e) {
+  const selectedDate = e.target.value.replace(/-/g, "");
+  console.log(selectedDate);
+  const response = await fetch("/api/1.0/fantasy/history_schedule", {
+    method: "POST",
+    headers: new Headers({
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${window.localStorage.getItem("access_token")}`
+    }),
+    body: JSON.stringify({ date: selectedDate })
+  });
+  const json = await response.json();
+  if (json.data.error) {
+    // eslint-disable-next-line no-undef
+    Swal.fire(
+      "今天沒有比賽唷！"
+    );
+  } else {
+    const showTeams = document.querySelectorAll(".glyphicon-plus-sign");
+    const teamsLogo = document.querySelectorAll(".teams");
+    const teamPlayers = document.querySelectorAll(".players");
 
     for (let i = 0; i < showTeams.length; i++) {
-      showTeams[i].addEventListener("click", function (event) {
-        // console.log(event.path);
+      showTeams[i].addEventListener("click", function () {
         if (showTeams[i].classList.contains("glyphicon-plus-sign")) {
           closeOtherbuttons(i);
           showTeams[i].classList.remove("glyphicon-plus-sign");
           showTeams[i].classList.add("glyphicon-minus-sign");
 
-          for (let j = 0; j < teamsId.length; j++) {
+          for (let j = 0; j < json.data.length; j++) {
             const image = document.createElement("img");
             image.setAttribute(
               "src",
-              `https://cdn.nba.com/logos/nba/${teamsId[j]}/global/D/logo.svg`
+              `https://cdn.nba.com/logos/nba/${json.data[j]}/global/D/logo.svg`
             );
             image.setAttribute("class", "teamLogo");
             image.setAttribute("alt", `${i}`);
@@ -44,7 +119,7 @@ xhr.onreadystatechange = function () {
         } else {
           showTeams[i].classList.remove("glyphicon-minus-sign");
           showTeams[i].classList.add("glyphicon-plus-sign");
-          for (let j = 0; j < teamsId.length; j++) {
+          for (let j = 0; j < json.data.length; j++) {
             const image = document.querySelector(".teamLogo");
             teamsLogo[i].removeChild(image);
             teamPlayers[i].innerHTML = "";
@@ -54,8 +129,6 @@ xhr.onreadystatechange = function () {
     }
   }
 };
-xhr.open("get", "api/1.0/fantasy/schedule");
-xhr.send();
 
 function closeOtherbuttons (index) {
   for (let i = 0; i <= 4; i++) {
@@ -301,6 +374,52 @@ btnConfirm.addEventListener("click", function () {
   }
 });
 
+const getScore = document.querySelector(".get-score");
+getScore.addEventListener("click", function () {
+  const date = document.querySelector("#date");
+  console.log(date.value);
+  if (date.value) {
+    if (selectedPlayers.size === 5) {
+      const getselectedPlayers = async () => {
+        const playersObj = { players: [] };
+        for (const player of selectedPlayers) {
+          playersObj.players.push(player);
+        }
+        const data = {
+          date: date.value,
+          players: playersObj
+        };
+        const response = await fetch("/api/1.0/fantasy/history_players", {
+          method: "POST",
+          headers: new Headers({
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${window.localStorage.getItem("access_token")}`
+          }),
+          body: JSON.stringify(data)
+        });
+        const json = await response.json();
+        console.log(json);
+        // eslint-disable-next-line no-undef
+        Swal.fire(
+        `恭喜你獲得 ${json.data}分！`
+        );
+        return json;
+      };
+      getselectedPlayers();
+    } else {
+    // eslint-disable-next-line no-undef
+      Swal.fire(
+        "請確認您是否選了5位球員。"
+      );
+    }
+  } else {
+    // eslint-disable-next-line no-undef
+    Swal.fire(
+      "請先選擇日期唷！"
+    );
+  }
+});
+
 fetch("/api/1.0/fantasy/total_score", {
   method: "GET",
   headers: new Headers({
@@ -336,8 +455,13 @@ fetch("/api/1.0/fantasy/ranking", {
     }
   })
   .then((data) => {
+    console.log(data);
     const rank = document.querySelector(".rank");
-    rank.innerHTML = data[0].rank;
+    if (data.rank) {
+      rank.innerHTML = data[0].rank;
+    } else {
+      rank.innerHTML = 0;
+    }
   });
 
 fetch("/api/1.0/user/profile", {

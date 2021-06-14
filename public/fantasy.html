@@ -19,12 +19,13 @@
     <link href="./styles/footer.css" rel="stylesheet" />
   </head>
   <body class="body">
-     <header class="header">
+    <header class="header">
       <div class="leftbar">
         <a href="/fantasy.html" id="logo1">Fantasy</a>
         <a href="/rules.html" div id="rules">Rules</a>
       </div>
       <nav class="rightbar">
+        <a href="/main.html" id="header-ranking" style="cursor: pointer">Ranking</a>
         <a href="/" id="home">Home</a>
         <div class="member1" style="cursor: pointer">
           <img src="images/member.png" />
@@ -32,8 +33,21 @@
       </nav>
     </header>
     <div class="container ranking">
+      <div class="select-mode">
+        <input id="date" type="date" onchange="handler(event)"/>
+        <select
+          class="form-select"
+          id="mode"
+          onchange="mode()"
+          aria-label="Default select example"
+        >
+          <option selected value="0">遊 戲 模 式</option>
+          <option value="1">虛 擬 模 式</option>
+          <option value="2" onclick="official(event)">正 式 模 式</option>
+        </select>
+      </div>
       <div class="panel panel-primary">
-        <div class="panel-body">MY SCORE & RANK</div>
+        <div class="panel-body score-rank">MY SCORE & RANK</div>
       </div>
       <div class="totalbox">
         <div class="box1">
@@ -48,7 +62,7 @@
           <div class="score"></div>
         </div>
         <div class="box3">
-          Total Ranking
+          Daily Ranking
           <div class="totalrank">
             No.
             <div class="rank"></div>
@@ -142,6 +156,7 @@
       </div>
       <button type="button" class="btn btn-primary submit">Submit</button>
       <button type="button" class="btn btn-primary reset">Reset</button>
+      <button type="button" class="btn btn-primary get-score">get score</button>
     </div>
     <footer>
       <div class="name d-flex">

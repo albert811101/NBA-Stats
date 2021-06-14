@@ -18,12 +18,18 @@
     <link href="./styles/footer.css" rel="stylesheet" />
   </head>
   <body class="body">
-    <header>
+    <header class="header">
       <div class="leftbar">
         <a href="/fantasy.html" id="logo1">Fantasy</a>
         <a href="/rules.html" div id="rules">Rules</a>
       </div>
-      <div class="member1"><img src="images/member.png" /></div>
+      <nav class="rightbar">
+        <a href="/main.html" id="header-ranking" style="cursor: pointer">Ranking</a>
+        <a href="/" id="home">Home</a>
+        <div class="member1" style="cursor: pointer">
+          <img src="images/member.png" />
+        </div>
+      </nav>
     </header>
     <div class="main-box">
       <div class="main-top">
@@ -49,7 +55,7 @@
       <div class="main-rank">
         <div class="container top-ranking">
           <div class="panel panel-primary">
-            <div class="panel-body">DAILY RANKING</div>
+            <div class="panel-body">TOTAL RANKING</div>
           </div>
           <div class="col-3 players-list">
             <table class="table" id="ranking">

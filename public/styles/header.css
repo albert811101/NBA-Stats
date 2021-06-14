@@ -58,17 +58,21 @@ input:focus {
 #rules {
   font-family: sans-serif;
   font-size: large;
-  /* opacity: 0.9; */
   text-decoration: none;
   color: white;
   margin-top: 5px;
+}
+
+#header-ranking {
+  font-family: sans-serif;
+  text-decoration: none;
+  color: white;
 }
 
 #home {
   font-family: sans-serif;
   text-decoration: none;
   color: white;
-  margin-left: 35px;
 }
 
 .leftbar {
@@ -91,7 +95,7 @@ input:focus {
   align-items: center;
   width: 410px;
   font-size: 20px;
-  padding-left: 220px;
+  padding-left: 140px;
 }
 
 .searchbar {
