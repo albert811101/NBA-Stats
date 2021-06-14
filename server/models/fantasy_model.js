@@ -33,15 +33,30 @@ const getSelectedplayers = async (players, name) => {
   }
 };
 
+const getHistoryplayers = async (selectedDate, players) => {
+  console.log(selectedDate, players);
+
+  const result = await pool.query("SELECT * FROM player_boxscore WHERE game_date = ? AND player_id in (?)", [selectedDate, players]);
+  const score = [];
+  let totalScore = 0;
+  for (let i = 0; i < result[0].length; i++) {
+    score.push(result[0][i].pts + result[0][i].fg3m * 2 + result[0][i].reb * 1.2 + result[0][i].ast * 1.5 + result[0][i].stl * 3 + result[0][i].blk * 3 - result[0][i].tov);
+    totalScore = totalScore + score[i];
+  };
+  console.log(totalScore);
+
+  return Math.round(totalScore);
+};
+
 const createPlayers = async (todayBoxscore) => { // 這裡的playerBox是要接收的資料
   try {
     const arr = [];
     for (let i = 0; i < todayBoxscore.length; i++) {
       arr.push(todayBoxscore[i][3]);
     };
-    // console.log(arr);
+    console.log(arr);
 
-    const gameId = await pool.query("SELECT game_id FROM player_boxscore");
+    // const gameId = await pool.query("SELECT game_id FROM player_boxscore");
     // console.log(gameId[0]);
     // console.log(arr.includes(gameId[0][0].game_id));
     // for (let i = 1; i < gameId[0].length; i++) {
@@ -51,11 +66,41 @@ const createPlayers = async (todayBoxscore) => { // 這裡的playerBox是要接�
     //     console.log("準備匯入");
     //   }
     // }
-    console.log(todayBoxscore);
-    const result = await pool.query("INSERT INTO player_boxscore (player_id, player_name, team_id, game_id, game_date, matchup, winlose, min, pts, fgm, fga, fg_pct, fg3m, fg3a, fg3_pct, ftm, fta, ft_pct, oreb, dreb, reb, ast, stl, blk, tov, pf, plus_minus, season_type) VALUES ?", [todayBoxscore]);
-    console.log("當日box數據都進去啦");
-    console.log(result[0]);
-    // return result;
+    // console.log(todayBoxscore);
+    // const result = await pool.query("INSERT INTO player_boxscore (player_id, player_name, team_id, game_id, game_date, matchup, winlose, min, pts, fgm, fga, fg_pct, fg3m, fg3a, fg3_pct, ftm, fta, ft_pct, oreb, dreb, reb, ast, stl, blk, tov, pf, plus_minus, season_type) VALUES ?", [todayBoxscore]);
+    // console.log("季後賽box數據都進去啦");
+    // console.log(result[0]);
+
+    const dateYesterday = moment().tz("Asia/Taipei").subtract(1, "day").format();
+    const correctDate = dateYesterday.slice(0, 10);
+
+    const result2 = await pool.query(`SELECT * FROM player_boxscore LEFT JOIN selected_players ON player_boxscore.player_id = selected_players.player1_id OR player_boxscore.player_id = selected_players.player2_id OR player_boxscore.player_id = selected_players.player3_id OR player_boxscore.player_id = selected_players.player4_id OR player_boxscore.player_id = selected_players.player5_id WHERE game_date = "${correctDate}" AND selected_players.selected_date = "${correctDate}"`);
+    const score = [];
+    let totalScore = 0;
+    for (let i = 0; i < result2[0].length; i++) {
+      score.push(result2[0][i].pts + result2[0][i].fg3m * 2 + result2[0][i].reb * 1.2 + result2[0][i].ast * 1.5 + result2[0][i].stl * 3 + result2[0][i].blk * 3 - result2[0][i].tov);
+      totalScore = totalScore + score[i];
+    };
+    console.log(result2[0], 147);
+    const userScore = {};
+    for (const playerScore of result2[0]) {
+      // console.log(playerScore);
+      if (playerScore.user_id in userScore) { // 跑第2, 3, 4, 5圈
+        userScore[playerScore.user_id] += playerScore.pts + playerScore.fg3m * 2 + playerScore.reb * 1.2 + playerScore.ast * 1.5 + playerScore.stl * 3 + playerScore.blk * 3 - playerScore.tov;
+      } else { // 跑第1圈
+        userScore[playerScore.user_id] = playerScore.pts + playerScore.fg3m * 2 + playerScore.reb * 1.2 + playerScore.ast * 1.5 + playerScore.stl * 3 + playerScore.blk * 3 - playerScore.tov;
+      }
+    };
+    // console.log(userScore, 555);
+    let updateScore;
+    for (const userId in userScore) {
+      updateScore = `UPDATE selected_players SET total_score = ${Math.round(userScore[userId])} WHERE user_id IN (${userId}) AND selected_date = "${correctDate}";`;
+      console.log(updateScore, 111);
+      await pool.query(updateScore);
+    };
+    // const result3 = await pool.query(`UPDATE selected_players SET total_score = ${Math.round(totalScore)} WHERE selected_date = "${correctDate}"`);
+    // console.log(result3[0]);
+    return result2;
   } catch (error) {
     console.log(error);
     await pool.query("ROLLBACK");
@@ -70,18 +115,13 @@ const getTotalscore = async (name) => {
   const correctDate = dateYesterday.slice(0, 10);
 
   const result = await pool.query(`SELECT * FROM player_boxscore LEFT JOIN selected_players ON player_boxscore.player_id = selected_players.player1_id OR player_boxscore.player_id = selected_players.player2_id OR player_boxscore.player_id = selected_players.player3_id OR player_boxscore.player_id = selected_players.player4_id OR player_boxscore.player_id = selected_players.player5_id WHERE user_id = ${userDetail[0][0].user_id} AND game_date = "${correctDate}" AND selected_players.selected_date = "${correctDate}"`);
-  console.log(correctDate, "e04");
   const score = [];
   let totalScore = 0;
-  console.log(result[0]);
+  // console.log(result[0]);
   for (let i = 0; i < result[0].length; i++) {
     score.push(result[0][i].pts + result[0][i].fg3m * 2 + result[0][i].reb * 1.2 + result[0][i].ast * 1.5 + result[0][i].stl * 3 + result[0][i].blk * 3 - result[0][i].tov);
     totalScore = totalScore + score[i];
   };
-  console.log(totalScore, 4938042);
-  const result2 = await pool.query(`UPDATE selected_players SET total_score = ${Math.round(totalScore)} WHERE user_id = ${userDetail[0][0].user_id} AND selected_date = "${correctDate}"`);
-  console.log(score);
-  console.log(totalScore);
   return (totalScore);
 };
 
@@ -100,8 +140,89 @@ const getPlayerstats = async () => {
   const conn = await pool.getConnection();
   try {
     const result = await conn.query("SELECT * FROM player_stats");
-    console.log("抓出球員數據囉");
+    // console.log("抓出球員數據囉");
     return result;
+  } catch (error) {
+    await conn.query("ROLLBACK");
+    return error;
+  } finally {
+    await conn.release();
+  }
+};
+
+const getRanking = async (name) => {
+  const userDetail = await pool.query("SELECT * FROM user WHERE name = (?)", name);
+  const conn = await pool.getConnection();
+  try {
+    const dateYesterday = moment().tz("Asia/Taipei").subtract(1, "day").format();
+    const correctDate = dateYesterday.slice(0, 10);
+    // const result = await conn.query(`SELECT user_id, total_score FROM selected_players WHERE user_id = ${userDetail[0][0].user_id} AND selected_date = "${correctDate}";`);
+    const result2 = await conn.query(`SELECT user_id, total_score FROM selected_players WHERE selected_date = "${correctDate}" ORDER BY total_score DESC`);
+
+    // console.log(result2[0]);
+    let rankArr = [];
+    const ranking = result2[0].map(function (value, index) {
+      let rank;
+      if (rankArr.length === 0) { rankArr = [1]; rank = 1; } else if (result2[0][index].total_score === result2[0][index - 1].total_score) {
+        rankArr[index] = rankArr[index - 1];
+        rank = rankArr[index - 1];
+      } else {
+        rankArr[index] = index + 1;
+        rank = index + 1;
+      }
+      return { ...value, rank: rank };
+    });
+    // console.log(ranking);
+    const playerRank = ranking.filter(function (item) {
+      return item.user_id === userDetail[0][0].user_id;
+    });
+    // console.log(playerRank);
+
+    // console.log("抓出當天每個人分數");
+    return playerRank;
+  } catch (error) {
+    await conn.query("ROLLBACK");
+    return error;
+  } finally {
+    await conn.release();
+  }
+};
+
+const createSchedule = async (schedule) => {
+  const conn = await pool.getConnection();
+  try {
+    // console.log(schedule[0].gameDate.slice(0, 9));
+    for (let i = 0; i < schedule.length; i++) {
+      for (let j = 0; j < schedule[i].games.length; j++) {
+        // await conn.query(`INSERT INTO schedule (game_id, game_date, hometeam_id, awayteam_id) VALUES (${schedule[i].games[j].gameId}, ${schedule[i].games[j].gameCode.slice(0, 8)}, ${schedule[i].games[j].homeTeam.teamId}, ${schedule[i].games[j].awayTeam.teamId})`);
+      }
+    }
+    console.log("匯入賽程表");
+    // return result;
+  } catch (error) {
+    console.log(error);
+    await conn.query("ROLLBACK");
+    return error;
+  } finally {
+    await conn.release();
+  }
+};
+
+const getSchedule = async (date) => {
+  const selectedDate = await pool.query("SELECT hometeam_id, awayteam_id FROM schedule WHERE game_date = (?)", date);
+  const conn = await pool.getConnection();
+  try {
+    // eslint-disable-next-line eqeqeq
+    if (!selectedDate[0].length == 0) {
+      const teamsId = [];
+      for (let i = 0; i < selectedDate[0].length; i++) {
+        teamsId.push(selectedDate[0][i].hometeam_id);
+        teamsId.push(selectedDate[0][i].awayteam_id);
+      }
+      return teamsId;
+    } else {
+      return { error: "There is no game today!" };
+    }
   } catch (error) {
     await conn.query("ROLLBACK");
     return error;
@@ -113,8 +234,12 @@ const getPlayerstats = async () => {
 module.exports = {
   getPlayerinfo,
   getSelectedplayers,
+  getHistoryplayers,
   createPlayers,
   getTotalscore,
   createPlayerstats,
-  getPlayerstats
+  getPlayerstats,
+  getRanking,
+  createSchedule,
+  getSchedule
 };

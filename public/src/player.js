@@ -124,8 +124,8 @@ fetch(`/api/1.0/player/recent_games${params}`, {
 signUp.addEventListener("click", function () {
   Swal.fire({
     title: "Sign Up",
-    html: `<input type="text" id="signup" "swal2-input" placeholder="Username">
-      <input type="password" id="password" "swal2-input" placeholder="Password">`,
+    html: `<input type="text" id="signup" class="swal2-input" placeholder="Username" maxlength="12">
+      <input type="password" id="password" class="swal2-input" placeholder="Password">`,
     confirmButtonText: "Sign Up",
     focusConfirm: false,
     preConfirm: () => {
@@ -155,12 +155,9 @@ signUp.addEventListener("click", function () {
       }).then((data) => {
         if (!data.error) {
           window.localStorage.setItem("access_token", data.data.access_token);
-          const confirm = document.querySelector(".swal2-confirm");
-          confirm.addEventListener("click", function () {
-            signIn.style.display = "none";
-            signUp.style.display = "none";
-            member.style.display = "inline-block";
-          });
+          signIn.style.display = "none";
+          signUp.style.display = "none";
+          member.style.display = "inline-block";
         } else {
           console.log(data);
         }
@@ -171,8 +168,8 @@ signUp.addEventListener("click", function () {
 signIn.addEventListener("click", function () {
   Swal.fire({
     title: "Sign In",
-    html: `<input type="text" id="signin" "swal2-input" placeholder="Username">
-      <input type="password" id="password" "swal2-input" placeholder="Password">`,
+    html: `<input type="text" id="signin" class="swal2-input" placeholder="Username" maxlength="12">
+    <input type="password" id="password" class="swal2-input" placeholder="Password">`,
     confirmButtonText: "Sign In",
     focusConfirm: false,
     preConfirm: () => {
@@ -202,12 +199,9 @@ signIn.addEventListener("click", function () {
       .then((data) => {
         if (!data.error) {
           window.localStorage.setItem("access_token", data.data.access_token);
-          const confirm = document.querySelector(".swal2-confirm");
-          confirm.addEventListener("click", function () {
-            signIn.style.display = "none";
-            signUp.style.display = "none";
-            member.style.display = "inline-block";
-          });
+          signIn.style.display = "none";
+          signUp.style.display = "none";
+          member.style.display = "inline-block";
         } else if (data.error === "Password is wrong") {
           Swal.fire("密碼有誤!".trim());
         } else {
@@ -237,6 +231,36 @@ fantasy.addEventListener("click", function () {
 
 const search = document.querySelector("#bar");
 const input = document.querySelector(".searchbar");
+
+$(".searchbar").on("keypress", function (e) {
+  if (e.key === "Enter" || e.keyCode === 13) {
+    fetch("/api/1.0/player/playername", {
+      method: "POST",
+      headers: new Headers({
+        "Content-Type": "application/json"
+      }),
+      body: JSON.stringify({ name: input.value })
+    })
+      .then(function (response) {
+        if (response.status === 200) {
+          return response.json();
+        } else {
+          console.log("error");
+        }
+      })
+      .then((data) => {
+        console.log(data);
+        if (data.length === 0) {
+          Swal.fire(
+            "No Players!",
+            "No Players Matched your selected filters"
+          );
+        } else {
+          location.href = `/player.html?playerid=${data[0].person_id}`;
+        }
+      });
+  }
+});
 
 search.addEventListener("click", function () {
   fetch("/api/1.0/player/playername", {

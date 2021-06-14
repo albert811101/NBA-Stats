@@ -4,13 +4,40 @@
   height: 100%;
 }
 
+.select-mode {
+  justify-content: flex-end;
+  display: flex;
+  margin-left: 140px;
+}
+
+#date {
+  display: none;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  margin-right: 10px;
+}
+
+.form-select {
+  font-weight: bold;
+  width: 110px;
+  height: 35px;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  background-color: #CAD3C5;
+  color: black;
+}
+
+option {
+  font-weight: bold;
+}
+
 .ranking {
-  margin-top: 50px;
   margin-bottom: 80px;
   text-align: center;
 }
 
 .panel {
+  margin: 0 auto;
   font-weight: 800;
   font-size: 15px;
   justify-content: center;
@@ -75,6 +102,10 @@
 .totalrank {
   display: flex;
   justify-content: center;
+}
+
+.rank {
+  margin-left: 3px;
 }
 
 .step {
@@ -156,10 +187,6 @@ th {
   text-align: center;
 }
 
-/* td:hover {
-  background-color :#C5FFFD;
-} */
-
 .user-selection {
   padding: 50px 0;
 }
@@ -201,7 +228,20 @@ th {
   margin: 0 10px;
 }
 
-.btn-primary {
+.submit {
+  display: none;
+  background-color: #CAD3C5;
+  color: black;
+}
+
+.reset {
+  display: none;
+  background-color: #CAD3C5;
+  color: black;
+}
+
+.get-score {
+  display: none;
   background-color: #CAD3C5;
   color: black;
 }
