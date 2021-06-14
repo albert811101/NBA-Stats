@@ -22,27 +22,27 @@
     <header class="header">
       <div class="leftbar">
         <a href="/fantasy.html" id="logo1">Fantasy</a>
-        <a href="/rules.html" div id="rules">Rules</a>
+        <!-- <a href="/rules.html" div id="rules">Rules</a> -->
       </div>
       <nav class="rightbar">
         <a href="/main.html" id="header-ranking" style="cursor: pointer">Ranking</a>
         <a href="/" id="home">Home</a>
-        <div class="member1" style="cursor: pointer">
+        <div class="fas fa-sign-out-alt icon member1" style="cursor: pointer">
           <img src="images/member.png" />
         </div>
       </nav>
     </header>
     <div class="container ranking">
       <div class="select-mode">
-        <input id="date" type="date" onchange="handler(event)"/>
+        <input id="date" type="date" onchange="clearAll(), handler(event)"/>
         <select
           class="form-select"
           id="mode"
-          onchange="mode()"
+          onchange="clearAll(), mode()" 
           aria-label="Default select example"
         >
           <option selected value="0">遊 戲 模 式</option>
-          <option value="1">虛 擬 模 式</option>
+          <option value="1">模 擬 模 式</option>
           <option value="2" onclick="official(event)">正 式 模 式</option>
         </select>
       </div>
@@ -92,66 +92,66 @@
           2.每個比賽日前一天選取的球員才會計算積分
         </div>
         <div class="panel-group">
-          <div class="panel panel-primary player">
+          <div class="panel panel-primary player" onclick="checkmode()">
             <div class="panel-body">
               <div class="position-name">球員位置 後衛</div>
-              <div class="playerName" alt="null"></div>
+              <div class="playerName" id="playerName1" alt="null"></div>
               <div
-                class="glyphicon glyphicon-plus-sign"
+                class="glyphicon glyphicon-plus-sign" id="plus-button1" onclick="appendData(0), showTodayteams(0)"
                 style="cursor: pointer"
               ></div>
             </div>
           </div>
-          <div class="teams" style="cursor: pointer"></div>
-          <div class="players"></div>
-          <div class="panel panel-primary player">
+          <div class="teams" id="teams1" style="cursor: pointer"></div>
+          <div class="players" id="players1"></div>
+          <div class="panel panel-primary player" onclick="checkmode()">
             <div class="panel-body">
               <div class="position-name">球員位置 後衛</div>
-              <div class="playerName" alt="null"></div>
+              <div class="playerName" id="playerName2" alt="null"></div>
               <div
-                class="glyphicon glyphicon-plus-sign"
+                class="glyphicon glyphicon-plus-sign" id="plus-button2" onclick="appendData(1), showTodayteams(1)"
                 style="cursor: pointer"
               ></div>
             </div>
           </div>
-          <div class="teams" style="cursor: pointer"></div>
-          <div class="players"></div>
-          <div class="panel panel-primary player">
+          <div class="teams" id="teams2" style="cursor: pointer"></div>
+          <div class="players" id="players2"></div>
+          <div class="panel panel-primary player" onclick="checkmode()">
             <div class="panel-body">
               <div class="position-name">球員位置 前鋒</div>
-              <div class="playerName" alt="null"></div>
+              <div class="playerName" id="playerName3" alt="null"></div>
               <div
-                class="glyphicon glyphicon-plus-sign"
+                class="glyphicon glyphicon-plus-sign" id="plus-button3" onclick="appendData(2), showTodayteams(2)"
                 style="cursor: pointer"
               ></div>
             </div>
           </div>
-          <div class="teams" style="cursor: pointer"></div>
-          <div class="players"></div>
-          <div class="panel panel-primary player">
+          <div class="teams" id="teams3" style="cursor: pointer"></div>
+          <div class="players" id="players3"></div>
+          <div class="panel panel-primary player" onclick="checkmode()">
             <div class="panel-body">
               <div class="position-name">球員位置 前鋒</div>
-              <div class="playerName" alt="null"></div>
+              <div class="playerName" id="playerName4" alt="null"></div>
               <div
-                class="glyphicon glyphicon-plus-sign"
+                class="glyphicon glyphicon-plus-sign" id="plus-button4" onclick="appendData(3), showTodayteams(3)"
                 style="cursor: pointer"
               ></div>
             </div>
           </div>
-          <div class="teams" style="cursor: pointer"></div>
-          <div class="players"></div>
-          <div class="panel panel-primary player">
+          <div class="teams" id="teams4" style="cursor: pointer"></div>
+          <div class="players" id="players4"></div>
+          <div class="panel panel-primary player" onclick="checkmode()">
             <div class="panel-body">
               <div class="position-name">球員位置 中鋒</div>
-              <div class="playerName" alt="null"></div>
+              <div class="playerName" id="playerName5" alt="null"></div>
               <div
-                class="glyphicon glyphicon-plus-sign"
+                class="glyphicon glyphicon-plus-sign" id="plus-button5" onclick="appendData(4), showTodayteams(4)"
                 style="cursor: pointer"
               ></div>
             </div>
           </div>
-          <div class="teams" style="cursor: pointer"></div>
-          <div class="players"></div>
+          <div class="teams" id="teams5" style="cursor: pointer"></div>
+          <div class="players" id="players5"></div>
         </div>
       </div>
       <button type="button" class="btn btn-primary submit">Submit</button>

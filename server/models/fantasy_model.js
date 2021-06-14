@@ -54,7 +54,7 @@ const createPlayers = async (todayBoxscore) => { // 這裡的playerBox是要接�
     for (let i = 0; i < todayBoxscore.length; i++) {
       arr.push(todayBoxscore[i][3]);
     };
-    // console.log(arr);
+    console.log(arr);
 
     // const gameId = await pool.query("SELECT game_id FROM player_boxscore");
     // console.log(gameId[0]);
@@ -68,7 +68,7 @@ const createPlayers = async (todayBoxscore) => { // 這裡的playerBox是要接�
     // }
     // console.log(todayBoxscore);
     // const result = await pool.query("INSERT INTO player_boxscore (player_id, player_name, team_id, game_id, game_date, matchup, winlose, min, pts, fgm, fga, fg_pct, fg3m, fg3a, fg3_pct, ftm, fta, ft_pct, oreb, dreb, reb, ast, stl, blk, tov, pf, plus_minus, season_type) VALUES ?", [todayBoxscore]);
-    // console.log("當日box數據都進去啦");
+    // console.log("季後賽box數據都進去啦");
     // console.log(result[0]);
 
     const dateYesterday = moment().tz("Asia/Taipei").subtract(1, "day").format();
@@ -81,7 +81,7 @@ const createPlayers = async (todayBoxscore) => { // 這裡的playerBox是要接�
       score.push(result2[0][i].pts + result2[0][i].fg3m * 2 + result2[0][i].reb * 1.2 + result2[0][i].ast * 1.5 + result2[0][i].stl * 3 + result2[0][i].blk * 3 - result2[0][i].tov);
       totalScore = totalScore + score[i];
     };
-    // console.log(result2[0], 147);
+    console.log(result2[0], 147);
     const userScore = {};
     for (const playerScore of result2[0]) {
       // console.log(playerScore);
