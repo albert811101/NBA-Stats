@@ -696,7 +696,7 @@ fetch("/api/1.0/fantasy/ranking", {
   .then((data) => {
     console.log(data);
     const rank = document.querySelector(".rank");
-    if (data.rank) {
+    if (data[0].rank) {
       rank.innerHTML = data[0].rank;
     } else {
       rank.innerHTML = 0;
