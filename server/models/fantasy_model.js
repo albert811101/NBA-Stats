@@ -68,7 +68,7 @@ const createPlayers = async (todayBoxscore) => { // 這裡的playerBox是要接�
     // }
     // console.log(todayBoxscore);
     // const result = await pool.query("INSERT INTO player_boxscore (player_id, player_name, team_id, game_id, game_date, matchup, winlose, min, pts, fgm, fga, fg_pct, fg3m, fg3a, fg3_pct, ftm, fta, ft_pct, oreb, dreb, reb, ast, stl, blk, tov, pf, plus_minus, season_type) VALUES ?", [todayBoxscore]);
-    // console.log("季後賽box數據都進去啦");
+    // console.log("當日box數據都進去啦");
     // console.log(result[0]);
 
     const dateYesterday = moment().tz("Asia/Taipei").subtract(1, "day").format();
