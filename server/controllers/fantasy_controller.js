@@ -116,7 +116,6 @@ const fetchAllplayerstats = async (req, res) => {
 
 const fetchPlayerstats = async (req, res) => {
   const result2 = await playerinfo.getPlayerstats();
-  // console.log(result2[0][0].player_id);
   const playerstats = {};
   for (const item of result2[0]) {
     playerstats[item.player_id] = {
@@ -128,7 +127,8 @@ const fetchPlayerstats = async (req, res) => {
       ast: item.ast,
       stl: item.stl,
       blk: item.blk,
-      tov: item.tov
+      tov: item.tov,
+      season_type: item.season_type
     };
   }
 
@@ -254,7 +254,7 @@ const fetchBoxscore = async (req, res) => {
 
 const getTotalscore = async (req, res) => {
   const result = await playerinfo.getTotalscore(req.user.name);
-  console.log(result);
+  // console.log(result);
   res.status(200).send({ data: result });
 };
 
@@ -266,6 +266,7 @@ const getRanking = async (req, res) => {
 const createPlayerstats = async (req, res) => {
   const url =
   "https://stats.nba.com/stats/leaguedashplayerstats?College=&Conference=&Country=&DateFrom=&DateTo=&Division=&DraftPick=&DraftYear=&GameScope=&GameSegment=&Height=&LastNGames=0&LeagueID=00&Location=&MeasureType=Base&Month=0&OpponentTeamID=0&Outcome=&PORound=0&PaceAdjust=N&PerMode=PerGame&Period=0&PlayerExperience=&PlayerPosition=&PlusMinus=N&Rank=N&Season=2020-21&SeasonSegment=&SeasonType=Playoffs&ShotClockRange=&StarterBench=&TeamID=0&TwoWay=0&VsConference=&VsDivision=&Weight=";
+  // "https://stats.nba.com/stats/leaguedashplayerstats?College=&Conference=&Country=&DateFrom=&DateTo=&Division=&DraftPick=&DraftYear=&GameScope=&GameSegment=&Height=&LastNGames=0&LeagueID=00&Location=&MeasureType=Base&Month=0&OpponentTeamID=0&Outcome=&PORound=0&PaceAdjust=N&PerMode=PerGame&Period=0&PlayerExperience=&PlayerPosition=&PlusMinus=N&Rank=N&Season=2020-21&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&StarterBench=&TeamID=0&TwoWay=0&VsConference=&VsDivision=&Weight=";
   const result = await axios.get(url, {
     headers: {
       Referer: "https://www.nba.com/"
@@ -295,7 +296,8 @@ const createPlayerstats = async (req, res) => {
     item[playerStatMap.AST],
     item[playerStatMap.STL],
     item[playerStatMap.BLK],
-    item[playerStatMap.TOV]
+    item[playerStatMap.TOV],
+    "playoff" 
   ]);
 
   await playerinfo.createPlayerstats(playerStats);

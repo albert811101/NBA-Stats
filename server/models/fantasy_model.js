@@ -122,15 +122,15 @@ const getTotalscore = async (name) => {
     score.push(result[0][i].pts + result[0][i].fg3m * 2 + result[0][i].reb * 1.2 + result[0][i].ast * 1.5 + result[0][i].stl * 3 + result[0][i].blk * 3 - result[0][i].tov);
     totalScore = totalScore + score[i];
   };
-  console.log(score);
-  console.log(totalScore);
+  // console.log(score);
+  // console.log(totalScore);
   return (totalScore);
 };
 
 const createPlayerstats = async (playerStats) => {
   const conn = await pool.getConnection();
   try {
-    // await conn.query("INSERT INTO player_stats (player_id, player_name, team_id, pts, fg3m, reb, ast, stl, blk, tov) VALUES ?", [playerStats]);
+    // await conn.query("INSERT INTO player_stats (player_id, player_name, team_id, pts, fg3m, reb, ast, stl, blk, tov, season_type) VALUES ?", [playerStats]);
     // console.log("球員平均數據都進去囉");
   } catch (error) {
     await conn.query("ROLLBACK");
@@ -141,7 +141,7 @@ const createPlayerstats = async (playerStats) => {
 const getPlayerstats = async () => {
   const conn = await pool.getConnection();
   try {
-    const result = await conn.query("SELECT * FROM player_stats");
+    const result = await conn.query("SELECT * FROM player_stats ");
     // console.log("抓出球員數據囉");
     return result;
   } catch (error) {

@@ -1,6 +1,4 @@
-// const fs = require("fs");
 const axios = require("axios");
-// const request = require("request");
 // const cheerio = require("cheerio");
 const player = require("../models/player_model");
 

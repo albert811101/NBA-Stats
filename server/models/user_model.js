@@ -1,8 +1,6 @@
 require("dotenv").config();
-// const bcrypt = require("bcrypt");
 const { createHash } = require("crypto");
 const { pool } = require("./mysqlcon");
-// const salt = parseInt(process.env.BCRYPT_SALT);
 const { TOKEN_EXPIRE, TOKEN_SECRET } = process.env; // 30 days by seconds
 const jwt = require("jsonwebtoken");
 

@@ -3,6 +3,10 @@ if (!localStorage.access_token) {
   location.href = "/";
 }
 
+const showTeams = document.querySelectorAll(".glyphicon-plus-sign");
+const teamsLogo = document.querySelectorAll(".teams");
+const teamPlayers = document.querySelectorAll(".players");
+
 function clearAll () {
   const teams1 = document.querySelector("#teams1");
   const teams2 = document.querySelector("#teams2");
@@ -19,6 +23,11 @@ function clearAll () {
   const playerName3 = document.querySelector("#playerName3");
   const playerName4 = document.querySelector("#playerName4");
   const playerName5 = document.querySelector("#playerName5");
+  const plusButton1 = document.querySelector("#plus-button1");
+  const plusButton2 = document.querySelector("#plus-button2");
+  const plusButton3 = document.querySelector("#plus-button3");
+  const plusButton4 = document.querySelector("#plus-button4");
+  const plusButton5 = document.querySelector("#plus-button5");
   teams1.innerHTML = "";
   teams2.innerHTML = "";
   teams3.innerHTML = "";
@@ -34,27 +43,23 @@ function clearAll () {
   playerName3.innerHTML = "";
   playerName4.innerHTML = "";
   playerName5.innerHTML = "";
-
-  // if (targetElement.classList.contains("reset")) {
-  //   playerSet.clear();
-  //   console.log(playerSet, 123456);
-  //   for (let i = 0; i < playerName.length; i++) {
-  //     playerName[i].innerHTML = "";
-  //     playerName[i].setAttribute("alt", "null");
-  //   }
-  // }
+  plusButton1.classList.remove("glyphicon-minus-sign");
+  plusButton1.classList.add("glyphicon-plus-sign");
+  plusButton2.classList.remove("glyphicon-minus-sign");
+  plusButton2.classList.add("glyphicon-plus-sign");
+  plusButton3.classList.remove("glyphicon-minus-sign");
+  plusButton3.classList.add("glyphicon-plus-sign");
+  plusButton4.classList.remove("glyphicon-minus-sign");
+  plusButton4.classList.add("glyphicon-plus-sign");
+  plusButton5.classList.remove("glyphicon-minus-sign");
+  plusButton5.classList.add("glyphicon-plus-sign");
 }
-
-const showTeams = document.querySelectorAll(".glyphicon-plus-sign");
-const teamsLogo = document.querySelectorAll(".teams");
-const teamPlayers = document.querySelectorAll(".players");
 
 let todayData;
 
 function showTodayteams (i) {
   const mode = document.querySelector("#mode");
-  if (mode.value == 2) {
-    showTeams[i].addEventListener("click", function () {
+  if (mode.value == 2) { 
       if (showTeams[i].classList.contains("glyphicon-plus-sign")) {
         closeOtherbuttons(i);
         showTeams[i].classList.remove("glyphicon-plus-sign");
@@ -78,7 +83,6 @@ function showTodayteams (i) {
           teamPlayers[i].innerHTML = "";
         }
       }
-    });
   }
 }
 
@@ -86,30 +90,37 @@ let retrieveData;
 
 function appendData (i) {
   const mode = document.querySelector("#mode");
-  if (mode.value == 1) {
-    if (showTeams[i].classList.contains("glyphicon-plus-sign")) {
-      closeOtherbuttons(i);
-      showTeams[i].classList.remove("glyphicon-plus-sign");
-      showTeams[i].classList.add("glyphicon-minus-sign");
-      for (let j = 0; j < retrieveData.length; j++) {
-        const image = document.createElement("img");
-        image.setAttribute(
-          "src",
-                  `https://cdn.nba.com/logos/nba/${retrieveData[j]}/global/D/logo.svg`
-        );
-        image.setAttribute("class", "teamLogo");
-        image.setAttribute("alt", `${i}`);
-        teamsLogo[i].appendChild(image);
+  if (mode.value == 1) {  //模擬
+    if (retrieveData !== undefined) {
+      if (showTeams[i].classList.contains("glyphicon-plus-sign")) {
+        closeOtherbuttons(i);
+        showTeams[i].classList.remove("glyphicon-plus-sign");
+        showTeams[i].classList.add("glyphicon-minus-sign");
+        for (let j = 0; j < retrieveData.length; j++) {
+          const image = document.createElement("img");
+          image.setAttribute(
+            "src",
+                    `https://cdn.nba.com/logos/nba/${retrieveData[j]}/global/D/logo.svg`
+          );
+          image.setAttribute("class", "teamLogo");
+          image.setAttribute("alt", `${i}`);
+          teamsLogo[i].appendChild(image);
+        }
+      } else {
+        showTeams[i].classList.remove("glyphicon-minus-sign");
+        showTeams[i].classList.add("glyphicon-plus-sign");
+        for (let j = 0; j < retrieveData.length; j++) {
+          const image = document.querySelector(".teamLogo");
+          teamsLogo[i].removeChild(image);
+          teamPlayers[i].innerHTML = "";
+        }
       }
     } else {
-      showTeams[i].classList.remove("glyphicon-minus-sign");
-      showTeams[i].classList.add("glyphicon-plus-sign");
-      for (let j = 0; j < retrieveData.length; j++) {
-        const image = document.querySelector(".teamLogo");
-        teamsLogo[i].removeChild(image);
-        teamPlayers[i].innerHTML = "";
-      }
+      Swal.fire(
+        "請先選擇日期！"
+      );
     }
+
   }
 }
 
@@ -130,12 +141,20 @@ function mode () {
   //     }
   //   });
   // };
-  // eslint-disable-next-line eqeqeq
-  if (mode.value == 1) {
+  if (mode.value == 0) {
+    if (selectedPlayers !== undefined) {
+      selectedPlayers.clear();
+    } 
+  }else if (mode.value == 1) {
     date.style.display = "flex";
     getScore.style.display = "inline-block";
     submit.style.display = "none";
     reset.style.display = "none";
+    if (selectedPlayers !== undefined) {
+      console.log(selectedPlayers)
+      selectedPlayers.clear();
+      console.log(selectedPlayers)
+    } 
     // for (let i = 0; i <= 4; i++) {
     //   const teamsLogo = document.querySelectorAll(".teams");
     //   teamsLogo[i].innerHTML = "";
@@ -149,9 +168,13 @@ function mode () {
     // }
 
   // eslint-disable-next-line eqeqeq
-  } else if (mode.value == 2) {
+  } else if (mode.value == 2) {  //official mode
+    if (selectedPlayers !== undefined) {
+      console.log(selectedPlayers)
+      selectedPlayers.clear();
+      console.log(selectedPlayers)
+    } 
     const date = document.querySelector("#date");
-    console.log(date.value);
     date.style.display = "none";
     getScore.style.display = "none";
     submit.style.display = "inline-block";
@@ -173,37 +196,37 @@ function mode () {
         }
         todayData = teamsId;
 
-        const showTeams = document.querySelectorAll(".glyphicon-plus-sign"); // 5
-        const teamsLogo = document.querySelectorAll(".teams"); // 5
-        const teamPlayers = document.querySelectorAll(".players"); // 5
+        // const showTeams = document.querySelectorAll(".glyphicon-plus-sign"); // 5
+        // const teamsLogo = document.querySelectorAll(".teams"); // 5
+        // const teamPlayers = document.querySelectorAll(".players"); // 5
 
-        for (let i = 0; i < showTeams.length; i++) {
-          showTeams[i].addEventListener("click", function () {
-            if (showTeams[i].classList.contains("glyphicon-plus-sign")) {
-              closeOtherbuttons(i);
-              showTeams[i].classList.remove("glyphicon-plus-sign");
-              showTeams[i].classList.add("glyphicon-minus-sign");
-              for (let j = 0; j < todayData.length; j++) {
-                const image = document.createElement("img");
-                image.setAttribute(
-                  "src",
-              `https://cdn.nba.com/logos/nba/${todayData[j]}/global/D/logo.svg`
-                );
-                image.setAttribute("class", "teamLogo");
-                image.setAttribute("alt", `${i}`);
-                teamsLogo[i].appendChild(image);
-              }
-            } else {
-              showTeams[i].classList.remove("glyphicon-minus-sign");
-              showTeams[i].classList.add("glyphicon-plus-sign");
-              for (let j = 0; j < todayData.length; j++) {
-                const image = document.querySelector(".teamLogo");
-                teamsLogo[i].removeChild(image);
-                teamPlayers[i].innerHTML = "";
-              }
-            }
-          });
-        }
+        // for (let i = 0; i < showTeams.length; i++) {
+        //   showTeams[i].addEventListener("click", function () {
+        //     if (showTeams[i].classList.contains("glyphicon-plus-sign")) {
+        //       closeOtherbuttons(i);
+        //       showTeams[i].classList.remove("glyphicon-plus-sign");
+        //       showTeams[i].classList.add("glyphicon-minus-sign");
+        //       for (let j = 0; j < todayData.length; j++) {
+        //         const image = document.createElement("img");
+        //         image.setAttribute(
+        //           "src",
+        //       `https://cdn.nba.com/logos/nba/${todayData[j]}/global/D/logo.svg`
+        //         );
+        //         image.setAttribute("class", "teamLogo");
+        //         image.setAttribute("alt", `${i}`);
+        //         teamsLogo[i].appendChild(image);
+        //       }
+        //     } else {
+        //       showTeams[i].classList.remove("glyphicon-minus-sign");
+        //       showTeams[i].classList.add("glyphicon-plus-sign");
+        //       for (let j = 0; j < todayData.length; j++) {
+        //         const image = document.querySelector(".teamLogo");
+        //         teamsLogo[i].removeChild(image);
+        //         teamPlayers[i].innerHTML = "";
+        //       }
+        //     }
+        //   });
+        // }
       }
     };
     xhr.open("get", "api/1.0/fantasy/schedule");
@@ -233,27 +256,6 @@ function checkmode () {
   }
 }
 
-function initSelect (json) {
-  const showTeams = document.querySelectorAll(".glyphicon-plus-sign");
-  const teamsLogo = document.querySelectorAll(".teams");
-  const teamPlayers = document.querySelectorAll(".players");
-  for (let i = 0; i < showTeams.length; i++) {
-    if (showTeams[i].classList.contains("glyphicon-plus-sign")) {
-      // closeOtherbuttons(i);
-      // showTeams[i].classList.remove("glyphicon-plus-sign");
-      // showTeams[i].classList.add("glyphicon-minus-sign");
-    } else {
-      showTeams[i].classList.remove("glyphicon-minus-sign");
-      showTeams[i].classList.add("glyphicon-plus-sign");
-      for (let j = 0; j < json.data.length; j++) {
-        const image = document.querySelector(".teamLogo");
-        teamsLogo[i].removeChild(image);
-        teamPlayers[i].innerHTML = "";
-      }
-    }
-  }
-};
-
 // eslint-disable-next-line no-unused-vars
 async function handler (e) {
   const selectedDate = e.target.value.replace(/-/g, "");
@@ -274,89 +276,9 @@ async function handler (e) {
     );
   } else {
     retrieveData = json.data;
-    // initSelect(json);
-
-    // const plusButton1 = document.querySelector("#plus-button1");
-    // const plusButton2 = document.querySelector("#plus-button2");
-    // const plusButton3 = document.querySelector("#plus-button3");
-    // const plusButton4 = document.querySelector("#plus-button4");
-    // const plusButton5 = document.querySelector("#plus-button5");
-    // plusButton1.addEventListener("click", appendData(0), false);
-    // plusButton2.addEventListener("click", appendData(1), false);
-    // plusButton3.addEventListener("click", appendData(2), false);
-    // plusButton4.addEventListener("click", appendData(3), false);
-    // plusButton5.addEventListener("click", appendData(4), false);
-    // const showTeams = document.querySelectorAll(".glyphicon-plus-sign");
-    // const teamsLogo = document.querySelectorAll(".teams");
-    // const teamPlayers = document.querySelectorAll(".players");
-    // function appendData (i) {
-    //   console.log("dkoqwkdpqwkqwpd");
-    //   console.log(showTeams[i].classList[1]);
-    //   console.log(showTeams[i].classList.contains("glyphicon-plus-sign"));
-    //   console.log(teamsLogo);
-    //   if (showTeams[i].classList.contains("glyphicon-plus-sign")) {
-    //     console.log(123);
-    //     console.log(showTeams[i].classList, "www");
-    //     closeOtherbuttons(i);
-    //     showTeams[i].classList.remove("glyphicon-plus-sign");
-    //     showTeams[i].classList.add("glyphicon-minus-sign");
-    //     console.log(showTeams[i].classList, "ddwqq");
-    //     for (let j = 0; j < retrieveData.length; j++) {
-    //       const image = document.createElement("img");
-    //       image.setAttribute(
-    //         "src",
-    //               `https://cdn.nba.com/logos/nba/${retrieveData[j]}/global/D/logo.svg`
-    //       );
-    //       image.setAttribute("class", "teamLogo");
-    //       image.setAttribute("alt", `${i}`);
-    //       teamsLogo[i].appendChild(image);
-    //     }
-    //   } else {
-    //     console.log(showTeams[i].classList, "lplp");
-    //     showTeams[i].classList.remove("glyphicon-minus-sign");
-    //     showTeams[i].classList.add("glyphicon-plus-sign");
-    //     for (let j = 0; j < retrieveData.length; j++) {
-    //       const image = document.querySelector(".teamLogo");
-    //       teamsLogo[i].removeChild(image);
-    //       teamPlayers[i].innerHTML = "";
-    //     }
-    //   }
-    // }
-    // for (let i = 0; i < showTeams.length; i++) {
-    //   showTeams[i].addEventListener("click", function () {
-    //     console.log("dkoqwkdpqwkqwpd");
-    //     console.log(showTeams[i].classList[1]);
-    //     console.log(showTeams[i].classList.contains("glyphicon-plus-sign"));
-    //     console.log(teamsLogo);
-    //     if (showTeams[i].classList.contains("glyphicon-plus-sign")) {
-    //       console.log(123);
-    //       console.log(showTeams[i].classList, "www");
-    //       closeOtherbuttons(i);
-    //       showTeams[i].classList.remove("glyphicon-plus-sign");
-    //       showTeams[i].classList.add("glyphicon-minus-sign");
-    //       console.log(showTeams[i].classList, "ddwqq");
-    //       for (let j = 0; j < json.data.length; j++) {
-    //         const image = document.createElement("img");
-    //         image.setAttribute(
-    //           "src",
-    //           `https://cdn.nba.com/logos/nba/${json.data[j]}/global/D/logo.svg`
-    //         );
-    //         image.setAttribute("class", "teamLogo");
-    //         image.setAttribute("alt", `${i}`);
-    //         teamsLogo[i].appendChild(image);
-    //       }
-    //     } else {
-    //       console.log(showTeams[i].classList, "lplp");
-    //       showTeams[i].classList.remove("glyphicon-minus-sign");
-    //       showTeams[i].classList.add("glyphicon-plus-sign");
-    //       for (let j = 0; j < json.data.length; j++) {
-    //         const image = document.querySelector(".teamLogo");
-    //         teamsLogo[i].removeChild(image);
-    //         teamPlayers[i].innerHTML = "";
-    //       }
-    //     }
-    //   });
-    // }
+    if (selectedPlayers !== undefined) {
+      selectedPlayers.clear();
+    }
   }
 };
 
@@ -399,7 +321,7 @@ fetch("/api/1.0/fantasy/playerstats", {
       const targetElement = event.target;
       const playerName = document.querySelectorAll(".playerName");
       const playerId = event.path[1].childNodes[1].dataset.player;
-      if (targetElement.classList.contains("reset") || targetElement.classList.contains("reset-mode")) {
+      if (targetElement.classList.contains("reset")) {
         playerSet.clear();
         for (let i = 0; i < playerName.length; i++) {
           playerName[i].innerHTML = "";
@@ -659,25 +581,25 @@ getScore.addEventListener("click", function () {
   }
 });
 
-fetch("/api/1.0/fantasy/total_score", {
-  method: "GET",
-  headers: new Headers({
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${window.localStorage.getItem("access_token")}`
-  })
-})
-  .then(function (response) {
-    if (response.status === 200) {
-      return response.json();
-    } else {
-      console.log("error");
-    }
-  })
-  .then((data) => {
-    console.log(data);
-    const score = document.querySelector(".score");
-    score.innerHTML = Math.round(data.data);
-  });
+// fetch("/api/1.0/fantasy/total_score", {
+//   method: "GET",
+//   headers: new Headers({
+//     "Content-Type": "application/json",
+//     Authorization: `Bearer ${window.localStorage.getItem("access_token")}`
+//   })
+// })
+//   .then(function (response) {
+//     if (response.status === 200) {
+//       return response.json();
+//     } else {
+//       console.log("error");
+//     }
+//   })
+//   .then((data) => {
+//     console.log(data);
+//     const score = document.querySelector(".score");
+//     score.innerHTML = Math.round(data.data);
+//   });
 
 fetch("/api/1.0/fantasy/ranking", {
   method: "GET",
@@ -696,9 +618,15 @@ fetch("/api/1.0/fantasy/ranking", {
   .then((data) => {
     console.log(data);
     const rank = document.querySelector(".rank");
-    if (data[0].rank) {
+    const score = document.querySelector(".score");
+    if (data.length === 0) {
+      score.innerHTML = 0;
+      rank.innerHTML = 0;
+    } else if (data[0].total_score && data[0].rank) {
+      score.innerHTML = Math.round(data[0].total_score);
       rank.innerHTML = data[0].rank;
     } else {
+      score.innerHTML = 0;
       rank.innerHTML = 0;
     }
   });
