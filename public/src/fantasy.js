@@ -153,9 +153,7 @@ function mode () {
     submit.style.display = "none";
     reset.style.display = "none";
     if (selectedPlayers !== undefined) {
-      console.log(selectedPlayers);
       selectedPlayers.clear();
-      console.log(selectedPlayers);
     }
   // eslint-disable-next-line eqeqeq
   } else if (mode.value == 2) { // official mode
@@ -223,7 +221,6 @@ function checkmode () {
 // eslint-disable-next-line no-unused-vars
 async function handler (e) {
   const selectedDate = e.target.value.replace(/-/g, "");
-  console.log(selectedDate);
   const response = await fetch("/api/1.0/fantasy/history_schedule", {
     method: "POST",
     headers: new Headers({
