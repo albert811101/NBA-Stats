@@ -1,17 +1,18 @@
-const fantasyMain = require("../models/main_model");
+const fantasyRanking = require("../models/main_model");
 
 const getRanking = async (req, res) => {
-  const result = await fantasyMain.getRanking();
-  res.status(200).send(result);
+  const result = await fantasyRanking.getRanking();
+  const ranking = result.slice(0, 10);
+  res.status(200).send(ranking);
 };
 
-const getTopplayers = async (req, res) => {
-  const result = await fantasyMain.getTopplayers();
-  const result2 = result.slice(0, 10);
-  res.status(200).send(result2);
+const getTopPlayers = async (req, res) => {
+  const result = await fantasyRanking.getTopPlayers();
+  const topPlayers = result.slice(0, 10);
+  res.status(200).send(topPlayers);
 };
 
 module.exports = {
   getRanking,
-  getTopplayers
+  getTopPlayers
 };

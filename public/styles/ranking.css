@@ -1,0 +1,91 @@
+.body {
+  background-color: rgb(237, 238, 240);
+  position: relative;
+  height: 100%;
+  }
+
+.container1 {
+  width: 450px;
+}
+
+.main-box {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.main-top {
+  box-shadow: 5px 5px 25px 0px rgba(0,0,0,0.3);
+  border-radius: 12px;
+  margin-top: 100px;
+  margin-bottom: 200px;
+  text-align: center;
+  height: 1100px;
+}
+
+.main-rank {
+  box-shadow: 5px 5px 25px 0px rgba(0,0,0,0.3);
+  border-radius: 12px;
+  margin-top: 100px;
+  margin-bottom: 200px;
+  text-align: center;
+  height: 1100px;
+}
+
+.top-players {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.top-ranking {
+  margin-top: 30px;
+  text-align: center;
+}
+
+#players-list {
+  text-align: center;
+  margin-bottom: 230px;
+}
+
+.box {
+  font-family: "Lucida Sans", "trebuchet MS", Arial, Helvetica;
+  font-weight: bolder;
+  font-size: 20px;
+}
+
+.panel-body {
+  height: 51px;
+}
+
+th {
+  text-align: center;
+}
+
+td {
+  width: 100px;
+}
+
+tr {
+  height: 80px;
+}
+
+.player {
+  width: 200px;
+  font-weight: bold;
+}
+
+.photo {
+  width: 90px;
+  height: 70px;
+  margin-top: 20px;
+}
+
+.rank {
+  font-size: 15px;
+  font-weight: bold;
+  color: #B23A48;
+}
+
+.name {
+  font-weight: bold;
+}
+

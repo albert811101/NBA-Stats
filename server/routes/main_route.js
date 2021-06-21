@@ -6,13 +6,13 @@ const {
 
 const {
   getRanking,
-  getTopplayers
+  getTopPlayers
 } = require("../controllers/main_controller");
 
 router.route("/fantasy/rank")
   .get(authentication(), getRanking);
 
 router.route("/fantasy/top_players")
-  .get(authentication(), getTopplayers);
+  .get(authentication(), getTopPlayers);
 
 module.exports = router;

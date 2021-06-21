@@ -15,27 +15,30 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="./styles/header.css" rel="stylesheet" />
-    <link href="./styles/main.css" rel="stylesheet" />
+    <link href="./styles/ranking.css" rel="stylesheet" />
     <link href="./styles/footer.css" rel="stylesheet" />
   </head>
   <body class="body">
     <header class="header">
-      <div class="leftbar">
-        <a href="/fantasy.html" id="logo1">Fantasy</a>
-        <!-- <a href="/rules.html" div id="rules">Rules</a> -->
-      </div>
-      <nav class="rightbar">
-        <a href="/main.html" id="header-ranking" style="cursor: pointer">Ranking</a>
-        <a href="/" id="home">Home</a>
-        <div class="member1" style="cursor: pointer">
-          <img src="images/member.png" />
+        <div class="leftbar">
+          <a href="/fantasy.html" id="logo1">Fantasy</a>
+          <div id="header-r">
+            <a href="/ranking.html" id="header-ranking2" style="cursor: pointer"
+              >Ranking</a
+            >
+          </div>
         </div>
-      </nav>
-    </header>
+        <nav class="rightbar">
+          <a href="/" id="home">Home</a>
+          <div class="member1" style="cursor: pointer">
+            <img src="images/member.png" />
+          </div>
+        </nav>
+      </header>
     <div class="main-box">
-      <div class="main-top">
-        <div class="container top-players">
-          <div class="panel panel-primary">
+      <div class="container1 main-top">
+        <div class="top-players">
+          <div class="box">
             <div class="panel-body">TOP PLAYERS</div>
           </div>
         </div>
@@ -53,9 +56,9 @@
           </table>
         </div>
       </div>
-      <div class="main-rank">
-        <div class="container top-ranking">
-          <div class="panel panel-primary">
+      <div class="container1 main-rank">
+        <div class="top-ranking">
+          <div class="box">
             <div class="panel-body">TOTAL RANKING</div>
           </div>
           <div class="col-3 players-list">

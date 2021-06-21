@@ -1,33 +1,33 @@
 const router = require("express").Router();
 const {
-  getPlayerbio,
-  fetchPlayerstats,
-  fetchPlayerbio,
-  createPlayerbio,
-  getRecentgames,
-  getPlayername,
-  fetchStatsleader
+  getPlayerBio,
+  fetchPlayerStats,
+  fetchPlayerBio,
+  createPlayerBio,
+  getRecentGames,
+  getPlayerName,
+  fetchStatslLeader
 } = require("../controllers/player_controller");
 
 router.route("/player/player_averagestats")
-  .get(fetchPlayerstats);
+  .get(fetchPlayerStats);
 
 router.route("/player/fetchPlayerbio")
-  .get(fetchPlayerbio);
+  .get(fetchPlayerBio);
 
 router.route("/player/statsleader")
-  .get(fetchStatsleader);
+  .get(fetchStatslLeader);
 
-router.route("/player/createPlayerbio")
-  .get(createPlayerbio);
+router.route("/player/create_player_bio")
+  .get(createPlayerBio);
 
 router.route("/player/playerbio")
-  .get(getPlayerbio);
+  .get(getPlayerBio);
 
 router.route("/player/recent_games")
-  .get(getRecentgames);
+  .get(getRecentGames);
 
 router.route("/player/playername")
-  .post(getPlayername);
+  .post(getPlayerName);
 
 module.exports = router;

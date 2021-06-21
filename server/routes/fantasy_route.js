@@ -5,50 +5,46 @@ const {
 } = require("../../util/util");
 
 const {
-  fetchschedule,
+  fetchSchedule,
   getSchedule,
-  fetchAllplayerstats,
   fetchBoxscore,
-  getTotalscore,
+  getTotalScore,
   getRanking,
-  getSelectedplayers,
-  getHistoryplayers,
+  getSelectedPlayers,
+  getHistoryPlayers,
   getUserProfile,
-  fetchPlayerstats,
-  createPlayerstats
+  fetchPlayerStats,
+  createPlayerStats
 } = require("../controllers/fantasy_controller");
 
 router.route("/fantasy/schedule")
-  .get(fetchschedule);
+  .get(fetchSchedule);
 
 router.route("/fantasy/history_schedule")
   .post(authentication(), getSchedule);
-
-router.route("/fantasy/allplayerstats")
-  .get(fetchAllplayerstats);
 
 router.route("/fantasy/box_score")
   .get(fetchBoxscore);
 
 router.route("/fantasy/total_score")
-  .get(authentication(), getTotalscore);
+  .get(authentication(), getTotalScore);
 
 router.route("/fantasy/ranking")
   .get(authentication(), getRanking);
 
 router.route("/fantasy/selected_players")
-  .post(authentication(), getSelectedplayers);
+  .post(authentication(), getSelectedPlayers);
 
 router.route("/fantasy/history_players")
-  .post(authentication(), getHistoryplayers);
+  .post(authentication(), getHistoryPlayers);
 
 router.route("/user/profile")
   .get(authentication(), getUserProfile);
 
 router.route("/fantasy/playerstats")
-  .get(fetchPlayerstats);
+  .get(fetchPlayerStats);
 
 router.route("/fantasy/create_playerstats")
-  .get(createPlayerstats);
+  .get(createPlayerStats);
 
 module.exports = router;

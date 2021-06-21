@@ -1,9 +1,5 @@
 const router = require("express").Router();
 
-// const {
-//   authentication
-// } = require("../../util/util");
-
 const {
   signUp,
   signIn

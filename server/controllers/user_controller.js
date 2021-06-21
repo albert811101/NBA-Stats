@@ -1,12 +1,25 @@
 require("dotenv").config();
+const validator = require("validator");
 const User = require("../models/user_model");
 
 const signUp = async (req, res) => {
-  const { name } = req.body;
+  let { name } = req.body;
   const { password } = req.body;
 
   if (!name || !password) {
     res.status(400).send({ error: "Request Error: name and password are required." });
+    return;
+  }
+
+  name = validator.escape(name);
+
+  if (name.length > 12) {
+    res.status(400).send({ error: "The number of name is limited to 12." });
+    return;
+  }
+
+  if (password.length > 20) {
+    res.status(400).send({ error: "The number of password is limited to 20." });
     return;
   }
 
@@ -37,7 +50,7 @@ const signUp = async (req, res) => {
 
 const nativeSignIn = async (name, password) => {
   if (!name || !password) {
-    return { error: "Request Error: email and password are required.", status: 400 };
+    return { error: "Request Error: name and password are required.", status: 400 };
   }
 
   try {

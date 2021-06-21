@@ -16,6 +16,12 @@ app.use("/api/1.0",
   ]
 );
 
+// Page not found
+app.use(function (req, res, next) {
+  // eslint-disable-next-line node/no-path-concat
+  res.status(404).sendFile(__dirname + "/public/404.html");
+});
+
 // eslint-disable-next-line node/handle-callback-err
 app.use(function (err, req, res, next) {
   console.log("err");
