@@ -3,7 +3,6 @@ const xhr = new XMLHttpRequest();
 xhr.onreadystatechange = function () {
   if (xhr.readyState === 4 && xhr.status === 200) {
     const data = JSON.parse(xhr.responseText).items[0].items;
-    console.log(data);
     const name1 = document.querySelectorAll(".playerName1");
     const name2 = document.querySelectorAll(".playerName2");
     const name3 = document.querySelectorAll(".playerName3");
@@ -35,50 +34,44 @@ xhr.onreadystatechange = function () {
     for (let i = 0; i < data[0].playerstats.length; i++) {
       const name = data[0].playerstats[i].PLAYER_NAME;
       const playerid = data[0].playerstats[i].PLAYER_ID;
-      const teamid = data[0].playerstats[i].TEAM_ID;
       name1[i].innerHTML = name;
       name1[i].href = `player.html?playerid=${playerid}`;
-      image1[i].src = `https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/${teamid}/2020/260x190/${playerid}.png`;
+      image1[i].src = `https://cdn.nba.com/headshots/nba/latest/1040x760/${playerid}.png`;
     }
     for (let i = 0; i < data[0].playerstats.length; i++) {
       const name = data[2].playerstats[i].PLAYER_NAME;
       const playerid = data[2].playerstats[i].PLAYER_ID;
-      const teamid = data[2].playerstats[i].TEAM_ID;
       name2[i].innerHTML = name;
       name2[i].href = `player.html?playerid=${playerid}`;
-      image2[i].src = `https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/${teamid}/2020/260x190/${playerid}.png`;
+      image2[i].src = `https://cdn.nba.com/headshots/nba/latest/1040x760/${playerid}.png`;
     }
     for (let i = 0; i < data[0].playerstats.length; i++) {
       const name = data[6].playerstats[i].PLAYER_NAME;
       const playerid = data[6].playerstats[i].PLAYER_ID;
-      const teamid = data[6].playerstats[i].TEAM_ID;
       name3[i].innerHTML = name;
       name3[i].href = `player.html?playerid=${playerid}`;
-      image3[i].src = `https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/${teamid}/2020/260x190/${playerid}.png`;
+      image3[i].src = `https://cdn.nba.com/headshots/nba/latest/1040x760/${playerid}.png`;
     }
     for (let i = 0; i < data[0].playerstats.length; i++) {
       const name = data[1].playerstats[i].PLAYER_NAME;
       const playerid = data[1].playerstats[i].PLAYER_ID;
-      const teamid = data[1].playerstats[i].TEAM_ID;
       name4[i].innerHTML = name;
       name4[i].href = `player.html?playerid=${playerid}`;
-      image4[i].src = `https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/${teamid}/2020/260x190/${playerid}.png`;
+      image4[i].src = `https://cdn.nba.com/headshots/nba/latest/1040x760/${playerid}.png`;
     }
     for (let i = 0; i < data[0].playerstats.length; i++) {
       const name = data[3].playerstats[i].PLAYER_NAME;
       const playerid = data[3].playerstats[i].PLAYER_ID;
-      const teamid = data[3].playerstats[i].TEAM_ID;
       name5[i].innerHTML = name;
       name5[i].href = `player.html?playerid=${playerid}`;
-      image5[i].src = `https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/${teamid}/2020/260x190/${playerid}.png`;
+      image5[i].src = `https://cdn.nba.com/headshots/nba/latest/1040x760/${playerid}.png`;
     }
     for (let i = 0; i < data[0].playerstats.length; i++) {
       const name = data[4].playerstats[i].PLAYER_NAME;
       const playerid = data[4].playerstats[i].PLAYER_ID;
-      const teamid = data[4].playerstats[i].TEAM_ID;
       name6[i].innerHTML = name;
       name6[i].href = `player.html?playerid=${playerid}`;
-      image6[i].src = `https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/${teamid}/2020/260x190/${playerid}.png`;
+      image6[i].src = `https://cdn.nba.com/headshots/nba/latest/1040x760/${playerid}.png`;
     }
     for (let i = 0; i < data[0].playerstats.length; i++) {
       team[i].innerHTML = data[0].playerstats[i].TEAM_ABBREVIATION;

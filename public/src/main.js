@@ -13,7 +13,6 @@ fetch("/api/1.0/fantasy/rank", {
     }
   })
   .then((data) => {
-    console.log(data);
     const table = document.querySelector("#ranking");
 
     for (let i = 0; i < data.length; i++) {
@@ -49,7 +48,6 @@ fetch("/api/1.0/fantasy/top_players", {
     }
   })
   .then((data) => {
-    console.log(data);
     const table = document.querySelector("#players-list");
     for (let i = 0; i < data.length; i++) {
       const tr = document.createElement("tr");

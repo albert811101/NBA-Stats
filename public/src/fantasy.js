@@ -276,7 +276,6 @@ fetch("/api/1.0/fantasy/playerstats", {
     }
   })
   .then((data) => {
-    console.log(data);
     const teamPlayers = document.querySelectorAll(".players");
     const playerSet = new Set();
 
@@ -600,7 +599,6 @@ fetch("/api/1.0/fantasy/ranking", {
     }
   })
   .then((data) => {
-    console.log(data);
     const rank = document.querySelector(".rank");
     const score = document.querySelector(".score");
     if (data.length === 0) {
@@ -630,7 +628,6 @@ fetch("/api/1.0/user/profile", {
     }
   })
   .then((data) => {
-    console.log(data);
     const username = document.querySelector(".user");
     username.innerHTML = data.data.user;
   });

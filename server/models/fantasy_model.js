@@ -117,7 +117,6 @@ const getRanking = async (name) => {
     const dateYesterday = moment().tz("Asia/Taipei").subtract(1, "day").format();
     const correctDate = dateYesterday.slice(0, 10);
     const result2 = await conn.query(`SELECT user_id, total_score FROM selected_players WHERE selected_date = "${correctDate}" ORDER BY total_score DESC`);
-
     let rankArr = [];
     const ranking = result2[0].map(function (value, index) {
       let rank;
