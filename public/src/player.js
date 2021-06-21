@@ -21,7 +21,6 @@ fetch(`/api/1.0/player/playerbio${params}`, {
     }
   })
   .then((data) => {
-    console.log(data[0]);
     const teamCity = document.querySelector(".header-teamcity");
     const teamName = document.querySelector(".header-teamname");
     const jerseyNumber = document.querySelector(".header-jersey_number");
@@ -48,7 +47,7 @@ fetch(`/api/1.0/player/playerbio${params}`, {
     pts.innerHTML = data[0].pts;
     reb.innerHTML = data[0].reb;
     ast.innerHTML = data[0].ast;
-    profile.src = `https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/${data[0].team_id}/2020/260x190/${data[0].person_id}.png`;
+    profile.src = `https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/${data[0].team_id}/2020/260x190/${data[0].player_id}.png`;
     teamLogo.src = `https://cdn.nba.com/logos/nba/${data[0].team_id}/global/D/logo.svg`;
     height.innerHTML = data[0].height;
     weight.innerHTML = data[0].weight;
@@ -68,8 +67,6 @@ fetch(`/api/1.0/player/recent_games${params}`, {
     }
   })
   .then((data) => {
-    console.log(data[0]);
-
     const statGamedate = document.querySelectorAll(".stat-gamedate");
     const statMatchup = document.querySelectorAll(".stat-matchup");
     const statWinlose = document.querySelectorAll(".stat-winlose");
@@ -125,7 +122,7 @@ signUp.addEventListener("click", function () {
   Swal.fire({
     title: "Sign Up",
     html: `<input type="text" id="signup" class="swal2-input" placeholder="Username" maxlength="12">
-      <input type="password" id="password" class="swal2-input" placeholder="Password">`,
+      <input type="password" id="password" class="swal2-input" placeholder="Password" maxlength="20">`,
     confirmButtonText: "Sign Up",
     focusConfirm: false,
     preConfirm: () => {
@@ -169,7 +166,7 @@ signIn.addEventListener("click", function () {
   Swal.fire({
     title: "Sign In",
     html: `<input type="text" id="signin" class="swal2-input" placeholder="Username" maxlength="12">
-    <input type="password" id="password" class="swal2-input" placeholder="Password">`,
+    <input type="password" id="password" class="swal2-input" placeholder="Password" maxlength="20">`,
     confirmButtonText: "Sign In",
     focusConfirm: false,
     preConfirm: () => {
@@ -256,7 +253,7 @@ $(".searchbar").on("keypress", function (e) {
             "No Players Matched your selected filters"
           );
         } else {
-          location.href = `/player.html?playerid=${data[0].person_id}`;
+          location.href = `/player.html?playerid=${data[0].player_id}`;
         }
       });
   }
@@ -285,7 +282,7 @@ search.addEventListener("click", function () {
           "No Players Matched your selected filters"
         );
       } else {
-        location.href = `/player.html?playerid=${data[0].person_id}`;
+        location.href = `/player.html?playerid=${data[0].player_id}`;
       }
     });
 });

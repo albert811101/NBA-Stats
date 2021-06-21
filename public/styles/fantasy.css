@@ -250,3 +250,32 @@ th {
   text-align: left;
   width: 130px;
 }
+
+.swal-mode {
+  font-weight: bold;
+  font-size: large;
+  color: #114B5F;
+}
+
+.mode-alert {
+  text-align: center;
+  font-weight: bold;
+  font-size: large;
+}
+
+.mode-alert2 {
+  text-align: center;
+}
+
+.swal-wide{
+  width: 750px !important;
+}
+
+.swal2-html-container {
+  text-align: left;
+  font-size: medium;
+}
+
+.example {
+  color: grey;
+}

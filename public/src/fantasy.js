@@ -7,6 +7,7 @@ const showTeams = document.querySelectorAll(".glyphicon-plus-sign");
 const teamsLogo = document.querySelectorAll(".teams");
 const teamPlayers = document.querySelectorAll(".players");
 
+// eslint-disable-next-line no-unused-vars
 function clearAll () {
   const teams1 = document.querySelector("#teams1");
   const teams2 = document.querySelector("#teams2");
@@ -57,9 +58,11 @@ function clearAll () {
 
 let todayData;
 
+// eslint-disable-next-line no-unused-vars
 function showTodayteams (i) {
   const mode = document.querySelector("#mode");
-  if (mode.value == 2) { 
+  if (mode.value == 2) {
+    if (todayData) {
       if (showTeams[i].classList.contains("glyphicon-plus-sign")) {
         closeOtherbuttons(i);
         showTeams[i].classList.remove("glyphicon-plus-sign");
@@ -68,7 +71,7 @@ function showTodayteams (i) {
           const image = document.createElement("img");
           image.setAttribute(
             "src",
-      `https://cdn.nba.com/logos/nba/${todayData[j]}/global/D/logo.svg`
+        `https://cdn.nba.com/logos/nba/${todayData[j]}/global/D/logo.svg`
           );
           image.setAttribute("class", "teamLogo");
           image.setAttribute("alt", `${i}`);
@@ -83,14 +86,22 @@ function showTodayteams (i) {
           teamPlayers[i].innerHTML = "";
         }
       }
+    } else {
+      // eslint-disable-next-line no-undef
+      Swal.fire({
+        html: `<div class="mode-alert">明天沒有比賽</div><br>
+        <div class="mode-alert2">可以選擇模擬模式來玩唷！</div>`
+      });
+    }
   }
 }
 
 let retrieveData;
 
+// eslint-disable-next-line no-unused-vars
 function appendData (i) {
   const mode = document.querySelector("#mode");
-  if (mode.value == 1) {  //模擬
+  if (mode.value == 1) { // 模擬
     if (retrieveData !== undefined) {
       if (showTeams[i].classList.contains("glyphicon-plus-sign")) {
         closeOtherbuttons(i);
@@ -116,11 +127,11 @@ function appendData (i) {
         }
       }
     } else {
+      // eslint-disable-next-line no-undef
       Swal.fire(
         "請先選擇日期！"
       );
     }
-
   }
 }
 
@@ -132,48 +143,25 @@ function mode () {
   const reset = document.querySelector(".reset");
   const getScore = document.querySelector(".get-score");
   date.value = "";
-  // for (let i = 0; i < showTeams.length; i++) {
-  //   showTeams[i].addEventListener("click", function () {
-  //     if (showTeams[i].classList.contains("glyphicon-minus-sign")) {
-  //       console.log("change plus button");
-  //       showTeams[i].classList.remove("glyphicon-minus-sign");
-  //       showTeams[i].classList.add("glyphicon-plus-sign");
-  //     }
-  //   });
-  // };
   if (mode.value == 0) {
     if (selectedPlayers !== undefined) {
       selectedPlayers.clear();
-    } 
-  }else if (mode.value == 1) {
+    }
+  } else if (mode.value == 1) {
     date.style.display = "flex";
     getScore.style.display = "inline-block";
     submit.style.display = "none";
     reset.style.display = "none";
     if (selectedPlayers !== undefined) {
-      console.log(selectedPlayers)
+      console.log(selectedPlayers);
       selectedPlayers.clear();
-      console.log(selectedPlayers)
-    } 
-    // for (let i = 0; i <= 4; i++) {
-    //   const teamsLogo = document.querySelectorAll(".teams");
-    //   teamsLogo[i].innerHTML = "";
-    //   const showTeams = document.querySelectorAll(".glyphicon-minus-sign"); // 5
-    //   for (const showTeam of showTeams) {
-    //     showTeam.classList.remove("glyphicon-minus-sign");
-    //     showTeam.classList.add("glyphicon-plus-sign");
-    //   }
-    //   const teamPlayers = document.querySelectorAll(".players");
-    //   teamPlayers[i].innerHTML = "";
-    // }
-
+      console.log(selectedPlayers);
+    }
   // eslint-disable-next-line eqeqeq
-  } else if (mode.value == 2) {  //official mode
+  } else if (mode.value == 2) { // official mode
     if (selectedPlayers !== undefined) {
-      console.log(selectedPlayers)
       selectedPlayers.clear();
-      console.log(selectedPlayers)
-    } 
+    }
     const date = document.querySelector("#date");
     date.style.display = "none";
     getScore.style.display = "none";
@@ -189,44 +177,20 @@ function mode () {
         const fantasyDate = datas.filter(function (data) {
           return data.gameDate.includes(todayDate);
         });
-        const teamsId = [];
-        for (let i = 0; i < fantasyDate[0].games.length; i++) {
-          teamsId.push(fantasyDate[0].games[i].homeTeam.teamId);
-          teamsId.push(fantasyDate[0].games[i].awayTeam.teamId);
+        if (fantasyDate.length === 0) {
+          // eslint-disable-next-line no-undef
+          Swal.fire({
+            html: `<div class="mode-alert">明天沒有比賽</div><br>
+            <div class="mode-alert2">可以選擇模擬模式來玩唷！</div>`
+          });
+        } else {
+          const teamsId = [];
+          for (let i = 0; i < fantasyDate[0].games.length; i++) {
+            teamsId.push(fantasyDate[0].games[i].homeTeam.teamId);
+            teamsId.push(fantasyDate[0].games[i].awayTeam.teamId);
+          }
+          todayData = teamsId;
         }
-        todayData = teamsId;
-
-        // const showTeams = document.querySelectorAll(".glyphicon-plus-sign"); // 5
-        // const teamsLogo = document.querySelectorAll(".teams"); // 5
-        // const teamPlayers = document.querySelectorAll(".players"); // 5
-
-        // for (let i = 0; i < showTeams.length; i++) {
-        //   showTeams[i].addEventListener("click", function () {
-        //     if (showTeams[i].classList.contains("glyphicon-plus-sign")) {
-        //       closeOtherbuttons(i);
-        //       showTeams[i].classList.remove("glyphicon-plus-sign");
-        //       showTeams[i].classList.add("glyphicon-minus-sign");
-        //       for (let j = 0; j < todayData.length; j++) {
-        //         const image = document.createElement("img");
-        //         image.setAttribute(
-        //           "src",
-        //       `https://cdn.nba.com/logos/nba/${todayData[j]}/global/D/logo.svg`
-        //         );
-        //         image.setAttribute("class", "teamLogo");
-        //         image.setAttribute("alt", `${i}`);
-        //         teamsLogo[i].appendChild(image);
-        //       }
-        //     } else {
-        //       showTeams[i].classList.remove("glyphicon-minus-sign");
-        //       showTeams[i].classList.add("glyphicon-plus-sign");
-        //       for (let j = 0; j < todayData.length; j++) {
-        //         const image = document.querySelector(".teamLogo");
-        //         teamsLogo[i].removeChild(image);
-        //         teamPlayers[i].innerHTML = "";
-        //       }
-        //     }
-        //   });
-        // }
       }
     };
     xhr.open("get", "api/1.0/fantasy/schedule");
@@ -283,7 +247,6 @@ async function handler (e) {
 };
 
 function closeOtherbuttons (index) {
-  console.log("closeOtherbuttons");
   for (let i = 0; i <= 4; i++) {
     if (i === index) {
       continue;
@@ -381,7 +344,7 @@ fetch("/api/1.0/fantasy/playerstats", {
                   </thead>
                   <tbody>
                     <tr class="selected-player">
-                      <td class="name" data-player="${data.data.G[targetElement.src.slice(30, 40)][i].person_id}" alt="${parseInt(targetElement.alt)}" style="cursor: pointer">${data.data.G[targetElement.src.slice(30, 40)][i].player_first_name} ${data.data.G[targetElement.src.slice(30, 40)][i].player_last_name}</td>
+                      <td class="name" data-player="${data.data.G[targetElement.src.slice(30, 40)][i].player_id}" alt="${parseInt(targetElement.alt)}" style="cursor: pointer">${data.data.G[targetElement.src.slice(30, 40)][i].player_first_name} ${data.data.G[targetElement.src.slice(30, 40)][i].player_last_name}</td>
                       <td>${data.data.G[targetElement.src.slice(30, 40)][i].pts}</td>
                       <td>${data.data.G[targetElement.src.slice(30, 40)][i].fg3m}</td>
                       <td>${data.data.G[targetElement.src.slice(30, 40)][i].reb}</td>
@@ -416,7 +379,7 @@ fetch("/api/1.0/fantasy/playerstats", {
               </thead>
               <tbody>
                 <tr class="selected-player">
-                  <td class="name" data-player="${data.data.F[targetElement.src.slice(30, 40)][i].person_id}" alt="${parseInt(targetElement.alt)}" style="cursor: pointer">${data.data.F[targetElement.src.slice(30, 40)][i].player_first_name} ${data.data.F[targetElement.src.slice(30, 40)][i].player_last_name}</td>
+                  <td class="name" data-player="${data.data.F[targetElement.src.slice(30, 40)][i].player_id}" alt="${parseInt(targetElement.alt)}" style="cursor: pointer">${data.data.F[targetElement.src.slice(30, 40)][i].player_first_name} ${data.data.F[targetElement.src.slice(30, 40)][i].player_last_name}</td>
                   <td>${data.data.F[targetElement.src.slice(30, 40)][i].pts}</td>
                   <td>${data.data.F[targetElement.src.slice(30, 40)][i].fg3m}</td>
                   <td>${data.data.F[targetElement.src.slice(30, 40)][i].reb}</td>
@@ -451,7 +414,7 @@ fetch("/api/1.0/fantasy/playerstats", {
               </thead>
               <tbody>
                 <tr class="selected-player">
-                  <td class="name" data-player="${data.data.C[targetElement.src.slice(30, 40)][i].person_id}" alt="${parseInt(targetElement.alt)}" style="cursor: pointer">${data.data.C[targetElement.src.slice(30, 40)][i].player_first_name} ${data.data.C[targetElement.src.slice(30, 40)][i].player_last_name}</td>
+                  <td class="name" data-player="${data.data.C[targetElement.src.slice(30, 40)][i].player_id}" alt="${parseInt(targetElement.alt)}" style="cursor: pointer">${data.data.C[targetElement.src.slice(30, 40)][i].player_first_name} ${data.data.C[targetElement.src.slice(30, 40)][i].player_last_name}</td>
                   <td>${data.data.C[targetElement.src.slice(30, 40)][i].pts}</td>
                   <td>${data.data.C[targetElement.src.slice(30, 40)][i].fg3m}</td>
                   <td>${data.data.C[targetElement.src.slice(30, 40)][i].reb}</td>
@@ -479,6 +442,27 @@ member.addEventListener("click", function () {
   confirm.addEventListener("click", function () {
     window.localStorage.clear();
     location.href = "/"; // 照理來說要跳到fantasy首頁
+  });
+});
+
+const rules = document.querySelector("#rules");
+
+rules.addEventListener("click", function () {
+  // eslint-disable-next-line no-undef
+  Swal.fire({
+    html: `<div class="swal-mode">正式模式：</div><br>
+    <div>1. 台灣時間早上 00:00~23:59 選擇隔天出賽的5位球員，進行每一天的積分統計。</div>
+    <div>2. 當日積分於台灣時間每天下午更新，Ranking 頁面會有排行榜可查看你的總積分排名。</div><br>
+    <div class="swal-mode">模擬模式：</div><br>
+    <div>可以選擇今年賽季的任一有賽程的日期，挑選自己喜歡的球員5位，會有當天球員數據的加權分數。</div><br>
+    <div class="swal-mode">積分計算方式：</div><br>
+    <div>1. 依照NBA球員每場球賽的比賽數據而有不同的加權。</div>
+    <div>得分*1、三分進球數*2、籃板*1.2、助攻*1.5、抄截*3、阻攻*3、失誤*-1</div><br> 
+    <div class="example">【舉例】</div>
+    <div class="example">快艇球員 Kawhi Leonard 本日得到 30分、2三分、10籃板 、5助攻 、3抄截、0阻攻、5失誤</div>
+    <div class="example">依照加權計算出的積分為 30+4+12+7.5+9+0-5= 57.5 分</div>`,
+    customClass: "swal-wide",
+    focusConfirm: false
   });
 });
 

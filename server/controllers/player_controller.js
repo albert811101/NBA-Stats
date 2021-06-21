@@ -1,10 +1,7 @@
 const axios = require("axios");
-// const cheerio = require("cheerio");
 const player = require("../models/player_model");
 
-const fetchPlayerstats = async (req, res) => {
-  console.log("Making API Request...");
-  // request the data from the JSON API
+const fetchPlayerStats = async (req, res) => {
   const url =
     "https://stats.nba.com/stats/playerdashboardbyyearoveryear?DateFrom=&DateTo=&GameSegment=&LastNGames=0&LeagueID=00&Location=&MeasureType=Base&Month=0&OpponentTeamID=0&Outcome=&PORound=0&PaceAdjust=N&PerMode=PerGame&Period=0&PlayerID=201939&PlusMinus=N&Rank=N&Season=2020-21&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&Split=yoy&VsConference=&VsDivision=";
   const results = await axios.get(url, {
@@ -13,18 +10,9 @@ const fetchPlayerstats = async (req, res) => {
     }
   });
   res.status(200).json(results.data);
-  // console.log(
-  //   "Got results =",
-  //   results.data.resultSets[0].headers,
-  //   results.data.resultSets[0].rowSet[0]
-  // );
 };
 
-const fetchPlayerbio = async (req, res) => {
-  console.log("Making API Request...");
-  // request the data from the JSON API
-  // const url = "https://stats.nba.com/stats/playerdashboardbyyearoveryear?DateFrom=&DateTo=&GameSegment=&LastNGames=0&LeagueID=00&Location=&MeasureType=Base&Month=0&OpponentTeamID=0&Outcome=&PORound=0&PaceAdjust=N&PerMode=PerGame&Period=0&PlayerID=201939&PlusMinus=N&Rank=N&Season=2020-21&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&Split=yoy&VsConference=&VsDivision=";
-  // const url = "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/1610612744/2020/260x190/201939.png";
+const fetchPlayerBio = async (req, res) => {
   const url =
     "https://stats.nba.com/stats/playerindex?College=&Country=&DraftPick=&DraftRound=&DraftYear=&Height=&Historical=1&LeagueID=00&Season=2020-21&SeasonType=Regular Season&TeamID=0&Weight=";
   const result = await axios.get(url, {
@@ -32,13 +20,7 @@ const fetchPlayerbio = async (req, res) => {
       Referer: "https://www.nba.com/"
     }
   });
-  console.log(
-    "Got result =",
-    result.data.resultSets[0].headers,
-    result.data.resultSets[0].rowSet[4001]
-  );
-  // console.log(results.data.resultSets[0].headers[0]);
-  // console.log(results.data.resultSets);
+
   const playerStatMap = {
     PERSON_ID: 0,
     PLAYER_LAST_NAME: 1,
@@ -79,53 +61,53 @@ const fetchPlayerbio = async (req, res) => {
     item[playerStatMap.FROM_YEAR],
     item[playerStatMap.TO_YEAR]
   ]);
-  // console.log("okay");
-  // res.send("okay");
   return playerBio;
 };
 
-const createPlayerbio = async (req, res) => {
-  const result = await fetchPlayerbio();
-  await player.createPlayerbio(result);
+const createPlayerBio = async (req, res) => {
+  const result = await fetchPlayerBio();
+  await player.createPlayerBio(result);
   res.send(result);
 };
 
-const getPlayerbio = async (req, res) => {
+const getPlayerBio = async (req, res) => {
   const playerId = req.query.playerid;
-  const result = await player.getPlayerbio(playerId); // 傳出去的資料
+  const result = await player.getPlayerBio(playerId);
   res.send(result[0]);
 };
 
-const getRecentgames = async (req, res) => {
+const getRecentGames = async (req, res) => {
   const playerId = req.query.playerid;
-  const result = await player.getRecentgames(playerId); // 傳出去的資料
+  const result = await player.getRecentGames(playerId);
   res.send(result);
 };
 
-const getPlayername = async (req, res) => {
-  const result = await player.getPlayername(req.body.name); // 傳出去的資料
+const getPlayerName = async (req, res) => {
+  const { name } = req.body;
+  if (name.length > 30) {
+    res.status(400).send({ error: "The number of name is limited to 30." });
+    return;
+  }
+  const result = await player.getPlayerName(req.body.name); // 傳出去的資料
   res.send(result[0]);
 };
 
-const fetchStatsleader = async (req, res) => {
-  // console.log("Making API Request...");
-  // request the data from the JSON API
+const fetchStatslLeader = async (req, res) => {
   const url = "https://stats.nba.com/js/data/widgets/home_season.json";
   const statsleader = await axios.get(url, {
     headers: {
       Referer: "https://www.nba.com/"
     }
   });
-  // console.log(statsleader.data.items[0].items[0].playerstats[0]);
   res.send(JSON.stringify(statsleader.data));
 };
 
 module.exports = {
-  fetchPlayerstats,
-  fetchPlayerbio,
-  createPlayerbio,
-  getPlayerbio,
-  getRecentgames,
-  getPlayername,
-  fetchStatsleader
+  fetchPlayerStats,
+  fetchPlayerBio,
+  createPlayerBio,
+  getPlayerBio,
+  getRecentGames,
+  getPlayerName,
+  fetchStatslLeader
 };

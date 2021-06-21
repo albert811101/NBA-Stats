@@ -53,17 +53,14 @@ const nativeSignIn = async (name, password) => {
   const conn = await pool.getConnection();
   try {
     await conn.query("START TRANSACTION");
-
     const users = await conn.query("SELECT * FROM user WHERE name = ?", [name]);
     const user = users[0][0];
-    // console.log(bcrypt.hashSync(password, salt) === user.password);
     if (user.password !== encodePassword(password)) {
       await conn.query("COMMIT");
       return { error: "Password is wrong" };
     }
 
     const loginAt = new Date();
-    console.log(loginAt);
     const accessToken = jwt.sign({
       name: user.name
     }, TOKEN_SECRET);
@@ -87,7 +84,6 @@ const nativeSignIn = async (name, password) => {
 const getUserDetail = async (name) => {
   try {
     const users = await pool.query("SELECT * FROM user WHERE name = ?", [name]);
-    // console.log(users[0][0]);
     return users[0][0];
   } catch (e) {
     return null;

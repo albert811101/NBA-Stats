@@ -1,12 +1,13 @@
 require("dotenv").config();
 const User = require("../server/models/user_model");
+const playerInfo = require("../server/models/fantasy_model");
 const { TOKEN_SECRET } = process.env; // 30 days by seconds
 const jwt = require("jsonwebtoken");
+const cron = require("node-cron");
 
 const authentication = () => {
   return async function (req, res, next) {
     let accessToken = req.get("Authorization");
-    // console.log(accessToken);
     if (!accessToken) {
       res.status(401).send({ error: "Unauthorized" });
       return;
@@ -36,6 +37,15 @@ const authentication = () => {
   };
 };
 
+const autoCreatePlayers = cron.schedule("0 0 15 * * *", () => {
+  console.log("get boxscore at 15:00 at Asia/Taipei timezone");
+  playerInfo.createPlayers();
+}, {
+  scheduled: true,
+  timezone: "Asia/Taipei"
+});
+
 module.exports = {
-  authentication
+  authentication,
+  autoCreatePlayers
 };

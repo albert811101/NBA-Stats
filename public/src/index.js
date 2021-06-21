@@ -135,7 +135,7 @@ signUp.addEventListener("click", function () {
   Swal.fire({
     title: "Sign Up",
     html: `<input type="text" id="signup" class="swal2-input" placeholder="Username" maxlength="12">
-    <input type="password" id="password" class="swal2-input" placeholder="Password">`,
+    <input type="password" id="password" class="swal2-input" placeholder="Password" maxlength="20">`,
     confirmButtonText: "Sign Up",
     focusConfirm: false,
     preConfirm: () => {
@@ -179,7 +179,7 @@ signIn.addEventListener("click", function () {
   Swal.fire({
     title: "Sign In",
     html: `<input type="text" id="signin" class="swal2-input" placeholder="Username" maxlength="12">
-    <input type="password" id="password" class="swal2-input" placeholder="Password">`,
+    <input type="password" id="password" class="swal2-input" placeholder="Password" maxlength="20">`,
     confirmButtonText: "Sign In",
     focusConfirm: false,
     preConfirm: () => {
@@ -266,7 +266,7 @@ $(".searchbar").on("keypress", function (e) {
             "No Players Matched your selected filters"
           );
         } else {
-          location.href = `/player.html?playerid=${data[0].person_id}`;
+          location.href = `/player.html?playerid=${data[0].player_id}`;
         }
       });
   }
@@ -295,7 +295,7 @@ search.addEventListener("click", function () {
           "No Players Matched your selected filters"
         );
       } else {
-        location.href = `/player.html?playerid=${data[0].person_id}`;
+        location.href = `/player.html?playerid=${data[0].player_id}`;
       }
     });
 });

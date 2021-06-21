@@ -1,121 +1,24 @@
 const axios = require("axios");
-const playerinfo = require("../models/fantasy_model");
+const playerInfo = require("../models/fantasy_model");
 const moment = require("moment-timezone");
 
-const fetchschedule = async (req, res) => {
+const fetchSchedule = async (req, res) => {
   const url =
     "https://cdn.nba.com/static/json/staticData/scheduleLeagueV2_32.json";
   const results = await axios.get(url, {
-
   });
-  // console.log(results.data.leagueSchedule.gameDates[100].games[0].gameId);
-  // await playerinfo.createSchedule(results.data.leagueSchedule.gameDates);
+  // await playerInfo.createSchedule(results.data.leagueSchedule.gameDates);
   res.status(200).json(results.data);
 };
 
 const getSchedule = async (req, res) => {
   const date = req.body.date;
-  const result = await playerinfo.getSchedule(date);
+  const result = await playerInfo.getSchedule(date);
   res.status(200).send({ data: result });
 };
 
-const fetchAllplayerstats = async (req, res) => {
-  const url =
-    "https://stats.nba.com/stats/leaguedashplayerstats?College=&Conference=&Country=&DateFrom=&DateTo=&Division=&DraftPick=&DraftYear=&GameScope=&GameSegment=&Height=&LastNGames=0&LeagueID=00&Location=&MeasureType=Base&Month=0&OpponentTeamID=0&Outcome=&PORound=0&PaceAdjust=N&PerMode=PerGame&Period=0&PlayerExperience=&PlayerPosition=&PlusMinus=N&Rank=N&Season=2020-21&SeasonSegment=&SeasonType=Playoffs&ShotClockRange=&StarterBench=&TeamID=0&TwoWay=0&VsConference=&VsDivision=&Weight=";
-  const result = await axios.get(url, {
-    headers: {
-      Referer: "https://www.nba.com/"
-    }
-  });
-
-  // console.log(result.data.resultSets);
-
-  const playerStatMap = {
-    PLAYER_ID: 0,
-    PLAYER__NAME: 1,
-    TEAM_ID: 3,
-    PTS: 30,
-    FG3M: 14,
-    REB: 22,
-    AST: 23,
-    TOV: 24,
-    STL: 25,
-    BLK: 26
-  };
-
-  const playerStats = result.data.resultSets[0].rowSet.map((item) => [
-    item[playerStatMap.PLAYER_ID],
-    item[playerStatMap.PLAYER__NAME],
-    item[playerStatMap.TEAM_ID],
-    item[playerStatMap.PTS],
-    item[playerStatMap.FG3M],
-    item[playerStatMap.REB],
-    item[playerStatMap.AST],
-    item[playerStatMap.STL],
-    item[playerStatMap.BLK],
-    item[playerStatMap.TOV]
-  ]);
-
-  console.log(playerStats);
-
-  // const playerstats = {};
-  // for (const item of result.data.resultSets[0].rowSet) {
-  //   playerstats[item[playerStatMap.PLAYER_ID]] = {
-  //     player_name: item[playerStatMap.PLAYER__NAME],
-  //     team_id: item[playerStatMap.TEAM_ID],
-  //     pts: item[playerStatMap.PTS],
-  //     fg3m: item[playerStatMap.FG3M],
-  //     reb: item[playerStatMap.REB],
-  //     ast: item[playerStatMap.AST],
-  //     stl: item[playerStatMap.STL],
-  //     blk: item[playerStatMap.BLK],
-  //     tov: item[playerStatMap.TOV]
-  //   };
-  // }
-
-  const result2 = await playerinfo.getPlayerstats();
-  // console.log(result2[0][0].player_id);
-  const playerstats = {};
-  for (const item of result2[0]) {
-    playerstats[item.player_id] = {
-      player_name: item.player_name,
-      team_id: item.team_id,
-      pts: item.pts,
-      fg3m: item.fg3m,
-      reb: item.reb,
-      ast: item.ast,
-      stl: item.stl,
-      blk: item.blk,
-      tov: item.tov
-    };
-  }
-
-  const results = await playerinfo.getPlayerinfo();
-  const playerData = results[0];
-  const detailMap = {};
-  playerData.forEach(function (item) {
-    item = { ...item, ...playerstats[item.person_id] };
-    const positions = item.position.split("-");
-    positions.forEach(function (position) {
-      if (!detailMap[position]) {
-        detailMap[position] = {};
-      }
-      if (!detailMap[position][item.team_id]) {
-        detailMap[position][item.team_id] = [];
-      }
-      detailMap[position][item.team_id].push(item);
-    });
-  });
-
-  // console.log(detailMap.F[1610612757][0]);
-  // res.send({ status: "okay" });
-
-  res.send({ data: detailMap });
-  // res.status(200).json(result.data.resultSets[0]);
-};
-
-const fetchPlayerstats = async (req, res) => {
-  const result2 = await playerinfo.getPlayerstats();
+const fetchPlayerStats = async (req, res) => {
+  const result2 = await playerInfo.getPlayerStats();
   const playerstats = {};
   for (const item of result2[0]) {
     playerstats[item.player_id] = {
@@ -132,11 +35,11 @@ const fetchPlayerstats = async (req, res) => {
     };
   }
 
-  const results = await playerinfo.getPlayerinfo();
+  const results = await playerInfo.getPlayerInfo();
   const playerData = results[0];
   const detailMap = {};
   playerData.forEach(function (item) {
-    item = { ...item, ...playerstats[item.person_id] };
+    item = { ...item, ...playerstats[item.player_id] };
     const positions = item.position.split("-");
     positions.forEach(function (position) {
       if (!detailMap[position]) {
@@ -152,7 +55,6 @@ const fetchPlayerstats = async (req, res) => {
 };
 
 const fetchBoxscore = async (req, res) => {
-  // where to download the HTML from
   const url = "https://stats.nba.com/stats/leaguegamelog?Counter=1000&DateFrom=&DateTo=&Direction=DESC&LeagueID=00&PlayerOrTeam=P&Season=2020-21&SeasonType=Playoffs&Sorter=DATE";
   const boxscore = await axios.get(url, {
     headers: {
@@ -220,7 +122,6 @@ const fetchBoxscore = async (req, res) => {
     item[playerBoxscoreMap.PLUS_MINUS],
     "playoff"
   ]);
-  // console.log(playerBox);
 
   const dateYesterday = moment().tz("Asia/Taipei").subtract(1, "day").format();
   const correctDate = dateYesterday.slice(0, 10);
@@ -229,44 +130,23 @@ const fetchBoxscore = async (req, res) => {
     return boxscore[4].includes(correctDate);
   });
 
-  // const playerBox = {};
-  // for (const item of boxscore.data.resultSets[0].rowSet) {
-  //   const key = JSON.stringify(item[playerBoxscoreMap.PLAYER_ID]) + "-" + item[playerBoxscoreMap.GAME_DATE];
-  //   playerBox[key] = {
-  //     player_name: item[playerBoxscoreMap.PLAYER__NAME],
-  //     player_id: item[playerBoxscoreMap.PLAYER_ID],
-  //     team_id: item[playerBoxscoreMap.TEAM_ID],
-  //     game_id: item[playerBoxscoreMap.GAME_ID],
-  //     game_date: item[playerBoxscoreMap.GAME_DATE],
-  //     pts: item[playerBoxscoreMap.PTS],
-  //     fg3m: item[playerBoxscoreMap.FG3M],
-  //     reb: item[playerBoxscoreMap.REB],
-  //     ast: item[playerBoxscoreMap.AST],
-  //     stl: item[playerBoxscoreMap.STL],
-  //     blk: item[playerBoxscoreMap.BLK],
-  //     tov: item[playerBoxscoreMap.TOV]
-  //   };
-  // }
-
-  await playerinfo.createPlayers(todayBoxscore); // 這裡的playerBox是要傳出去的資料
+  await playerInfo.createPlayers(todayBoxscore);
   res.send(todayBoxscore);
 };
 
-const getTotalscore = async (req, res) => {
-  const result = await playerinfo.getTotalscore(req.user.name);
-  // console.log(result);
+const getTotalScore = async (req, res) => {
+  const result = await playerInfo.getTotalScore(req.user.name);
   res.status(200).send({ data: result });
 };
 
 const getRanking = async (req, res) => {
-  const result = await playerinfo.getRanking(req.user.name);
+  const result = await playerInfo.getRanking(req.user.name);
   res.status(200).send(result);
 };
 
-const createPlayerstats = async (req, res) => {
+const createPlayerStats = async (req, res) => {
   const url =
   "https://stats.nba.com/stats/leaguedashplayerstats?College=&Conference=&Country=&DateFrom=&DateTo=&Division=&DraftPick=&DraftYear=&GameScope=&GameSegment=&Height=&LastNGames=0&LeagueID=00&Location=&MeasureType=Base&Month=0&OpponentTeamID=0&Outcome=&PORound=0&PaceAdjust=N&PerMode=PerGame&Period=0&PlayerExperience=&PlayerPosition=&PlusMinus=N&Rank=N&Season=2020-21&SeasonSegment=&SeasonType=Playoffs&ShotClockRange=&StarterBench=&TeamID=0&TwoWay=0&VsConference=&VsDivision=&Weight=";
-  // "https://stats.nba.com/stats/leaguedashplayerstats?College=&Conference=&Country=&DateFrom=&DateTo=&Division=&DraftPick=&DraftYear=&GameScope=&GameSegment=&Height=&LastNGames=0&LeagueID=00&Location=&MeasureType=Base&Month=0&OpponentTeamID=0&Outcome=&PORound=0&PaceAdjust=N&PerMode=PerGame&Period=0&PlayerExperience=&PlayerPosition=&PlusMinus=N&Rank=N&Season=2020-21&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&StarterBench=&TeamID=0&TwoWay=0&VsConference=&VsDivision=&Weight=";
   const result = await axios.get(url, {
     headers: {
       Referer: "https://www.nba.com/"
@@ -297,17 +177,17 @@ const createPlayerstats = async (req, res) => {
     item[playerStatMap.STL],
     item[playerStatMap.BLK],
     item[playerStatMap.TOV],
-    "playoff" 
+    "playoff"
   ]);
 
-  await playerinfo.createPlayerstats(playerStats);
+  await playerInfo.createPlayerStats(playerStats);
 
   res.status(200).send(playerStats);
 };
 
-const getSelectedplayers = async (req, res) => {
+const getSelectedPlayers = async (req, res) => {
   const { players } = req.body;
-  const result = await playerinfo.getSelectedplayers(players, req.user.name);
+  const result = await playerInfo.getSelectedPlayers(players, req.user.name);
 
   if (result.error) {
     res.send({ error: result.error });
@@ -316,10 +196,10 @@ const getSelectedplayers = async (req, res) => {
   res.status(200).send({ status: "okay" });
 };
 
-const getHistoryplayers = async (req, res) => {
+const getHistoryPlayers = async (req, res) => {
   const date = req.body.date;
   const players = req.body.players.players;
-  const result = await playerinfo.getHistoryplayers(date, players);
+  const result = await playerInfo.getHistoryPlayers(date, players);
   res.status(200).send({ data: result });
 };
 
@@ -332,15 +212,14 @@ const getUserProfile = async (req, res) => {
 };
 
 module.exports = {
-  fetchschedule,
+  fetchSchedule,
   getSchedule,
-  fetchAllplayerstats,
   fetchBoxscore,
-  getTotalscore,
+  getTotalScore,
   getRanking,
-  getSelectedplayers,
-  getHistoryplayers,
+  getSelectedPlayers,
+  getHistoryPlayers,
   getUserProfile,
-  fetchPlayerstats,
-  createPlayerstats
+  fetchPlayerStats,
+  createPlayerStats
 };

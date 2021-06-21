@@ -22,10 +22,14 @@
     <header class="header">
       <div class="leftbar">
         <a href="/fantasy.html" id="logo1">Fantasy</a>
-        <a href="/rules.html" div id="rules">Rules</a>
+        <div id="header-r">
+          <a href="/ranking.html" id="header-ranking" style="cursor: pointer"
+            >Ranking</a
+          >
+          <a id="rules" style="cursor: pointer">Rules</a>
+        </div>
       </div>
       <nav class="rightbar">
-        <a href="/main.html" id="header-ranking" style="cursor: pointer">Ranking</a>
         <a href="/" id="home">Home</a>
         <div class="member1" style="cursor: pointer">
           <img src="images/member.png" />
@@ -34,11 +38,11 @@
     </header>
     <div class="container ranking">
       <div class="select-mode">
-        <input id="date" type="date" onchange="clearAll(), handler(event)"/>
+        <input id="date" type="date" onchange="clearAll(), handler(event)" />
         <select
           class="form-select"
           id="mode"
-          onchange="clearAll(), mode()" 
+          onchange="clearAll(), mode()"
           aria-label="Default select example"
         >
           <option selected value="0">遊 戲 模 式</option>
@@ -97,7 +101,9 @@
               <div class="position-name">球員位置 後衛</div>
               <div class="playerName" id="playerName1" alt="null"></div>
               <div
-                class="glyphicon glyphicon-plus-sign" id="plus-button1" onclick="appendData(0), showTodayteams(0)"
+                class="glyphicon glyphicon-plus-sign"
+                id="plus-button1"
+                onclick="appendData(0), showTodayteams(0)"
                 style="cursor: pointer"
               ></div>
             </div>
@@ -109,7 +115,9 @@
               <div class="position-name">球員位置 後衛</div>
               <div class="playerName" id="playerName2" alt="null"></div>
               <div
-                class="glyphicon glyphicon-plus-sign" id="plus-button2" onclick="appendData(1), showTodayteams(1)"
+                class="glyphicon glyphicon-plus-sign"
+                id="plus-button2"
+                onclick="appendData(1), showTodayteams(1)"
                 style="cursor: pointer"
               ></div>
             </div>
@@ -121,7 +129,9 @@
               <div class="position-name">球員位置 前鋒</div>
               <div class="playerName" id="playerName3" alt="null"></div>
               <div
-                class="glyphicon glyphicon-plus-sign" id="plus-button3" onclick="appendData(2), showTodayteams(2)"
+                class="glyphicon glyphicon-plus-sign"
+                id="plus-button3"
+                onclick="appendData(2), showTodayteams(2)"
                 style="cursor: pointer"
               ></div>
             </div>
@@ -133,7 +143,9 @@
               <div class="position-name">球員位置 前鋒</div>
               <div class="playerName" id="playerName4" alt="null"></div>
               <div
-                class="glyphicon glyphicon-plus-sign" id="plus-button4" onclick="appendData(3), showTodayteams(3)"
+                class="glyphicon glyphicon-plus-sign"
+                id="plus-button4"
+                onclick="appendData(3), showTodayteams(3)"
                 style="cursor: pointer"
               ></div>
             </div>
@@ -145,7 +157,9 @@
               <div class="position-name">球員位置 中鋒</div>
               <div class="playerName" id="playerName5" alt="null"></div>
               <div
-                class="glyphicon glyphicon-plus-sign" id="plus-button5" onclick="appendData(4), showTodayteams(4)"
+                class="glyphicon glyphicon-plus-sign"
+                id="plus-button5"
+                onclick="appendData(4), showTodayteams(4)"
                 style="cursor: pointer"
               ></div>
             </div>
@@ -156,7 +170,7 @@
       </div>
       <button type="button" class="btn btn-primary submit">Submit</button>
       <button type="button" class="btn btn-primary reset">Reset</button>
-      <button type="button" class="btn btn-primary get-score">get score</button>
+      <button type="button" class="btn btn-primary get-score">Get score</button>
     </div>
     <footer>
       <div class="name d-flex">
