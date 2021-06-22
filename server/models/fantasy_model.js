@@ -92,7 +92,6 @@ const getTotalScore = async (name) => {
 };
 
 const createPlayerStats = async (playerStats) => {
-  console.log(123);
   const conn = await pool.getConnection();
   try {
     for (let i = 0; i < playerStats.length; i++) {
@@ -189,6 +188,32 @@ const getSchedule = async (date) => {
   }
 };
 
+const getTodaySchedule = async () => {
+  const dateToday = moment().tz("Asia/Taipei").format();
+  const correctDate = dateToday.slice(0, 10);
+  const todayDate = correctDate.replace(/-/g, "");
+  const selectedDate = await pool.query("SELECT hometeam_id, awayteam_id FROM schedule WHERE game_date = (?)", todayDate);
+  const conn = await pool.getConnection();
+  try {
+    // eslint-disable-next-line eqeqeq
+    if (!selectedDate[0].length == 0) {
+      const teamsId = [];
+      for (let i = 0; i < selectedDate[0].length; i++) {
+        teamsId.push(selectedDate[0][i].hometeam_id);
+        teamsId.push(selectedDate[0][i].awayteam_id);
+      }
+      return teamsId;
+    } else {
+      return { error: "There is no game today!" };
+    }
+  } catch (error) {
+    await conn.query("ROLLBACK");
+    return error;
+  } finally {
+    await conn.release();
+  }
+};
+
 module.exports = {
   getPlayerInfo,
   getSelectedPlayers,
@@ -199,5 +224,6 @@ module.exports = {
   getPlayerStats,
   getRanking,
   createSchedule,
-  getSchedule
+  getSchedule,
+  getTodaySchedule
 };
