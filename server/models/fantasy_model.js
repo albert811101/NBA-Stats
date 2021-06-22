@@ -97,6 +97,7 @@ const createPlayerStats = async (playerStats) => {
     for (let i = 0; i < playerStats.length; i++) {
       await conn.query(`UPDATE player_stats SET pts = ${playerStats[i][3]}, fg3m = ${playerStats[i][4]}, reb = ${playerStats[i][5]}, ast = ${playerStats[i][6]}, stl = ${playerStats[i][7]}, blk = ${playerStats[i][8]}, tov = ${playerStats[i][9]} WHERE player_id = "${playerStats[i][0]}" AND season_type = "playoff";`);
     }
+    console.log("finish");
   } catch (error) {
     await conn.query("ROLLBACK");
     return error;

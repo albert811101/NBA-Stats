@@ -12,7 +12,8 @@ const {
   getSelectedPlayers,
   getHistoryPlayers,
   getUserProfile,
-  fetchPlayerStats
+  fetchPlayerStats,
+  createPlayerStats
 } = require("../controllers/fantasy_controller");
 
 router.route("/fantasy/schedule")
@@ -38,5 +39,8 @@ router.route("/user/profile")
 
 router.route("/fantasy/playerstats")
   .get(fetchPlayerStats);
+
+router.route("/fantasy/create_playerstats")
+  .get(createPlayerStats);
 
 module.exports = router;

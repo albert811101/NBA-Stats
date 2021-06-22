@@ -179,7 +179,7 @@ const createPlayerStats = async (req, res) => {
 
   await playerInfo.createPlayerStats(playerStats);
 
-  res.status(200).send(playerStats);
+  res.send(playerStats);
 };
 
 const getSelectedPlayers = async (req, res) => {
