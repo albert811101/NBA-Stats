@@ -47,7 +47,7 @@ fetch(`/api/1.0/player/playerbio${params}`, {
     pts.innerHTML = data[0].pts;
     reb.innerHTML = data[0].reb;
     ast.innerHTML = data[0].ast;
-    profile.src = `https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/${data[0].team_id}/2020/260x190/${data[0].player_id}.png`;
+    profile.src = `https://cdn.nba.com/headshots/nba/latest/1040x760/${data[0].player_id}.png`;
     teamLogo.src = `https://cdn.nba.com/logos/nba/${data[0].team_id}/global/D/logo.svg`;
     height.innerHTML = data[0].height;
     weight.innerHTML = data[0].weight;
