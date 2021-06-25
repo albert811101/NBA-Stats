@@ -3,12 +3,9 @@ const playerInfo = require("../models/fantasy_model");
 const moment = require("moment-timezone");
 
 const fetchSchedule = async (req, res) => {
-  const url =
-    "https://cdn.nba.com/static/json/staticData/scheduleLeagueV2_32.json";
-  const results = await axios.get(url, {
-  });
+  const result = await playerInfo.getTodaySchedule();
   // await playerInfo.createSchedule(results.data.leagueSchedule.gameDates);
-  res.status(200).json(results.data);
+  res.status(200).json(result);
 };
 
 const getSchedule = async (req, res) => {
@@ -182,7 +179,7 @@ const createPlayerStats = async (req, res) => {
 
   await playerInfo.createPlayerStats(playerStats);
 
-  res.status(200).send(playerStats);
+  res.send(playerStats);
 };
 
 const getSelectedPlayers = async (req, res) => {

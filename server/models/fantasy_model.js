@@ -37,33 +37,37 @@ const getHistoryPlayers = async (selectedDate, players) => {
 
 const createPlayers = async (todayBoxscore) => {
   try {
-    // const result = await pool.query("INSERT INTO player_boxscore (player_id, player_name, team_id, game_id, game_date, matchup, winlose, min, pts, fgm, fga, fg_pct, fg3m, fg3a, fg3_pct, ftm, fta, ft_pct, oreb, dreb, reb, ast, stl, blk, tov, pf, plus_minus, season_type) VALUES ?", [todayBoxscore]);
-    // console.log("當日box數據都進去啦");
+    if (todayBoxscore) {
+      await pool.query("INSERT INTO player_boxscore (player_id, player_name, team_id, game_id, game_date, matchup, winlose, min, pts, fgm, fga, fg_pct, fg3m, fg3a, fg3_pct, ftm, fta, ft_pct, oreb, dreb, reb, ast, stl, blk, tov, pf, plus_minus, season_type) VALUES ?", [todayBoxscore]);
+      console.log("當日box數據都進去啦");
 
-    const dateYesterday = moment().tz("Asia/Taipei").subtract(1, "day").format();
-    const correctDate = dateYesterday.slice(0, 10);
+      const dateYesterday = moment().tz("Asia/Taipei").subtract(1, "day").format();
+      const correctDate = dateYesterday.slice(0, 10);
 
-    const result2 = await pool.query(`SELECT * FROM player_boxscore LEFT JOIN selected_players ON player_boxscore.player_id = selected_players.player1_id OR player_boxscore.player_id = selected_players.player2_id OR player_boxscore.player_id = selected_players.player3_id OR player_boxscore.player_id = selected_players.player4_id OR player_boxscore.player_id = selected_players.player5_id WHERE game_date = "${correctDate}" AND selected_players.selected_date = "${correctDate}"`);
-    const score = [];
-    let totalScore = 0;
-    for (let i = 0; i < result2[0].length; i++) {
-      score.push(result2[0][i].pts + result2[0][i].fg3m * 2 + result2[0][i].reb * 1.2 + result2[0][i].ast * 1.5 + result2[0][i].stl * 3 + result2[0][i].blk * 3 - result2[0][i].tov);
-      totalScore = totalScore + score[i];
-    };
-    const userScore = {};
-    for (const playerScore of result2[0]) {
-      if (playerScore.user_id in userScore) {
-        userScore[playerScore.user_id] += playerScore.pts + playerScore.fg3m * 2 + playerScore.reb * 1.2 + playerScore.ast * 1.5 + playerScore.stl * 3 + playerScore.blk * 3 - playerScore.tov;
-      } else {
-        userScore[playerScore.user_id] = playerScore.pts + playerScore.fg3m * 2 + playerScore.reb * 1.2 + playerScore.ast * 1.5 + playerScore.stl * 3 + playerScore.blk * 3 - playerScore.tov;
-      }
-    };
-    let updateScore;
-    for (const userId in userScore) {
-      updateScore = `UPDATE selected_players SET total_score = ${Math.round(userScore[userId])} WHERE user_id IN (${userId}) AND selected_date = "${correctDate}";`;
-      await pool.query(updateScore);
-    };
-    return result2;
+      const result2 = await pool.query(`SELECT * FROM player_boxscore LEFT JOIN selected_players ON player_boxscore.player_id = selected_players.player1_id OR player_boxscore.player_id = selected_players.player2_id OR player_boxscore.player_id = selected_players.player3_id OR player_boxscore.player_id = selected_players.player4_id OR player_boxscore.player_id = selected_players.player5_id WHERE game_date = "${correctDate}" AND selected_players.selected_date = "${correctDate}"`);
+      const score = [];
+      let totalScore = 0;
+      for (let i = 0; i < result2[0].length; i++) {
+        score.push(result2[0][i].pts + result2[0][i].fg3m * 2 + result2[0][i].reb * 1.2 + result2[0][i].ast * 1.5 + result2[0][i].stl * 3 + result2[0][i].blk * 3 - result2[0][i].tov);
+        totalScore = totalScore + score[i];
+      };
+      const userScore = {};
+      for (const playerScore of result2[0]) {
+        if (playerScore.user_id in userScore) {
+          userScore[playerScore.user_id] += playerScore.pts + playerScore.fg3m * 2 + playerScore.reb * 1.2 + playerScore.ast * 1.5 + playerScore.stl * 3 + playerScore.blk * 3 - playerScore.tov;
+        } else {
+          userScore[playerScore.user_id] = playerScore.pts + playerScore.fg3m * 2 + playerScore.reb * 1.2 + playerScore.ast * 1.5 + playerScore.stl * 3 + playerScore.blk * 3 - playerScore.tov;
+        }
+      };
+      let updateScore;
+      for (const userId in userScore) {
+        updateScore = `UPDATE selected_players SET total_score = ${Math.round(userScore[userId])} WHERE user_id IN (${userId}) AND selected_date = "${correctDate}";`;
+        await pool.query(updateScore);
+      };
+      return result2;
+    } else {
+      console.log("There is no game today!");
+    }
   } catch (error) {
     console.log(error);
     await pool.query("ROLLBACK");
@@ -90,7 +94,10 @@ const getTotalScore = async (name) => {
 const createPlayerStats = async (playerStats) => {
   const conn = await pool.getConnection();
   try {
-    // await conn.query("INSERT INTO player_stats (player_id, player_name, team_id, pts, fg3m, reb, ast, stl, blk, tov, season_type) VALUES ?", [playerStats]);
+    for (let i = 0; i < playerStats.length; i++) {
+      await conn.query(`UPDATE player_stats SET pts = ${playerStats[i][3]}, fg3m = ${playerStats[i][4]}, reb = ${playerStats[i][5]}, ast = ${playerStats[i][6]}, stl = ${playerStats[i][7]}, blk = ${playerStats[i][8]}, tov = ${playerStats[i][9]} WHERE player_id = "${playerStats[i][0]}" AND season_type = "playoff";`);
+    }
+    console.log("finish");
   } catch (error) {
     await conn.query("ROLLBACK");
     return error;
@@ -182,6 +189,32 @@ const getSchedule = async (date) => {
   }
 };
 
+const getTodaySchedule = async () => {
+  const dateToday = moment().tz("Asia/Taipei").format();
+  const correctDate = dateToday.slice(0, 10);
+  const todayDate = correctDate.replace(/-/g, "");
+  const selectedDate = await pool.query("SELECT hometeam_id, awayteam_id FROM schedule WHERE game_date = (?)", todayDate);
+  const conn = await pool.getConnection();
+  try {
+    // eslint-disable-next-line eqeqeq
+    if (!selectedDate[0].length == 0) {
+      const teamsId = [];
+      for (let i = 0; i < selectedDate[0].length; i++) {
+        teamsId.push(selectedDate[0][i].hometeam_id);
+        teamsId.push(selectedDate[0][i].awayteam_id);
+      }
+      return teamsId;
+    } else {
+      return { error: "There is no game today!" };
+    }
+  } catch (error) {
+    await conn.query("ROLLBACK");
+    return error;
+  } finally {
+    await conn.release();
+  }
+};
+
 module.exports = {
   getPlayerInfo,
   getSelectedPlayers,
@@ -192,5 +225,6 @@ module.exports = {
   getPlayerStats,
   getRanking,
   createSchedule,
-  getSchedule
+  getSchedule,
+  getTodaySchedule
 };

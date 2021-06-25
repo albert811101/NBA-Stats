@@ -7,7 +7,6 @@ const {
 const {
   fetchSchedule,
   getSchedule,
-  fetchBoxscore,
   getTotalScore,
   getRanking,
   getSelectedPlayers,
@@ -22,9 +21,6 @@ router.route("/fantasy/schedule")
 
 router.route("/fantasy/history_schedule")
   .post(authentication(), getSchedule);
-
-router.route("/fantasy/box_score")
-  .get(fetchBoxscore);
 
 router.route("/fantasy/total_score")
   .get(authentication(), getTotalScore);

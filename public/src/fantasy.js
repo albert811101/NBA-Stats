@@ -168,26 +168,15 @@ function mode () {
     const xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4 && xhr.status === 200) {
-        const today = new Date().toLocaleDateString();
-        const newToday = today.split("/");
-        const todayDate = [newToday[1], newToday[2], newToday[0]].join("/");
-        const datas = JSON.parse(xhr.responseText).leagueSchedule.gameDates;
-        const fantasyDate = datas.filter(function (data) {
-          return data.gameDate.includes(todayDate);
-        });
-        if (fantasyDate.length === 0) {
+        const todayDate = JSON.parse(xhr.responseText);
+        if (todayDate.length === 0) {
           // eslint-disable-next-line no-undef
           Swal.fire({
             html: `<div class="mode-alert">明天沒有比賽</div><br>
             <div class="mode-alert2">可以選擇模擬模式來玩唷！</div>`
           });
         } else {
-          const teamsId = [];
-          for (let i = 0; i < fantasyDate[0].games.length; i++) {
-            teamsId.push(fantasyDate[0].games[i].homeTeam.teamId);
-            teamsId.push(fantasyDate[0].games[i].awayTeam.teamId);
-          }
-          todayData = teamsId;
+          todayData = todayDate;
         }
       }
     };
