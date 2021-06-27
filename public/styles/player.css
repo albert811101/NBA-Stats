@@ -4,6 +4,10 @@
   height: 100%;
 }
 
+.container {
+  margin-top: 50px;
+}
+
 .col-md-12 {
   color: #0D1B2A;
   margin-bottom: 50px;
