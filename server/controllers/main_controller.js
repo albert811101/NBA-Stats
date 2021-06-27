@@ -8,7 +8,7 @@ const getRanking = async (req, res) => {
 
 const getTopPlayers = async (req, res) => {
   const result = await fantasyRanking.getTopPlayers();
-  const topPlayers = result.slice(0, 10);
+  const topPlayers = result.slice(0, 9);
   res.status(200).send(topPlayers);
 };
 

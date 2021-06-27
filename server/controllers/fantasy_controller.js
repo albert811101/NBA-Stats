@@ -51,7 +51,7 @@ const fetchPlayerStats = async (req, res) => {
   res.send({ data: detailMap });
 };
 
-const fetchBoxscore = async (req, res) => {
+const fetchBoxscore = async () => {
   const url = "https://stats.nba.com/stats/leaguegamelog?Counter=1000&DateFrom=&DateTo=&Direction=DESC&LeagueID=00&PlayerOrTeam=P&Season=2020-21&SeasonType=Playoffs&Sorter=DATE";
   const boxscore = await axios.get(url, {
     headers: {
@@ -128,7 +128,6 @@ const fetchBoxscore = async (req, res) => {
   });
 
   await playerInfo.createPlayers(todayBoxscore);
-  res.send(todayBoxscore);
 };
 
 const getTotalScore = async (req, res) => {
@@ -141,7 +140,7 @@ const getRanking = async (req, res) => {
   res.status(200).send(result);
 };
 
-const createPlayerStats = async (req, res) => {
+const createPlayerStats = async () => {
   const url =
   "https://stats.nba.com/stats/leaguedashplayerstats?College=&Conference=&Country=&DateFrom=&DateTo=&Division=&DraftPick=&DraftYear=&GameScope=&GameSegment=&Height=&LastNGames=0&LeagueID=00&Location=&MeasureType=Base&Month=0&OpponentTeamID=0&Outcome=&PORound=0&PaceAdjust=N&PerMode=PerGame&Period=0&PlayerExperience=&PlayerPosition=&PlusMinus=N&Rank=N&Season=2020-21&SeasonSegment=&SeasonType=Playoffs&ShotClockRange=&StarterBench=&TeamID=0&TwoWay=0&VsConference=&VsDivision=&Weight=";
   const result = await axios.get(url, {
@@ -178,8 +177,6 @@ const createPlayerStats = async (req, res) => {
   ]);
 
   await playerInfo.createPlayerStats(playerStats);
-
-  res.send(playerStats);
 };
 
 const getSelectedPlayers = async (req, res) => {
