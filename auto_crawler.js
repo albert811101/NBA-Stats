@@ -1,12 +1,12 @@
 const cron = require("node-cron");
 const { fetchBoxscore, createPlayerStats } = require("./server/controllers/fantasy_controller");
 
-cron.schedule("16 18 * * *", () => {
+cron.schedule("15 19 * * *", () => {
   console.log("add today boxscore");
   fetchBoxscore();
 });
 
-cron.schedule("18 18 * * *", () => {
+cron.schedule("16 19 * * *", () => {
   console.log("update player stats in playoff");
   createPlayerStats();
 });
