@@ -13,7 +13,7 @@ const createPlayerBio = async (playerBio) => {
 const getPlayerBio = async (playerId) => {
   const conn = await pool.getConnection();
   try {
-    const result = await conn.query(`SELECT * FROM player_bio WHERE player_id = ${playerId}`);
+    const result = await conn.query("SELECT * FROM player_bio WHERE player_id = ?", playerId);
     return result;
   } catch (error) {
     await conn.query("ROLLBACK");
@@ -26,7 +26,7 @@ const getPlayerBio = async (playerId) => {
 const getRecentGames = async (playerId) => {
   const conn = await pool.getConnection();
   try {
-    const result = await conn.query(`SELECT * FROM player_boxscore WHERE player_id = ${playerId} ORDER BY game_date DESC LIMIT 10;`);
+    const result = await conn.query("SELECT * FROM player_boxscore WHERE player_id = ? ORDER BY game_date DESC LIMIT 10;", playerId);
     return result;
   } catch (error) {
     await conn.query("ROLLBACK");
@@ -40,7 +40,8 @@ const getPlayerName = async (name) => {
   const conn = await pool.getConnection();
   try {
     const correctName = name.split(" ");
-    const result = await conn.query(`SELECT player_id FROM player_bio WHERE to_year = 2020 AND player_last_name = "${correctName[1]}" AND player_first_name = "${correctName[0]}";`);
+    // const result = await conn.query(`SELECT player_id FROM player_bio WHERE to_year = 2020 AND player_last_name = "${correctName[1]}" AND player_first_name = "${correctName[0]}";`);
+    const result = await conn.query("SELECT player_id FROM player_bio WHERE to_year = 2020 AND player_last_name = ? AND player_first_name = ?;", [correctName[1], correctName[0]]);
     return result;
   } catch (error) {
     await conn.query("ROLLBACK");
