@@ -1,3 +1,8 @@
+if (!localStorage.access_token) {
+  alert("請先登入");
+  location.href = "/";
+}
+
 fetch("/api/1.0/fantasy/rank", {
   method: "GET",
   headers: new Headers({
