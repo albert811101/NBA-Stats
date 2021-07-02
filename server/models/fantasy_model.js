@@ -44,7 +44,7 @@ const createPlayers = async (todayBoxscore) => {
       const dateYesterday = moment().tz("Asia/Taipei").subtract(1, "day").format();
       const correctDate = dateYesterday.slice(0, 10);
 
-      const result2 = await pool.query(`SELECT * FROM player_boxscore LEFT JOIN selected_players ON player_boxscore.player_id = selected_players.player1_id OR player_boxscore.player_id = selected_players.player2_id OR player_boxscore.player_id = selected_players.player3_id OR player_boxscore.player_id = selected_players.player4_id OR player_boxscore.player_id = selected_players.player5_id WHERE game_date = "${correctDate}" AND selected_players.selected_date = "${correctDate}"`);
+      const result2 = await pool.query("SELECT * FROM player_boxscore LEFT JOIN selected_players ON player_boxscore.player_id = selected_players.player1_id OR player_boxscore.player_id = selected_players.player2_id OR player_boxscore.player_id = selected_players.player3_id OR player_boxscore.player_id = selected_players.player4_id OR player_boxscore.player_id = selected_players.player5_id WHERE game_date = ? AND selected_players.selected_date = ?", [correctDate, correctDate]);
       const score = [];
       let totalScore = 0;
       for (let i = 0; i < result2[0].length; i++) {
@@ -61,8 +61,8 @@ const createPlayers = async (todayBoxscore) => {
       };
       let updateScore;
       for (const userId in userScore) {
-        updateScore = `UPDATE selected_players SET total_score = ${Math.round(userScore[userId])} WHERE user_id IN (${userId}) AND selected_date = "${correctDate}";`;
-        await pool.query(updateScore);
+        updateScore = "UPDATE selected_players SET total_score = ? WHERE user_id IN (?) AND selected_date = ?";
+        await pool.query(updateScore, [Math.round(userScore[userId]), userId, correctDate]);
       };
       return result2;
     } else {
@@ -81,13 +81,14 @@ const getTotalScore = async (name) => {
   const dateYesterday = moment().tz("Asia/Taipei").subtract(1, "day").format();
   const correctDate = dateYesterday.slice(0, 10);
 
-  const result = await pool.query(`SELECT * FROM player_boxscore LEFT JOIN selected_players ON player_boxscore.player_id = selected_players.player1_id OR player_boxscore.player_id = selected_players.player2_id OR player_boxscore.player_id = selected_players.player3_id OR player_boxscore.player_id = selected_players.player4_id OR player_boxscore.player_id = selected_players.player5_id WHERE user_id = ${userDetail[0][0].user_id} AND game_date = "${correctDate}" AND selected_players.selected_date = "${correctDate}"`);
+  const result = await pool.query("SELECT * FROM player_boxscore LEFT JOIN selected_players ON player_boxscore.player_id = selected_players.player1_id OR player_boxscore.player_id = selected_players.player2_id OR player_boxscore.player_id = selected_players.player3_id OR player_boxscore.player_id = selected_players.player4_id OR player_boxscore.player_id = selected_players.player5_id WHERE user_id = ? AND game_date = ? AND selected_players.selected_date = ? ", [userDetail[0][0].user_id, correctDate, correctDate]);
   const score = [];
   let totalScore = 0;
   for (let i = 0; i < result[0].length; i++) {
     score.push(result[0][i].pts + result[0][i].fg3m * 2 + result[0][i].reb * 1.2 + result[0][i].ast * 1.5 + result[0][i].stl * 3 + result[0][i].blk * 3 - result[0][i].tov);
     totalScore = totalScore + score[i];
   };
+  console.log(totalScore);
   return (totalScore);
 };
 
@@ -95,7 +96,7 @@ const createPlayerStats = async (playerStats) => {
   const conn = await pool.getConnection();
   try {
     for (let i = 0; i < playerStats.length; i++) {
-      await conn.query(`UPDATE player_stats SET pts = ${playerStats[i][3]}, fg3m = ${playerStats[i][4]}, reb = ${playerStats[i][5]}, ast = ${playerStats[i][6]}, stl = ${playerStats[i][7]}, blk = ${playerStats[i][8]}, tov = ${playerStats[i][9]} WHERE player_id = "${playerStats[i][0]}" AND season_type = "playoff";`);
+      await conn.query("UPDATE player_stats SET pts = ?, fg3m = ?, reb = ?, ast = ?, stl = ?, blk = ?, tov = ? WHERE player_id = ? AND season_type = 'playoff';", [playerStats[i][3], playerStats[i][4], playerStats[i][5], playerStats[i][6], playerStats[i][7], playerStats[i][8], playerStats[i][9], playerStats[i][0]]);
     }
     console.log("finish");
   } catch (error) {
@@ -139,6 +140,7 @@ const getRanking = async (name) => {
     const playerRank = ranking.filter(function (item) {
       return item.user_id === userDetail[0][0].user_id;
     });
+    console.log(playerRank);
     return playerRank;
   } catch (error) {
     await conn.query("ROLLBACK");
