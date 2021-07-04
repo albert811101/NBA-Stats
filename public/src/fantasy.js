@@ -169,7 +169,7 @@ function mode () {
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4 && xhr.status === 200) {
         const todayDate = JSON.parse(xhr.responseText);
-        if (todayDate.length === 0) {
+        if (todayDate.error) {
           // eslint-disable-next-line no-undef
           Swal.fire({
             html: `<div class="mode-alert">明天沒有比賽</div><br>
