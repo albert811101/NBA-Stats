@@ -55,6 +55,7 @@ const nativeSignIn = async (name, password) => {
     await conn.query("START TRANSACTION");
     const users = await conn.query("SELECT * FROM user WHERE name = ?", [name]);
     const user = users[0][0];
+    console.log(user);
     if (user.password !== encodePassword(password)) {
       await conn.query("COMMIT");
       return { error: "Password is wrong" };
